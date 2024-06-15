@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">DASHBOARD</h1>
+        <h1 class="my-4 text-3xl font-bold">DATA KRITERIA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
-                <li aria-current="page">
-                    <div
-                        class="flex items-center text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('admin.index') }}"
+                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
                         <svg class="me-0.5 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 20">
                             <path
@@ -15,10 +15,10 @@
                             <path
                                 d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                         </svg>
-                        <a href="#" class="ms-1 text-sm font-medium md:ms-2">Dashboard</a>
-                    </div>
+                        Dashboard
+                    </a>
                 </li>
-                <li>
+                <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -35,9 +35,9 @@
     <div class="mt-8 pb-4">
         <div class="flex justify-between">
             <h3 class="mb-2 text-xl font-bold">Tabel Data Kriteria</h3>
-            <button type="button"
+            <a href="{{ route('admin.kriteria.create') }}"
                 class="mb-2 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Tambah
-                Kriteria</button>
+                Kriteria</a>
         </div>
 
         <div class="relative overflow-x-auto border p-2 shadow-md sm:rounded-lg">
