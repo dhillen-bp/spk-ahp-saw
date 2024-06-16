@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('alternative_id');
             $table->unsignedBigInteger('criteria_id');
             $table->decimal('nilai');
-            $table->timestamps();
 
             // Definisi foreign key
             $table->foreign('alternative_id')->references('id')->on('alternatives')->onDelete('cascade')->onUpdate('cascade');

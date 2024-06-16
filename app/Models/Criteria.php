@@ -10,6 +10,7 @@ class Criteria extends Model
 {
     use HasFactory;
 
+    protected $table = 'criteria';
     protected $guarded = [];
 
     /**

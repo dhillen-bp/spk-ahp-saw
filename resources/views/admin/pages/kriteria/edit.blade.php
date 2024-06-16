@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">TAMBAH KRITERIA</h1>
+        <h1 class="my-4 text-3xl font-bold">EDIT KRITERIA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -30,7 +30,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Tambah
+                        <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Edit
                             Kriteria</span>
                     </div>
                 </li>
@@ -40,16 +40,17 @@
 
     <div class="grid grid-cols-1 space-y-5 md:grid-cols-5 md:space-x-10 md:space-y-0">
 
-        <form method="POST" action="{{ route('admin.kriteria.store') }}"
+        <form method="POST" action="{{ route('admin.kriteria.update', $kriteria->id) }}"
             class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3">
             @csrf
+            @method('PATCH')
             <div class="mb-5">
                 <label for="nama"
                     class="{{ $errors->has('nama') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Nama Kriteria</label>
                 <input type="nama" id="nama" name="nama"
                     class="{{ $errors->has('nama') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
-                    value="{{ old('nama') }}" />
+                    value="{{ old('nama') ?? $kriteria->nama }}" />
                 @error('nama')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
@@ -61,8 +62,12 @@
                 <select id="atribut" name="atribut"
                     class="{{ $errors->has('atribut') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">
                     <option selected disabled>-Pilih Atribut-</option>
-                    <option value="benefit" {{ old('atribut') == 'benefit' ? 'selected' : '' }}>Benefit</option>
-                    <option value="cost" {{ old('atribut') == 'cost' ? 'selected' : '' }}>Cost</option>
+                    <option value="benefit"
+                        {{ old('atribut') == 'benefit' ? 'selected' : ($kriteria->atribut == 'benefit' ? 'selected' : '') }}>
+                        Benefit</option>
+                    <option value="cost"
+                        {{ old('atribut') == 'cost' ? 'selected' : ($kriteria->atribut == 'cost' ? 'selected' : '') }}>Cost
+                    </option>
                 </select>
                 @error('atribut')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -73,10 +78,17 @@
                     class="{{ $errors->has('keterangan') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Keterangan</label>
                 <textarea id="keterangan" rows="4" name="keterangan"
-                    class="{{ $errors->has('keterangan') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">{{ old('keterangan') }}</textarea>
+                    class="{{ $errors->has('keterangan') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">{{ old('keterangan') ?? $kriteria->keterangan }}</textarea>
                 @error('keterangan')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
+            </div>
+            <div class="mb-5">
+                <label for="bobot" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Bobot</label>
+                <input type="number" id="bobot" aria-describedby="helper-text-explanation"
+                    value="{{ $kriteria->bobot }}"
+                    class="block w-full cursor-not-allowed rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    disabled readonly />
             </div>
             <button type="submit"
                 class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Simpan</button>

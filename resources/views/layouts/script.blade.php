@@ -1,6 +1,18 @@
-{{-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> --}}
+<script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script type="module">
+    //TOASTR
+    @if (session()->has('success'))
+
+        toastr.success('{{ session('success') }}', 'BERHASIL!');
+    @elseif (!empty($errors->all()))
+        @foreach ($errors->all() as $error)
+            toastr.error("{{ $error }}")
+        @endforeach
+    @endif
+
+    // NAVBAR
     $(document).ready(function() {
         // Mendeteksi pergerakan scroll
         $(window).scroll(function() {
