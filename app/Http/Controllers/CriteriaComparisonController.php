@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Criteria;
 use Illuminate\Http\Request;
 
 class CriteriaComparisonController extends Controller
@@ -11,7 +12,10 @@ class CriteriaComparisonController extends Controller
      */
     public function index()
     {
-        //
+        $kriteria = Criteria::all();
+        $totalKriteria = $kriteria->count();
+
+        return view('admin.pages.perbandingan.compare', compact('kriteria', 'totalKriteria'));
     }
 
     /**

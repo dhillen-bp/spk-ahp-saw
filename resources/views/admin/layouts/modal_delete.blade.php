@@ -1,4 +1,4 @@
-@props(['deleteMessage', 'loopId', 'kriteriaId'])
+@props(['deleteMessage', 'loopId', 'deletedId', 'routeName'])
 
 <div id="delete-modal-{{ $loopId }}" tabindex="-1" data-modal-backdrop="static"
     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
@@ -21,7 +21,7 @@
                         d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{ $deleteMessage }}</h3>
-                <form action="{{ route('admin.kriteria.destroy', $kriteriaId) }}" method="POST">
+                <form action="{{ route($routeName, $deletedId) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submits"

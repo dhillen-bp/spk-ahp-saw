@@ -10,6 +10,7 @@ class CriteriaComparison extends Model
 {
     use HasFactory;
 
+    protected $table = 'criteria_comparison';
     protected $guarded = [];
 
     /**
@@ -25,5 +26,10 @@ class CriteriaComparison extends Model
     public function kriteria2(): BelongsTo
     {
         return $this->belongsTo(Criteria::class, 'kriteria2_id');
+    }
+
+    public function criteriaSelected()
+    {
+        return $this->belongsTo(CriteriaSelected::class, 'criteria_selected_id');
     }
 }

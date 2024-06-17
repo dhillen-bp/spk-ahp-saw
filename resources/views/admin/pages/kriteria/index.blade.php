@@ -125,7 +125,8 @@
                         @component('admin.layouts.modal_delete', [
                             'deleteMessage' => "Anda yakin menghapus data = $data->nama?",
                             'loopId' => $loop->iteration,
-                            'kriteriaId' => $data->id,
+                            'deletedId' => $data->id,
+                            'routeName' => 'admin.kriteria.destroy',
                         ])
                         @endcomponent
                     @endforeach
