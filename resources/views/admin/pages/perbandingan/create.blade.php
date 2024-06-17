@@ -69,7 +69,7 @@
             </div>
 
             <div class="mb-5">
-                <label for="kriteria"
+                <label for="criteria"
                     class="{{ $errors->has('criteria') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Kriteria yang Dipilih</label>
                 @error('criteria')

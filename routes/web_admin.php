@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\CriteriaComparisonController;
 use App\Http\Controllers\CriteriaController;
+use App\Http\Controllers\CriteriaPriorityValueController;
 use App\Http\Controllers\CriteriaSelectedController;
 use App\Http\Controllers\DashboardController;
+use App\Models\CriteriaPriorityValue;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
@@ -26,5 +28,7 @@ Route::prefix('perbandingan')->name('admin.perbandingan.')->group(function () {
     Route::delete('/destroy/{id}', [CriteriaSelectedController::class, 'destroy'])->name('destroy');
 
 
-    Route::get('/compare/{id}', [CriteriaComparisonController::class, 'index'])->name('compare');
+    Route::get('/compare/{id}', [CriteriaComparisonController::class, 'show'])->name('compare');
+    Route::patch('/compare/{id}', [CriteriaComparisonController::class, 'update'])->name('compareUpdate');
+    Route::get('/compare_result/{id}', [CriteriaPriorityValueController::class, 'show'])->name('compareResult');
 });

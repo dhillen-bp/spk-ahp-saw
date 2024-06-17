@@ -89,9 +89,6 @@
                             Atribut
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Bobot
-                        </th>
-                        <th scope="col" class="px-6 py-3">
                             Action
                         </th>
                     </tr>
@@ -108,9 +105,6 @@
                             <td class="px-6 py-4">
                                 <span class="{{ $data->atribut == 'benefit' ? 'badge-benefit' : 'badge-cost' }}">
                                     {{ ucfirst($data->atribut) }}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $data->bobot == null ? '-' : $data->bobot }}
                             </td>
                             <td class="px-6 py-4">
                                 <a href="" class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>

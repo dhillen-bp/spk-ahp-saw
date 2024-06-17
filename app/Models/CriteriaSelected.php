@@ -21,4 +21,9 @@ class CriteriaSelected extends Model
     {
         return $this->hasMany(CriteriaComparison::class, 'criteria_selected_id');
     }
+
+    public function criteriaPriorityValues(): HasMany
+    {
+        return $this->hasMany(CriteriaPriorityValue::class, 'criteria_selected_id');
+    }
 }

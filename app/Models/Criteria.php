@@ -32,4 +32,9 @@ class Criteria extends Model
     {
         return $this->hasMany(CriteriaComparison::class, 'kriteria2_id');
     }
+
+    public function criteriaPriorityValues(): HasMany
+    {
+        return $this->hasMany(CriteriaPriorityValue::class, 'criteria_id');
+    }
 }

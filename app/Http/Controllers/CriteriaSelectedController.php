@@ -74,8 +74,9 @@ class CriteriaSelectedController extends Controller
                         CriteriaComparison::create([
                             'criteria_selected_id' => $criteriaSelected->id,
                             'kriteria1_id' => $request->criteria[$i],
-                            'kriteria2_id' => $request->criteria[$j], // Update as per your logic
-                            'nilai' => 0 // Update as per your logic
+                            'kriteria2_id' => $request->criteria[$j],
+                            'nilai_kriteria1' => 0,
+                            'nilai_kriteria2' => 0
                         ]);
                     }
                 }
@@ -136,8 +137,9 @@ class CriteriaSelectedController extends Controller
                         CriteriaComparison::create([
                             'criteria_selected_id' => $criteriaSelected->id,
                             'kriteria1_id' => $request->criteria[$i],
-                            'kriteria2_id' => $request->criteria[$j], // Update as per your logic
-                            'nilai' => 0 // Update as per your logic
+                            'kriteria2_id' => $request->criteria[$j],
+                            'nilai_kriteria1' => 0,
+                            'nilai_kriteria2' => 0
                         ]);
                     }
                 }
