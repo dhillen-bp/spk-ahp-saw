@@ -50,33 +50,43 @@
                 @foreach ($criteriaComparison as $data)
                     @php
                         $nilaiKriteria1 = $data->nilai_kriteria1;
-                        switch ($nilaiKriteria1) {
-                            case $nilaiKriteria1 == 0.11:
-                                $value = -7;
-                                break;
-                            case $nilaiKriteria1 == 0.13:
-                                $value = -6;
-                                break;
-                            case $nilaiKriteria1 == 0.14:
-                                $value = -5;
-                                break;
-                            case $nilaiKriteria1 == 0.17:
-                                $value = -4;
-                                break;
-                            case $nilaiKriteria1 == 0.2:
-                                $value = -3;
-                                break;
-                            case $nilaiKriteria1 == 0.25:
-                                $value = -2;
-                                break;
-                            case $nilaiKriteria1 == 0.33:
-                                $value = -1;
-                                break;
-                            case $nilaiKriteria1 == 0.5:
-                                $value = 0;
-                                break;
-                            default:
-                                $value = 1;
+
+                        if ($nilaiKriteria1 == 9.0) {
+                            $value = -7;
+                        } elseif ($nilaiKriteria1 == 8.0) {
+                            $value = -6;
+                        } elseif ($nilaiKriteria1 == 7.0) {
+                            $value = -5;
+                        } elseif ($nilaiKriteria1 == 6.0) {
+                            $value = -4;
+                        } elseif ($nilaiKriteria1 == 5.0) {
+                            $value = -3;
+                        } elseif ($nilaiKriteria1 == 4.0) {
+                            $value = -2;
+                        } elseif ($nilaiKriteria1 == 3.0) {
+                            $value = -1;
+                        } elseif ($nilaiKriteria1 == 2.0) {
+                            $value = 0;
+                        } elseif ($nilaiKriteria1 == 1.0) {
+                            $value = 1;
+                        } elseif ($nilaiKriteria1 == 0.5) {
+                            $value = 2;
+                        } elseif ($nilaiKriteria1 == 0.333) {
+                            $value = 3;
+                        } elseif ($nilaiKriteria1 == 0.25) {
+                            $value = 4;
+                        } elseif ($nilaiKriteria1 == 0.2) {
+                            $value = 5;
+                        } elseif ($nilaiKriteria1 == 0.167) {
+                            $value = 6;
+                        } elseif ($nilaiKriteria1 == 0.143) {
+                            $value = 7;
+                        } elseif ($nilaiKriteria1 == 0.125) {
+                            $value = 8;
+                        } elseif ($nilaiKriteria1 == 0.111) {
+                            $value = 9;
+                        } else {
+                            $value = '';
                         }
                     @endphp
 
@@ -87,9 +97,10 @@
                         </div>
                         <div class="relative mb-6">
                             <label for="labels-range-input" class="sr-only">Labels range</label>
+                            {{-- {{ 'Nilai Value: ' . $value }}
+                            {{ 'Nilai Kriteria1: ' . $data->nilai_kriteria1 }} --}}
                             <input id="labels-range-input" type="range" min="-7" max="9"
-                                name="nilai[{{ $data->id }}]"
-                                value="{{ $nilaiKriteria1 < 1 ? $value : $nilaiKriteria1 }}"
+                                name="nilai[{{ $data->id }}]" value="{{ $value }}"
                                 class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700">
                             <span class="absolute -bottom-6 start-0 text-sm text-gray-900 dark:text-gray-400">9</span>
                             <span
@@ -117,15 +128,17 @@
                     Perbandingan</button>
             </form>
 
-            <a href="{{ route('admin.perbandingan.compareResult', $criteriaSelectedId) }}">
-                <button
-                    class="group relative mb-2 me-2 mt-5 inline-flex w-full items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 group-hover:from-purple-600 group-hover:to-blue-500 dark:text-white dark:focus:ring-blue-800">
-                    <span
-                        class="relative w-full rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900">
-                        Perhitungan AHP
-                    </span>
-                </button>
-            </a>
+            @if ($criteriaComparison[0]->nilai_kriteria1 > 0)
+                <a href="{{ route('admin.perbandingan.compareResult', $criteriaSelectedId) }}">
+                    <button
+                        class="group relative mb-2 me-2 mt-5 inline-flex w-full items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 group-hover:from-purple-600 group-hover:to-blue-500 dark:text-white dark:focus:ring-blue-800">
+                        <span
+                            class="relative w-full rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900">
+                            Perhitungan AHP
+                        </span>
+                    </button>
+                </a>
+            @endif
         </div>
 
 

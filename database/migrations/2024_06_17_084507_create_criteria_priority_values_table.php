@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('criteria_selected_id');
             $table->unsignedBigInteger('criteria_id');
-            $table->decimal('nilai');
+            $table->decimal('nilai', 8, 3);
             $table->timestamps();
 
             $table->foreign('criteria_selected_id')->references('id')->on('criteria_selected')->onDelete('cascade')->onUpdate('cascade');

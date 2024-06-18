@@ -54,60 +54,122 @@
     </div>
     {{-- END BREADCRUMB --}}
 
-    <div class="my-6">
-        <div class="space-y-2 rounded-lg bg-slate-50 p-4">
-            <h3 class="text-lg font-bold">MATRIKS PENJUMLAHAN KOLOM KRITERIA</h3>
+    <div class="space-y-10 pb-6">
+        <div class="rounded-lg bg-slate-50 p-4">
+            <h3 class="mb-4 text-lg font-bold">MATRIKS PENJUMLAHAN KOLOM KRITERIA</h3>
+
             <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold uppercase text-gray-700">
+                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
                     <tr class="border-2 border-gray-900">
-                        <th scope="col" class="w-1/3 border-2 border-gray-900 px-6 py-4">
-                            Kriteria
+                        <th class="border-2 border-gray-900 px-6 py-4">
+                            <!-- Empty for the left top corner of the table -->
                         </th>
-                        <th scope="col" class="w-1/3 border-2 border-gray-900 px-6 py-4">
-                            C1
-                        </th>
-                        <th scope="col" class="w-1/3 border-2 border-gray-900 px-6 py-4">
-                            C2
-                        </th>
+                        @foreach ($columns as $column)
+                            <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr class="h text-gray-900">
-                        <th class="w-1/3 border-2 border-gray-900 bg-blue-200 px-6 py-4">
-                            C1
-                        </th>
-                        <td class="w-1/3 border-2 border-gray-900 px-6 py-4">
-                            1
-                        </td>
-                        <td class="w-1/3 border-2 border-gray-900 px-6 py-4">
-                            1
-                        </td>
-                    </tr>
-                    <tr class="text-gray-900">
-                        <th class="w-1/3 border-2 border-gray-900 bg-blue-200 px-6 py-4">
-                            C2
-                        </th>
-                        <td class="w-1/3 border-2 border-gray-900 px-6 py-4">
-                            1
-                        </td>
-                        <td class="w-1/3 border-2 border-gray-900 px-6 py-4">
-                            1
-                        </td>
-                    </tr>
+                    @foreach ($rows as $kriteria1 => $columnsData)
+                        <tr class="text-gray-900">
+                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
+                            @foreach ($columnsData as $kriteria2 => $nilai)
+                                <td class="border-2 border-gray-900 px-6 py-4">{{ $nilai }}</td>
+                            @endforeach
+                        </tr>
+                    @endforeach
                     <tr class="bg-slate-900 text-white">
-                        <th class="w-1/3 border-2 border-gray-500 px-6 py-4">
-                            Jumlah
-                        </th>
-                        <td class="w-1/3 border-2 border-gray-500 px-6 py-4">
-                            1
-                        </td>
-                        <td class="w-1/3 border-2 border-gray-500 px-6 py-4">
-                            1
-                        </td>
+                        <th class="border-2 border-gray-900 px-6 py-4">Jumlah</th>
+                        @foreach ($columns as $column)
+                            <td class="border-2 border-gray-900 px-6 py-4 font-bold">
+                                {{ array_sum(array_column($rows, $column)) }}</td>
+                        @endforeach
                     </tr>
                 </tbody>
             </table>
 
         </div>
+
+        <div class="rounded-lg bg-slate-50 p-4">
+
+            <h3 class="mb-4 text-lg font-bold">MATRIKS NORMALISASI KRITERIA</h3>
+            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                    <tr class="border-2 border-gray-900">
+                        <th class="border-2 border-gray-900 px-6 py-4">
+                            <!-- Empty for the left top corner of the table -->
+                        </th>
+                        @foreach ($columns as $column)
+                            <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
+                        @endforeach
+                        <th class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">Jumlah</th>
+                        <th class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">Nilai Prioritas</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach ($normalizedRows as $kriteria1 => $columnsData)
+                        <tr class="text-gray-900">
+                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
+                            @foreach ($columnsData as $kriteria2 => $nilai)
+                                <td class="border-2 border-gray-900 px-6 py-4">{{ $nilai }}</td>
+                            @endforeach
+                            <td class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">
+                                {{ array_sum($columnsData) }}</td>
+                            <td class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">
+                                {{ $priorityValues[$kriteria1] }}</td>
+                        </tr>
+                    @endforeach
+                    <tr class="{{ $totalPriorityValues == 1 || 1.0 ? 'bg-green-500' : 'bg-red-500' }} text-white">
+                        <th class="border-2 border-green-500 px-6 py-4">Total </th>
+                        @foreach ($columns as $column)
+                            <td class="border-2 border-green-500 px-6 py-4"></td>
+                        @endforeach
+                        <td class="border-2 border-green-500 px-6 py-4"></td>
+                        <td class="border-2 border-green-500 px-6 py-4">{{ $totalPriorityValues }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rounded-lg bg-slate-50 p-4">
+            <h3 class="text-lg font-bold">KONSISTENSI</h3>
+            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-800 rtl:text-right">
+                <tbody>
+                    <tr>
+                        <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">Lambda Maks</th>
+                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $lambdaMaks }}</td>
+                    </tr>
+                    <tr>
+                        <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">CI</th>
+                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $ci }}</td>
+                    </tr>
+                    <tr>
+                        <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">CR</th>
+                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">
+                            {{ $cr }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        @if ($cr < 0.1)
+            <div class="mb-4 flex items-center rounded-lg border border-green-300 bg-green-50 p-4 text-sm text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
+                role="alert">
+                <svg class="me-3 inline h-4 w-4 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">Hasil Konsisisten!</span> Rasio konsistensi menunjukkan kurang dari <span
+                        class="font-bold">0.1</span> yaitu sebesar <span class="font-bold">{{ $cr }}</span>
+                </div>
+            </div>
+
+            <button type="button"
+                class="mb-2 me-2 w-full rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-bold text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">Simpan
+                Bobot Prioritas</button>
+        @endif
     </div>
 @endsection

@@ -56,6 +56,7 @@ class CriteriaComparisonController extends Controller
     public function update(Request $request, $criteriaSelectedId)
     {
         $nilai = $request->input('nilai');
+
         $mapping = [
             -7 => -9,
             -6 => -8,
@@ -73,13 +74,17 @@ class CriteriaComparisonController extends Controller
                 $nilai[$id] = $mapping[$value];
             }
 
+            // return dd($nilai[$id]);
             // Lakukan perhitungan sesuai dengan skala kepentingan AHP
-            if ($nilai[$id] <= 0) {
-                $nilaiKriteria2 = abs($nilai[$id]);
-                $nilaiKriteria1 = 1 / $nilaiKriteria2;
+            if ($nilai[$id] < -1) {
+                $nilaiKriteria1 = abs($nilai[$id]);
+                $nilaiKriteria2 = 1 / $nilaiKriteria1;
+                // return dd($nilai[$id] . " - " . $nilaiKriteria1);
             } else {
-                $nilaiKriteria1 = $nilai[$id];
-                $nilaiKriteria2 = 1 / $nilai[$id];
+                // return (dd($nilai[$id]));
+                $nilaiKriteria2 = $nilai[$id];
+                $nilaiKriteria1 = 1 / $nilaiKriteria2;
+                // return dd($nilai[$id] . " - " . $nilaiKriteria1);
             }
 
             // Simpan nilai-nilai baru ke dalam tabel perbandingan berpasangan

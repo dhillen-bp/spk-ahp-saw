@@ -30,5 +30,5 @@ Route::prefix('perbandingan')->name('admin.perbandingan.')->group(function () {
 
     Route::get('/compare/{id}', [CriteriaComparisonController::class, 'show'])->name('compare');
     Route::patch('/compare/{id}', [CriteriaComparisonController::class, 'update'])->name('compareUpdate');
-    Route::get('/compare_result/{id}', [CriteriaPriorityValueController::class, 'show'])->name('compareResult');
+    Route::get('/show/{id}', [CriteriaPriorityValueController::class, 'show'])->name('compareResult');
 });

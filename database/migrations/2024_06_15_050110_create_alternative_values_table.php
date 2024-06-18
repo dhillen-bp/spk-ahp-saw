@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('alternative_id');
             $table->unsignedBigInteger('criteria_id');
-            $table->decimal('nilai');
+            $table->decimal('nilai', 8, 3);
 
             // Definisi foreign key
             $table->foreign('alternative_id')->references('id')->on('alternatives')->onDelete('cascade')->onUpdate('cascade');

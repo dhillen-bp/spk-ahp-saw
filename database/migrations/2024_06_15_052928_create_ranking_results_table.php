@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ranking_results', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('alternative_id');
-            $table->decimal('skor_total');
+            $table->decimal('skor_total', 8, 3);
             $table->timestamps();
 
             $table->foreign('alternative_id')->references('id')->on('alternatives')->onDelete('cascade');
