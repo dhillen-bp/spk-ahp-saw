@@ -1,4 +1,4 @@
-<aside id="bg-blue-700"
+<aside id="logo-sidebar"
     class="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-blue-700 pt-20 transition-transform dark:border-gray-700 sm:translate-x-0"
     aria-label="Sidebar">
     <div class="h-full overflow-y-auto bg-blue-700 px-3 pb-4">
@@ -18,8 +18,8 @@
                 <hr class="my-2 h-px border-0 bg-gray-400">
             </div>
             <li>
-                <a href="/admin/data-kriteria"
-                    class="{{ Request::is('admin/data-kriteria*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
+                <a href="/admin/kriteria"
+                    class="{{ Request::is('admin/kriteria*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._kriteria-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',

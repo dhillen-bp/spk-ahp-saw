@@ -20,6 +20,6 @@ class SubCriteria extends Model
      */
     public function criteria(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'criteria_id', 'id');
+        return $this->belongsTo(Criteria::class, 'criteria_id', 'id');
     }
 }

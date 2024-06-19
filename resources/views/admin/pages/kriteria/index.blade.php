@@ -107,7 +107,8 @@
                                     {{ ucfirst($data->atribut) }}</span>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="" class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
+                                <a href="{{ route('admin.kriteria.show', $data->id) }}"
+                                    class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
                                 <a href="{{ route('admin.kriteria.edit', $data->id) }}"
                                     class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
                                 <button data-modal-target="delete-modal-{{ $loop->iteration }}"

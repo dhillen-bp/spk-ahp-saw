@@ -50,7 +50,9 @@ class CriteriaController extends Controller
      */
     public function show($id)
     {
-        //
+        $criteria = Criteria::with('subCriteria')->findOrFail($id);
+
+        return view('admin.pages.kriteria.show', compact('criteria'));
     }
 
     /**
