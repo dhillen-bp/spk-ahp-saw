@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('criteria_selected_id')->references('id')->on('criteria_selected')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('criteria_id')->references('id')->on('criteria')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('criteria_id')->references('id')->on('criteria')->onDelete('cascade')->onUpdate('cascade')->onUpdate('cascade');
         });
     }
 

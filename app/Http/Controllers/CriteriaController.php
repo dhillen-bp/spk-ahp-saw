@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\AlternativeRequest;
 use App\Http\Requests\Admin\CriteriaStoreRequest;
 use App\Models\Criteria;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class CriteriaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CriteriaStoreRequest $request)
+    public function store(AlternativeRequest $request)
     {
         $validated = $request->validated();
 

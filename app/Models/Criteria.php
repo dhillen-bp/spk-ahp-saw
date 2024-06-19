@@ -37,4 +37,9 @@ class Criteria extends Model
     {
         return $this->hasMany(CriteriaPriorityValue::class, 'criteria_id');
     }
+
+    public function subCriteria(): HasMany
+    {
+        return $this->hasMany(SubCriteria::class, 'criteria_id');
+    }
 }

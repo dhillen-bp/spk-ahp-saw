@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">TAMBAH KRITERIA</h1>
+        <h1 class="my-4 text-3xl font-bold">TAMBAH ALTERNATIVE</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -18,9 +18,9 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <a href="{{ route('admin.kriteria.index') }}"
+                        <a href="{{ route('admin.alternative.index') }}"
                             class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Data
-                            Kriteria</a>
+                            Alternative</a>
                     </div>
                 </li>
                 <li aria-current="page">
@@ -31,7 +31,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Tambah
-                            Kriteria</span>
+                            Alternative</span>
                     </div>
                 </li>
             </ol>
@@ -40,13 +40,24 @@
 
     <div class="grid grid-cols-1 space-y-5 md:grid-cols-5 md:space-x-10 md:space-y-0">
 
-        <form method="POST" action="{{ route('admin.kriteria.store') }}"
+        <form method="POST" action="{{ route('admin.alternative.store') }}"
             class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3">
             @csrf
             <div class="mb-5">
+                <label for="nik"
+                    class="{{ $errors->has('nik') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    NIK</label>
+                <input type="text" id="nik" name="nik"
+                    class="{{ $errors->has('nik') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('nik') }}" />
+                @error('nik')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="mb-5">
                 <label for="nama"
                     class="{{ $errors->has('nama') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Nama Kriteria</label>
+                    Nama Alternative</label>
                 <input type="text" id="nama" name="nama"
                     class="{{ $errors->has('nama') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('nama') }}" />
@@ -55,26 +66,24 @@
                 @enderror
             </div>
             <div class="mb-5">
-                <label for="atribut"
-                    class="{{ $errors->has('atribut') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Atribut</label>
-                <select id="atribut" name="atribut"
-                    class="{{ $errors->has('atribut') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">
-                    <option selected disabled>-Pilih Atribut-</option>
-                    <option value="benefit" {{ old('atribut') == 'benefit' ? 'selected' : '' }}>Benefit</option>
-                    <option value="cost" {{ old('atribut') == 'cost' ? 'selected' : '' }}>Cost</option>
-                </select>
-                @error('atribut')
+                <label for="alamat"
+                    class="{{ $errors->has('alamat') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Alamat</label>
+                <input type="text" id="alamat" name="alamat"
+                    class="{{ $errors->has('alamat') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('alamat') }}" />
+                @error('alamat')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mb-5">
-                <label for="keterangan"
-                    class="{{ $errors->has('keterangan') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Keterangan</label>
-                <textarea id="keterangan" rows="4" name="keterangan"
-                    class="{{ $errors->has('keterangan') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">{{ old('keterangan') }}</textarea>
-                @error('keterangan')
+                <label for="kontak"
+                    class="{{ $errors->has('kontak') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Kontak</label>
+                <input type="kontak" id="kontak" name="kontak"
+                    class="{{ $errors->has('kontak') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('kontak') }}" />
+                @error('kontak')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
@@ -83,29 +92,8 @@
         </form>
 
         <div class="col-span-2 rounded-lg bg-blue-50 p-4">
-            <h3 class="text-center text-lg font-bold">Keterangan Atribut</h3>
-            <table class="my-4 w-full border-2 border-gray-900 text-left rtl:text-right">
-                <thead>
-                    <tr>
-                        <th class="w-1/2 border-2 border-gray-900 text-center">Benefit</th>
-                        <th class="w-1/2 border-2 border-gray-900 text-center">Cost</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm">
-                    <tr>
-                        <td class="border-2 border-gray-900">Atribut benefit adalah kriteria yang diinginkan untuk
-                            dimaksimalkan.</td>
-                        <td class="border-2 border-gray-900">Atribut cost adalah kriteria yang diinginkan untuk
-                            diminimalkan.</td>
-                    </tr>
-                    <tr>
-                        <td class="border-2 border-gray-900">Semakin tinggi nilai kriteria ini, semakin baik atau
-                            menguntungkan suatu alternatif.</td>
-                        <td class="border-2 border-gray-900">Semakin rendah nilai kriteria ini, semakin baik atau
-                            menguntungkan suatu alternatif.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h3 class="text-center text-lg font-bold">Keterangan</h3>
+            <p></p>
         </div>
     </div>
 @endsection

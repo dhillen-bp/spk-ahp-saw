@@ -58,7 +58,10 @@ class CriteriaPriorityValueController extends Controller
         // Calculate Consistency Ratio (CR)
         $cr = $this->calculateConsistencyRatio($ci, $n);
 
-        return view('admin.pages.perbandingan.compare-result', compact('criteriaSelectedId', 'rows', 'columns', 'normalizedRows', 'priorityValues', 'totalPriorityValues', 'lambdaMaks', 'ci', 'cr'));
+        // Mengecek apakah nilai prioritas pada kriteria sudah ada
+        $isCriteriaPriorityValueExist = CriteriaPriorityValue::where('criteria_selected_id', $criteriaSelectedId)->exists();
+
+        return view('admin.pages.perbandingan.compare-result', compact('criteriaSelectedId', 'isCriteriaPriorityValueExist', 'rows', 'columns', 'normalizedRows', 'priorityValues', 'totalPriorityValues', 'lambdaMaks', 'ci', 'cr'));
     }
 
     public function calculateCriteriaMatrix($criteriaSelectedId)
@@ -164,6 +167,56 @@ class CriteriaPriorityValueController extends Controller
         $ri = isset($riValues[$n]) ? $riValues[$n] : 1.49; // Default RI untuk ukuran matriks lebih dari 10
 
         return $ci / $ri;
+    }
+
+    // Simpan Priority Value
+    public function savePriorityValue(Request $request, $criteriaSelectedId)
+    {
+        $priorities = json_decode($request->input('criteria_priorities'), true);
+
+        // return dd($priorities);
+
+        foreach ($priorities as $criteriaName => $priorityValue) {
+            // Dapatkan id kriteria berdasarkan nama
+            $criteria = Criteria::where('nama', $criteriaName)->first();
+
+            if ($criteria) {
+                CriteriaPriorityValue::updateOrCreate(
+                    [
+                        'criteria_selected_id' => $criteriaSelectedId,
+                        'criteria_id' => $criteria->id,
+                    ],
+                    [
+                        'nilai' => $priorityValue,
+                    ]
+                );
+            }
+        }
+
+        return redirect()->back()->with('success_message', 'Bobot Prioritas berhasil disimpan!');
+    }
+
+    public function updatePriorityValue(Request $request, $criteriaSelectedId)
+    {
+        $priorities = json_decode($request->input('criteria_priorities'), true);
+
+        foreach ($priorities as $criteriaName => $priorityValue) {
+            $criteria = Criteria::where('nama', $criteriaName)->first();
+
+            if ($criteria) {
+                CriteriaPriorityValue::updateOrCreate(
+                    [
+                        'criteria_selected_id' => $criteriaSelectedId,
+                        'criteria_id' => $criteria->id,
+                    ],
+                    [
+                        'nilai' => $priorityValue,
+                    ]
+                );
+            }
+        }
+
+        return redirect()->back()->with('success_message', 'Bobot Prioritas berhasil diperbarui!');
     }
 
     /**

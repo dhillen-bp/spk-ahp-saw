@@ -48,7 +48,7 @@
                 <label for="nama"
                     class="{{ $errors->has('nama') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Nama Kriteria</label>
-                <input type="nama" id="nama" name="nama"
+                <input type="text" id="nama" name="nama"
                     class="{{ $errors->has('nama') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('nama') ?? $kriteria->nama }}" />
                 @error('nama')

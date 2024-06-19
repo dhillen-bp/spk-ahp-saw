@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ranking_results', function (Blueprint $table) {
+        Schema::create('sub_criteria', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('alternative_id');
-            $table->decimal('skor_total', 8, 3);
+            $table->string('nama');
+            $table->unsignedBigInteger('criteria_id');
             $table->timestamps();
 
-            $table->foreign('alternative_id')->references('id')->on('alternatives')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('criteria_id')->references('id')->on('criteria')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ranking_results');
+        Schema::dropIfExists('sub_criteria');
     }
 };

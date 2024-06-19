@@ -5,7 +5,7 @@
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="/admin"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50 dark:hover:bg-gray-700">
+                    class="{{ Request::is('admin') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50 dark:hover:bg-gray-700">
                     @include('partials.icons._dashboard-icon', [
                         'class' =>
                             'h-5 w-5 text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
@@ -19,7 +19,7 @@
             </div>
             <li>
                 <a href="/admin/data-kriteria"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                    class="{{ Request::is('admin/data-kriteria*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._kriteria-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
@@ -30,8 +30,8 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/data-kriteria"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                <a href="{{ route('admin.alternative.index') }}"
+                    class="{{ Request::is('admin/alternative*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._warga-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
@@ -41,8 +41,8 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/nilai-alternatif"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                <a href="{{ route('admin.alternative.penilaian.index') }}"
+                    class="{{ Request::is('admin/alternative/penilaian*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._nilai-alternatif-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
@@ -51,8 +51,8 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/perbandingan"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                <a href="{{ route('admin.perbandingan.index') }}"
+                    class="{{ Request::is('admin/perbandingan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._perbandingan-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="/admin/pemeringkatan"
                     class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._pemeringkatan-icon', [
                         'class' =>

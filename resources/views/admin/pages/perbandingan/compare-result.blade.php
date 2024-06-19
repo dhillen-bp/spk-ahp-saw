@@ -167,9 +167,18 @@
                 </div>
             </div>
 
-            <button type="button"
-                class="mb-2 me-2 w-full rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-bold text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">Simpan
-                Bobot Prioritas</button>
+            <form method="POST"
+                action="{{ $isCriteriaPriorityValueExist ? route('admin.perbandingan.updatePriorityValue', $criteriaSelectedId) : route('admin.perbandingan.savePriorityValue', $criteriaSelectedId) }}">
+                @csrf
+                @if ($isCriteriaPriorityValueExist)
+                    @method('PATCH')
+                @endif
+                <input type="hidden" name="criteria_priorities" value="{{ json_encode($priorityValues) }}">
+                <button type="submit"
+                    class="mb-2 me-2 w-full rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-bold text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
+                    Simpan Bobot Prioritas
+                </button>
+            </form>
         @endif
     </div>
 @endsection

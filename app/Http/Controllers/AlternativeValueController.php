@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternative;
+use App\Models\AlternativeValue;
+use App\Models\Criteria;
 use Illuminate\Http\Request;
 
 class AlternativeValueController extends Controller
@@ -11,7 +14,9 @@ class AlternativeValueController extends Controller
      */
     public function index()
     {
-        //
+        $alternativeValues = AlternativeValue::paginate(10);
+        $criterias = Criteria::all();
+        return view('admin.pages.alternative.penilaian.index', compact('alternativeValues', 'criterias'));
     }
 
     /**
@@ -19,7 +24,9 @@ class AlternativeValueController extends Controller
      */
     public function create()
     {
-        //
+        $criterias = Criteria::with('subCriteria')->get();
+        $alternatives = Alternative::all();
+        return view('admin.pages.alternative.penilaian.create', compact('criterias', 'alternatives'));
     }
 
     /**
@@ -27,13 +34,20 @@ class AlternativeValueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validated();
+
+        $alternative = AlternativeValue::create($validated);
+
+        if ($alternative) {
+            return redirect()->route('admin.alternative.penilaian.index')->with('success_message', 'Data nilai alternative berhasil ditambahkan!');
+        }
+        return redirect()->back()->with('error_message', 'Data nilai alternative gagal ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
     }
@@ -41,7 +55,7 @@ class AlternativeValueController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         //
     }
@@ -49,7 +63,7 @@ class AlternativeValueController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $id)
     {
         //
     }
@@ -57,7 +71,7 @@ class AlternativeValueController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
     }

@@ -32,15 +32,4 @@ class CriteriaComparison extends Model
     {
         return $this->belongsTo(CriteriaSelected::class, 'criteria_selected_id');
     }
-
-    public static function getSelectedCriterias($analysisId)
-    {
-        return static::where('criteria_selected_id', $analysisId)
-            ->join('criteria', 'kriteria1_id', '=', 'criteria.id')
-            ->select('criteria.*')
-            ->groupBy('criteria.nama')
-            ->groupBy('criteria.id')
-            ->orderBy('criteria.id')
-            ->get();
-    }
 }
