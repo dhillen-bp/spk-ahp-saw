@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\AlternativeValueStoreRequest;
 use App\Models\Alternative;
 use App\Models\AlternativeValue;
 use App\Models\Criteria;
@@ -14,9 +15,10 @@ class AlternativeValueController extends Controller
      */
     public function index()
     {
-        $alternativeValues = AlternativeValue::paginate(10);
+        $alternatives = Alternative::with('alternativeValues', 'alternativeValues.criteria.subCriteria')->whereHas('alternativeValues')->paginate(10);
+
         $criterias = Criteria::all();
-        return view('admin.pages.alternative.penilaian.index', compact('alternativeValues', 'criterias'));
+        return view('admin.pages.alternative.penilaian.index', compact('alternatives', 'criterias'));
     }
 
     /**
@@ -25,23 +27,31 @@ class AlternativeValueController extends Controller
     public function create()
     {
         $criterias = Criteria::with('subCriteria')->get();
-        $alternatives = Alternative::all();
+        $alternatives = Alternative::whereDoesntHave('alternativeValues')->get();
         return view('admin.pages.alternative.penilaian.create', compact('criterias', 'alternatives'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AlternativeValueStoreRequest $request)
     {
         $validated = $request->validated();
 
-        $alternative = AlternativeValue::create($validated);
+        $alternativeId = $request->input('alternative_id');
+        $criteriaValues = $request->input('criteria_values');
 
-        if ($alternative) {
-            return redirect()->route('admin.alternative.penilaian.index')->with('success_message', 'Data nilai alternative berhasil ditambahkan!');
+        // return dd($criteriaValues);
+
+        foreach ($criteriaValues as $criteriaId => $value) {
+            AlternativeValue::create([
+                'alternative_id' => $alternativeId,
+                'criteria_id' => $criteriaId,
+                'nilai' => $value,
+            ]);
         }
-        return redirect()->back()->with('error_message', 'Data nilai alternative gagal ditambahkan!');
+
+        return redirect()->route('admin.alternative.penilaian.index')->with('success_message', 'Data penilaian alternative berhasil ditambahkan!');
     }
 
     /**
@@ -49,7 +59,9 @@ class AlternativeValueController extends Controller
      */
     public function show($id)
     {
-        //
+        $alternative = Alternative::with('alternativeValues', 'alternativeValues.criteria.subCriteria')->findOrFail($id);
+
+        return view('admin.pages.alternative.penilaian.show', compact('alternative'));
     }
 
     /**
@@ -57,15 +69,41 @@ class AlternativeValueController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Memuat data alternatif beserta nilai kriterianya
+        $alternative = Alternative::with('alternativeValues')->findOrFail($id);
+
+        // Memuat semua kriteria beserta subkriteria
+        $criterias = Criteria::with('subCriteria')->get();
+
+        // Memuat alternatif yang tidak memiliki nilai atau selain yang sedang diedit
+        $alternatives = Alternative::whereDoesntHave('alternativeValues')->orWhere('id', $id)->get();
+
+        return view('admin.pages.alternative.penilaian.edit', compact('alternative', 'criterias', 'alternatives'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $id)
+    public function update(AlternativeValueStoreRequest $request,  $id)
     {
-        //
+        $validated = $request->validated();
+
+        $alternative = Alternative::findOrFail($id);
+
+        // Update alternative values
+        foreach ($validated['criteria_values'] as $criteriaId => $value) {
+            $alternativeValue = AlternativeValue::firstOrNew([
+                'alternative_id' => $alternative->id,
+                'criteria_id' => $criteriaId,
+            ]);
+
+            // Update nilai dari alternative value
+            $alternativeValue->nilai = $value;
+            $alternativeValue->save();
+        }
+
+        // Redirect kembali ke halaman index dengan pesan sukses
+        return redirect()->route('admin.alternative.penilaian.index')->with('success', 'Penilaian alternatif berhasil diperbarui.');
     }
 
     /**
@@ -73,6 +111,10 @@ class AlternativeValueController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Hapus semua AlternativeValue berdasarkan alternative_id
+        AlternativeValue::where('alternative_id', $id)->delete();
+
+        return redirect()->route('admin.alternative.penilaian.index')
+            ->with('success', 'Data penilaian alternatif berhasil dihapus!');
     }
 }

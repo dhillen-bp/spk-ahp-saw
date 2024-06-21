@@ -41,7 +41,7 @@
 
     <div class="grid grid-cols-1 space-y-5 md:grid-cols-5 md:space-x-10 md:space-y-0">
 
-        <form method="POST" action="{{ route('admin.alternative.store') }}"
+        <form method="POST" action="{{ route('admin.alternative.penilaian.store') }}"
             class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3">
             @csrf
             <div class="mb-5">
@@ -64,11 +64,21 @@
                     class="{{ $errors->has('criteria_values') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Nilai Kriteria:</label>
                 @foreach ($criterias as $criteria)
-                    <div class="my-4">
+                    <div class="my-4 rounded-lg border border-blue-500 px-2 py-3 shadow-sm">
                         <label for="nilai_{{ $criteria->id }}" class="text-sm">{{ $criteria->nama }}</label>
-                        <input type="number" id="nilai_{{ $criteria->id }}" name="criteria_values[{{ $criteria->id }}]"
-                            min="0" max="100" step="0.01"
-                            class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
+                        @if ($criteria->subcriteria->isNotEmpty())
+                            <select id="nilai_{{ $criteria->id }}" name="criteria_values[{{ $criteria->id }}]"
+                                class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
+                                <option class="text-gray-200" value="" disabled selected>-Pilih-</option>
+                                @foreach ($criteria->subcriteria as $sub)
+                                    <option value="{{ $sub->nilai }}">{{ $sub->nama }}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <input type="number" id="nilai_{{ $criteria->id }}"
+                                name="criteria_values[{{ $criteria->id }}]" min="0"
+                                class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
+                        @endif
                     </div>
                 @endforeach
                 @error('criteria_values')

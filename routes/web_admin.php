@@ -60,9 +60,10 @@ Route::prefix('alternative')->name('admin.alternative.')->group(function () {
 
     Route::prefix('penilaian')->name('penilaian.')->group(function () {
         Route::get('/', [AlternativeValueController::class, 'index'])->name('index');
+        Route::get('/detail/{id}', [AlternativeValueController::class, 'show'])->name('show');
         Route::get('/tambah', [AlternativeValueController::class, 'create'])->name('create');
         Route::post('/store', [AlternativeValueController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [Alternative::class, 'edit'])->name('edit');
+        Route::get('/edit/{id}', [AlternativeValueController::class, 'edit'])->name('edit');
         Route::patch('/update/{id}', [AlternativeValueController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [AlternativeValueController::class, 'destroy'])->name('destroy');
     });

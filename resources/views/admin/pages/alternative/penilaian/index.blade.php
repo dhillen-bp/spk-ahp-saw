@@ -79,12 +79,15 @@
             </div>
 
             <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
+                <thead class="bg-blue-50 text-center text-xs font-bold text-gray-700">
                     <tr>
                         <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
+                            No
+                        </th>
+                        <th scope="col" class="border px-6 py-3 uppercase" rowspan="2" class="align-middle">
                             Nama
                         </th>
-                        <th colspan="{{ count($criterias) }}" class="border px-6 py-3">
+                        <th colspan="{{ count($criterias) }}" class="border px-6 py-3 uppercase">
                             Kriteria
                         </th>
                         <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
@@ -100,33 +103,35 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    @foreach ($alternativeValues as $data)
+                    @foreach ($alternatives as $data)
                         <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
-                            <td class="px-6 py-4">
+                            <td class="border px-6 py-4">
+                                {{ $loop->iteration }}
+                            </td>
+                            <td class="border px-6 py-4">
                                 {{ $data->nama }}
                             </td>
-                            @foreach ($criterias as $criteria)
-                                <td class="px-6 py-4">
-                                    {{ $data->criteriaValues[$criteria->id] ?? 'N/A' }}
+                            @foreach ($data->alternativeValues as $alternativeValue)
+                                <td class="border px-6 py-4">
+                                    @if ($alternativeValue->criteria->subCriteria->isNotEmpty())
+                                        @php
+                                            $subCriteriaName =
+                                                $alternativeValue->criteria->subCriteria->firstWhere(
+                                                    'nilai',
+                                                    $alternativeValue->nilai,
+                                                )->nama ?? 'N/A';
+                                        @endphp
+                                        {{ $subCriteriaName . ' - ' . $alternativeValue->nilai }}
+                                    @else
+                                        {{ $alternativeValue->nilai ?? 'N/A' }}
+                                    @endif
                                 </td>
                             @endforeach
-                            <td class="px-6 py-4">
-                                <a href="" class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
-                                <a href="{{ route('admin.alternative.edit', $data->id) }}"
-                                    class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
-                                <button data-modal-target="delete-modal-{{ $loop->iteration }}"
-                                    data-modal-toggle="delete-modal-{{ $loop->iteration }}"
-                                    class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>
+                            <td class="border px-6 py-4">
+                                <a href="{{ route('admin.alternative.penilaian.show', $data->id) }}"
+                                    class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
                             </td>
                         </tr>
-
-                        @component('admin.layouts.modal_delete', [
-                            'deleteMessage' => "Anda yakin menghapus data = $data->nama?",
-                            'loopId' => $loop->iteration,
-                            'deletedId' => $data->id,
-                            'routeName' => 'admin.alternative.destroy',
-                        ])
-                        @endcomponent
                     @endforeach
                 </tbody>
             </table>
@@ -135,7 +140,7 @@
         </div>
         {{-- PAGINATION --}}
         <div>
-            {{ $alternativeValues->links('vendor.pagination.tailwind') }}
+            {{ $alternatives->links('vendor.pagination.tailwind') }}
         </div>
     </div>
 @endsection
