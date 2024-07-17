@@ -63,7 +63,7 @@
             </li>
             <li>
                 <a href="/admin/pemeringkatan"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                    class="{{ Request::is('admin/pemeringkatan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._pemeringkatan-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',

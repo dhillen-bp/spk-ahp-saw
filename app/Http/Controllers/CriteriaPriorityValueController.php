@@ -58,11 +58,19 @@ class CriteriaPriorityValueController extends Controller
         // Calculate Consistency Ratio (CR)
         $cr = $this->calculateConsistencyRatio($ci, $n);
 
+        // Calculate sum of column totals for Lambda Maks table
+        $sumOfColumnTotals = 0;
+        foreach ($rows as $kriteria1 => $columnsData) {
+            $sumOfColumnTotals += array_sum($columnsData);
+        }
+
         // Mengecek apakah nilai prioritas pada kriteria sudah ada
         $isCriteriaPriorityValueExist = CriteriaPriorityValue::where('criteria_selected_id', $criteriaSelectedId)->exists();
 
-        return view('admin.pages.perbandingan.compare-result', compact('criteriaSelectedId', 'isCriteriaPriorityValueExist', 'rows', 'columns', 'normalizedRows', 'priorityValues', 'totalPriorityValues', 'lambdaMaks', 'ci', 'cr'));
+        return view('admin.pages.perbandingan.compare-result', compact('criteriaSelectedId', 'isCriteriaPriorityValueExist', 'rows', 'columns', 'normalizedRows', 'priorityValues', 'totalPriorityValues', 'lambdaMaks', 'ci', 'cr', 'sumOfColumnTotals'));
     }
+
+
 
     public function calculateCriteriaMatrix($criteriaSelectedId)
     {
@@ -123,7 +131,7 @@ class CriteriaPriorityValueController extends Controller
                 } else {
                     $normalizedValue = 0; // Handle division by zero
                 }
-                $normalizedValue = round($normalizedValue, 3); // Round to 3 decimal places
+                $normalizedValue = $normalizedValue; // Round to 3 decimal places
                 $normalizedRow[$kriteria2] = $normalizedValue;
                 $priorityValues[$kriteria1] += $normalizedValue;
             }
@@ -142,18 +150,28 @@ class CriteriaPriorityValueController extends Controller
     public function calculateLambdaMaks($rows, $priorityValues)
     {
         $lambdaMaks = 0;
-        $n = count($priorityValues);
 
-        foreach ($priorityValues as $kriteria => $priorityValue) {
-            $columnSum = 0;
-            foreach ($rows as $kriteria1 => $columnsData) {
-                $columnSum += $columnsData[$kriteria];
+        // Calculate sum of weighted sums per row
+        $sumOfWeightedSums = [];
+        foreach ($rows as $kriteria1 => $columnsData) {
+            $totalPerBaris = 0;
+            foreach ($columnsData as $kriteria2 => $nilai) {
+                // Mengalikan nilai dengan nilai prioritas yang didapat sebelumnya
+                $nilaiPrioritas = $priorityValues[$kriteria2];
+                $nilaiKalikan = $nilai * $nilaiPrioritas;
+                $totalPerBaris += $nilaiKalikan;
             }
-            $lambdaMaks += $columnSum * $priorityValue;
+            // Hitung hasil bagi berdasarkan total per baris dibagi nilai prioritas kriteria pertama
+            $hasilBagi = $totalPerBaris / $priorityValues[$kriteria1];
+            $sumOfWeightedSums[$kriteria1] = $hasilBagi;
         }
+
+        // Calculate Lambda Maks
+        $lambdaMaks = array_sum($sumOfWeightedSums) / count($rows);
 
         return $lambdaMaks;
     }
+
 
     public function calculateConsistencyIndex($lambdaMaks, $n)
     {

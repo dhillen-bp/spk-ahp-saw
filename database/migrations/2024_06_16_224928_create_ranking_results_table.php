@@ -14,10 +14,15 @@ return new class extends Migration
         Schema::create('ranking_results', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('alternative_id');
+            $table->unsignedBigInteger('criteria_selected_id');
             $table->decimal('skor_total', 8, 3);
+            $table->boolean('is_verified')->default(1);
+            $table->string('is_verified_desc')->nullable();
+
             $table->timestamps();
 
             $table->foreign('alternative_id')->references('id')->on('alternatives')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('criteria_selected_id')->references('id')->on('criteria_selected')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

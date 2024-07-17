@@ -55,9 +55,9 @@
     {{-- END BREADCRUMB --}}
 
     <div class="space-y-10 pb-6">
+        <!-- Tabel Matriks Penjumlahan Kolom Kriteria -->
         <div class="rounded-lg bg-slate-50 p-4">
             <h3 class="mb-4 text-lg font-bold">MATRIKS PENJUMLAHAN KOLOM KRITERIA</h3>
-
             <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
                 <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
                     <tr class="border-2 border-gray-900">
@@ -87,11 +87,10 @@
                     </tr>
                 </tbody>
             </table>
-
         </div>
 
+        <!-- Tabel Matriks Normalisasi Kriteria -->
         <div class="rounded-lg bg-slate-50 p-4">
-
             <h3 class="mb-4 text-lg font-bold">MATRIKS NORMALISASI KRITERIA</h3>
             <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
                 <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
@@ -131,6 +130,68 @@
             </table>
         </div>
 
+
+
+        <!-- Tabel Perhitungan Lambda Maks -->
+        <div class="rounded-lg bg-slate-50 p-4">
+            <h3 class="mb-4 text-lg font-bold">PERHITUNGAN LAMBDA MAKS</h3>
+            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                    <tr class="border-2 border-gray-900">
+                        <th class="border-2 border-gray-900 px-6 py-4">Kriteria</th>
+                        @foreach ($columns as $column)
+                            <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
+                        @endforeach
+                        <th class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">Jumlah Per Baris</th>
+                        <th class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">Hasil Bagi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @php
+                        $totalHasilBagi = 0;
+                    @endphp
+                    @foreach ($rows as $kriteria1 => $columnsData)
+                        <tr class="text-gray-900">
+                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
+                            @php
+                                $totalPerBaris = 0;
+                            @endphp
+                            @foreach ($columnsData as $kriteria2 => $nilai)
+                                @php
+                                    // Mengalikan nilai dengan nilai prioritas yang didapat sebelumnya
+                                    $nilaiPrioritas = $priorityValues[$kriteria2];
+                                    $nilaiKalikan = $nilai * $nilaiPrioritas;
+                                    $totalPerBaris += $nilaiKalikan;
+                                @endphp
+                                <td class="border-2 border-gray-900 px-6 py-4">{{ $nilaiKalikan }}</td>
+                            @endforeach
+                            @php
+                                // Hitung hasil bagi berdasarkan total per baris dibagi nilai prioritas kriteria1
+                                $hasilBagi = $totalPerBaris / $priorityValues[$kriteria1];
+                                $totalHasilBagi += $hasilBagi;
+                            @endphp
+                            <td class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">{{ $totalPerBaris }}
+                            </td>
+                            <td class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">{{ $hasilBagi }}</td>
+                        </tr>
+                    @endforeach
+                    <tr class="bg-slate-900 text-white">
+                        <th colspan="{{ count($columns) + 2 }}" class="border-2 border-gray-900 px-6 py-4">Total Hasil Bagi
+                        </th>
+                        <td class="border-2 border-gray-900 px-6 py-4">{{ $totalHasilBagi }}</td>
+                    </tr>
+                    <tr class="bg-slate-900 text-white">
+                        <th colspan="{{ count($columns) + 2 }}" class="border-2 border-gray-900 px-6 py-4">Lambda Maks
+                        </th>
+                        <td class="border-2 border-gray-900 px-6 py-4">{{ $lambdaMaks }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!-- Konsistensi -->
         <div class="rounded-lg bg-slate-50 p-4">
             <h3 class="text-lg font-bold">KONSISTENSI</h3>
             <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-800 rtl:text-right">
@@ -145,8 +206,7 @@
                     </tr>
                     <tr>
                         <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">CR</th>
-                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">
-                            {{ $cr }}</td>
+                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $cr }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -162,8 +222,8 @@
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
-                    <span class="font-medium">Hasil Konsisisten!</span> Rasio konsistensi menunjukkan kurang dari <span
-                        class="font-bold">0.1</span> yaitu sebesar <span class="font-bold">{{ $cr }}</span>
+                    <span class="font-medium">Hasil Konsisten!</span> Rasio konsistensi menunjukkan kurang dari <span
+                        class="font-bold">0.1</span> yaitu sebesar <span class="font-bold">{{ $cr }}</span>.
                 </div>
             </div>
 
@@ -179,6 +239,21 @@
                     Simpan Bobot Prioritas
                 </button>
             </form>
+        @else
+            <div class="mb-4 flex items-center rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
+                role="alert">
+                <svg class="me-3 inline h-4 w-4 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">Hasil Tidak Konsisisten!</span> Rasio konsistensi menunjukkan lebih dari
+                    <span class="font-bold">0.1</span> yaitu sebesar <span class="font-bold">{{ $cr }}</span>.
+                    Silakan lakukan evaluasi kembali perbandingan kriteria.
+                </div>
+            </div>
         @endif
     </div>
 @endsection

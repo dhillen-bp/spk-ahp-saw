@@ -7,6 +7,7 @@ use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\CriteriaPriorityValueController;
 use App\Http\Controllers\CriteriaSelectedController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RankingResultController;
 use App\Http\Controllers\SubCriteriaController;
 use App\Models\Alternative;
 use App\Models\CriteriaPriorityValue;
@@ -54,7 +55,7 @@ Route::prefix('alternative')->name('admin.alternative.')->group(function () {
     Route::get('/', [AlternativeController::class, 'index'])->name('index');
     Route::get('/tambah', [AlternativeController::class, 'create'])->name('create');
     Route::post('/store', [AlternativeController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [Alternative::class, 'edit'])->name('edit');
+    Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [AlternativeController::class, 'update'])->name('update');
     Route::delete('/destroy/{id}', [AlternativeController::class, 'destroy'])->name('destroy');
 
@@ -67,4 +68,16 @@ Route::prefix('alternative')->name('admin.alternative.')->group(function () {
         Route::patch('/update/{id}', [AlternativeValueController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [AlternativeValueController::class, 'destroy'])->name('destroy');
     });
+});
+
+Route::prefix('pemeringkatan')->name('admin.pemeringkatan.')->group(function () {
+    Route::get('/', [RankingResultController::class, 'index'])->name('index');
+    Route::get('/tambah', [RankingResultController::class, 'create'])->name('create');
+    Route::post('/store', [RankingResultController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [RankingResultController::class, 'edit'])->name('edit');
+    Route::patch('/update/{id}', [RankingResultController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [RankingResultController::class, 'destroy'])->name('destroy');
+
+    Route::get('/result/{criteria_selected_id}', [RankingResultController::class, 'showSAWResult'])->name('result');
+    Route::post('/result', [RankingResultController::class, 'saveSAWResult'])->name('saveSAWResult');
 });

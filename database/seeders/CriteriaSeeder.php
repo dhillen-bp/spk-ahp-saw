@@ -16,11 +16,11 @@ class CriteriaSeeder extends Seeder
         $data = [
             [
                 'nama' => 'Pendapatan',
-                'atribut' => 'benefit',
+                'atribut' => 'cost',
             ],
             [
                 'nama' => 'Pekerjaan',
-                'atribut' => 'cost',
+                'atribut' => 'benefit',
             ],
             [
                 'nama' => 'Jumlah Tanggungan',
@@ -31,8 +31,12 @@ class CriteriaSeeder extends Seeder
                 'atribut' => 'benefit',
             ],
             [
-                'nama' => 'Kondisi Kesehatan',
-                'atribut' => 'cost',
+                'nama' => 'Keluarga Rentan Sakit',
+                'atribut' => 'benefit',
+            ],
+            [
+                'nama' => 'Status Keluarga',
+                'atribut' => 'benefit',
             ],
         ];
 
