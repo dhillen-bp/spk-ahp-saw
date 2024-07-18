@@ -141,46 +141,46 @@
             @endif
         </div>
 
-
         {{-- TABEL KETERANGAN --}}
         <div class="col-span-2 rounded-lg bg-blue-50 p-4">
-            <h3 class="text-center text-lg font-bold">Keterangan Skala Kepentingan</h3>
-            <table class="my-4 w-full border-2 border-gray-900 text-left rtl:text-right">
-                <thead>
-                    <tr>
-                        <th class="w-1/4 border-2 border-gray-900 p-2 text-center">Nilai</th>
-                        <th class="w-3/4 border-2 border-gray-900 p-2 text-center">Definisi</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm">
-                    <tr>
-                        <td class="border-2 border-gray-900 p-2">1</td>
-                        <td class="border-2 border-gray-900 p-2">Sama Penting</td>
-                    </tr>
-                    <tr>
-                        <td class="border-2 border-gray-900 p-2">3</td>
-                        <td class="border-2 border-gray-900 p-2">Sedikit Lebih Penting</td>
-                    </tr>
-                    <tr>
-                        <td class="border-2 border-gray-900 p-2">5</td>
-                        <td class="border-2 border-gray-900 p-2">Lebih Penting</td>
-                    </tr>
-                    <tr>
-                        <td class="border-2 border-gray-900 p-2">7</td>
-                        <td class="border-2 border-gray-900 p-2">Sangat Penting</td>
-                    </tr>
-                    <tr>
-                        <td class="border-2 border-gray-900 p-2">9</td>
-                        <td class="border-2 border-gray-900 p-2">Mutlak Sangat Penting</td>
-                    </tr>
-                    <tr>
-                        <td class="border-2 border-gray-900 p-2">2, 4, 6, 8</td>
-                        <td class="border-2 border-gray-900 p-2">Perlu Pertimbangan Karena Berdekatan (Compromise Value)
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div class="sticky top-16">
+                <h3 class="text-center text-lg font-bold">Keterangan Skala Kepentingan</h3>
+                <table class="my-4 w-full border-2 border-gray-900 text-left rtl:text-right">
+                    <thead>
+                        <tr>
+                            <th class="w-1/4 border-2 border-gray-900 p-2 text-center">Nilai</th>
+                            <th class="w-3/4 border-2 border-gray-900 p-2 text-center">Definisi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr>
+                            <td class="border-2 border-gray-900 p-2">1</td>
+                            <td class="border-2 border-gray-900 p-2">Sama Penting</td>
+                        </tr>
+                        <tr>
+                            <td class="border-2 border-gray-900 p-2">3</td>
+                            <td class="border-2 border-gray-900 p-2">Sedikit Lebih Penting</td>
+                        </tr>
+                        <tr>
+                            <td class="border-2 border-gray-900 p-2">5</td>
+                            <td class="border-2 border-gray-900 p-2">Lebih Penting</td>
+                        </tr>
+                        <tr>
+                            <td class="border-2 border-gray-900 p-2">7</td>
+                            <td class="border-2 border-gray-900 p-2">Sangat Penting</td>
+                        </tr>
+                        <tr>
+                            <td class="border-2 border-gray-900 p-2">9</td>
+                            <td class="border-2 border-gray-900 p-2">Mutlak Sangat Penting</td>
+                        </tr>
+                        <tr>
+                            <td class="border-2 border-gray-900 p-2">2, 4, 6, 8</td>
+                            <td class="border-2 border-gray-900 p-2">Perlu Pertimbangan Karena Berdekatan (Compromise Value)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

@@ -7,6 +7,7 @@ use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\CriteriaPriorityValueController;
 use App\Http\Controllers\CriteriaSelectedController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataPenerimaController;
 use App\Http\Controllers\RankingResultController;
 use App\Http\Controllers\SubCriteriaController;
 use App\Models\Alternative;
@@ -80,4 +81,10 @@ Route::prefix('pemeringkatan')->name('admin.pemeringkatan.')->group(function () 
 
     Route::get('/result/{criteria_selected_id}', [RankingResultController::class, 'showSAWResult'])->name('result');
     Route::post('/result', [RankingResultController::class, 'saveSAWResult'])->name('saveSAWResult');
+});
+
+Route::prefix('data-penerima')->name('admin.penerima.')->group(function () {
+    Route::get('/', [DataPenerimaController::class, 'index'])->name('index');
+    Route::get('/calon-penerima', [DataPenerimaController::class, 'viewCalonPenerima'])->name('calon');
+    Route::patch('/verifikasi/{id}', [DataPenerimaController::class, 'changeVerified'])->name('verifikasi');
 });

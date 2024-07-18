@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">DATA PENERIMA</h1>
+        <h1 class="my-4 text-3xl font-bold">DATA CALON PENERIMA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -18,6 +18,18 @@
                         Dashboard
                     </a>
                 </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 9 4-4-4-4" />
+                        </svg>
+                        <a href="{{ route('admin.penerima.index') }}"
+                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Data
+                            Penerima</a>
+                    </div>
+                </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180" aria-hidden="true"
@@ -25,7 +37,8 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Data Kriteria</span>
+                        <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Data Calon
+                            Penerima</span>
                     </div>
                 </li>
             </ol>
@@ -34,7 +47,7 @@
 
     <div class="mt-8 pb-4">
         <div class="mb-2 flex justify-between">
-            <h3 class="mb-2 text-xl font-bold">Tabel Data Penerima - Tahun {{ $selectedYear }}</h3>
+            <h3 class="mb-2 text-xl font-bold">Tabel Data Calon Penerima - Tahun {{ $selectedYear }}</h3>
         </div>
 
         <div class="relative overflow-x-auto sm:rounded-lg">
@@ -84,13 +97,24 @@
                 </div>
             </div>
 
-            <a href="{{ route('admin.penerima.calon') }}"
-                class="mb-8 inline-block rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                Lihat Data Calon Penerima {{ $selectedYear }}
+            <a href="{{ route('admin.penerima.index') }}"
+                class="mb-8 mt-4 inline-block rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                Lihat Data Penerima {{ $selectedYear }}
             </a>
 
+            <div class="mb-4 flex space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="h-4 w-4 rounded-full bg-green-200"></div>
+                    <span class="text-sm text-gray-900 dark:text-white">Lolos Verifikasi</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="h-4 w-4 rounded-full bg-red-200"></div>
+                    <span class="text-sm text-gray-900 dark:text-white">Tidak Lolos Verifikasi</span>
+                </div>
+            </div>
+
             <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
+                <thead class="bg-slate-50 text-center text-xs font-bold uppercase text-gray-700">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             ID
@@ -113,7 +137,8 @@
                 </thead>
                 <tbody class="text-center">
                     @foreach ($rankingResults as $data)
-                        <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
+                        <tr
+                            class="{{ $data->is_verified == 1 ? 'bg-green-200 hover:bg-green-300' : 'bg-red-200 hover:bg-red-300' }} text-gray-900">
                             <th class="px-6 py-4">
                                 {{ $loop->iteration }}
                             </th>
@@ -129,8 +154,8 @@
                             <td class="px-6 py-4">
                                 <button data-modal-target="aksi-modal-{{ $loop->iteration }}"
                                     data-modal-toggle="aksi-modal-{{ $loop->iteration }}"
-                                    class="btn-warning rounded-lg px-2.5 py-1.5 text-xs" type="button">
-                                    Aksi
+                                    class="btn-primary rounded-lg px-2.5 py-1.5 text-xs" type="button">
+                                    Keterangan
                                 </button>
                             </td>
                         </tr>
