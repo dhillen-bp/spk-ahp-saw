@@ -146,27 +146,31 @@
                                 {{ $data->alternative->nama }}
                             </td>
                             @foreach ($data->alternative->alternativeValues as $value)
-                                <td class="px-6 py-4">{{ $value->nilai }}</td>
+                                @if ($value->criteria->subCriteria->isNotEmpty())
+                                    @foreach ($value->criteria->subCriteria as $subCriteria)
+                                        @if ($value->nilai === $subCriteria->nilai)
+                                            <td class="px-6 py-4">{{ $subCriteria->nama }}</td>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <td class="px-6 py-4">{{ $value->nilai }}</td>
+                                @endif
                             @endforeach
                             <td class="px-6 py-4">
                                 {{ $data->skor_total }}
                             </td>
                             <td class="px-6 py-4">
-                                <button data-modal-target="aksi-modal-{{ $loop->iteration }}"
-                                    data-modal-toggle="aksi-modal-{{ $loop->iteration }}"
+                                <button data-modal-target="keterangan-modal-{{ $loop->iteration }}"
+                                    data-modal-toggle="keterangan-modal-{{ $loop->iteration }}"
                                     class="btn-primary rounded-lg px-2.5 py-1.5 text-xs" type="button">
                                     Keterangan
                                 </button>
                             </td>
                         </tr>
 
-                        @component('admin.layouts.modal_aksi', [
-                            'chooseName' => $data->alternative->nama,
+                        @component('admin.layouts.modal_keterangan_penerima', [
                             'loopId' => $loop->iteration,
-                            'chooseId' => $data->id,
-                            'is_verified' => $data->is_verified,
-                            'is_verified_desc' => $data->is_verified_desc,
-                            'routeName' => 'admin.penerima.verifikasi',
+                            'data' => $data,
                         ])
                         @endcomponent
                     @endforeach

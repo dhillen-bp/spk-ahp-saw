@@ -102,9 +102,7 @@ class DataPenerimaController extends Controller
         $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
 
         $rankingResults = RankingResult::with([
-            'alternative',
-            'alternative.alternativeValues',
-            'alternative.alternativeValues.criteria',
+            'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])
             ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
