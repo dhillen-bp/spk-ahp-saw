@@ -17,40 +17,10 @@
         </button>
 
         <div class="flex items-center space-x-3 rtl:space-x-reverse md:order-2 md:space-x-0">
-            <button type="button"
-                class="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:me-0"
-                id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-                data-dropdown-placement="bottom">
-                <span class="sr-only">Open user menu</span>
-                <div
-                    class="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-blue-700 dark:bg-gray-600">
-                    <span class="font-medium text-white dark:text-gray-300">JD</span>
-                </div>
-            </button>
-            <!-- Dropdown menu -->
-            <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
-                id="user-dropdown">
-                <div class="px-4 py-3">
-                    <span class="block text-sm text-gray-900 dark:text-white">John Doe</span>
-                </div>
-                <ul class="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Pengumuman
-                            Saya</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Pengaduan
-                            Saya</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Sign
-                            out</a>
-                    </li>
-                </ul>
-            </div>
+            <a href="{{ route('admin.login') }}"
+                class="me-2 rounded-lg border border-blue-700 px-5 py-2.5 text-center text-sm font-medium text-blue-700 hover:bg-blue-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white dark:focus:ring-blue-800">Login
+                Admin</a>
+
         </div>
 
         <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">

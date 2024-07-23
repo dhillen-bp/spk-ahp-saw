@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CriteriaSeeder::class,
-            SubCriteriaSeeder::class
+            SubCriteriaSeeder::class,
+            AdminSeeder::class
         ]);
     }
 }
