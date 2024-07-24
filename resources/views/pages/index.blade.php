@@ -8,7 +8,8 @@
              <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-white md:text-5xl lg:text-6xl">
                  Website Desa Karangwuni</h1>
              <p class="mb-8 text-lg font-normal text-gray-300 sm:px-16 lg:px-48 lg:text-xl">Selamat datang di website
-                 resmi pemerintah desa karangwuni. Kunjungi informasi dan pelayanan yang kami sediakan.
+                 informasi Penerima Bantuan Langsung Tunai Dana Desa Pemerintah Desa Karangwuni. Kunjungi informasi dan
+                 pelayanan yang kami sediakan.
              </p>
              <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
                  <a href="#"
@@ -56,22 +57,22 @@
 
      <section class="bg-blue-700 p-6">
          <div class="mx-auto my-4 flex justify-center">
-             <h2 class="inline-block rounded-full bg-white p-2 px-4 text-2xl font-bold text-blue-700">Data Jumlah Penerima
-                 Bantuan</h2>
+             <h2 class="inline-block rounded-full bg-white p-2 px-4 text-2xl font-bold text-blue-700">Data Terkait Penerima
+                 BLT Dana Desa 2024</h2>
          </div>
 
          <dl class="mx-auto grid max-w-screen-xl grid-cols-2 gap-8 p-4 text-gray-900 dark:text-white sm:grid-cols-3 sm:p-8">
              <div class="flex flex-col items-center justify-center">
                  <dt class="mb-2 text-3xl font-extrabold">25</dt>
-                 <dd class="text-white">Tahun 2024</dd>
+                 <dd class="text-white">Jumlah Krieria</dd>
              </div>
              <div class="flex flex-col items-center justify-center">
                  <dt class="mb-2 text-3xl font-extrabold">20</dt>
-                 <dd class="text-white">Tahun 2023</dd>
+                 <dd class="text-white">Jumlah Penerima</dd>
              </div>
              <div class="flex flex-col items-center justify-center">
                  <dt class="mb-2 text-3xl font-extrabold">20</dt>
-                 <dd class="text-white">Tahun 2022</dd>
+                 <dd class="text-white">Anggaran Tersedia</dd>
              </div>
 
          </dl>

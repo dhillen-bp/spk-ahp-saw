@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->text('deskripsi');
             $table->string('pengirim');
-            $table->string('status');
+            $table->enum('status', ['menunggu', 'diproses', 'selesai'])->default('menunggu');
 
             $table->timestamps();
         });

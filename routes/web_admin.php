@@ -10,6 +10,7 @@ use App\Http\Controllers\CriteriaSelectedController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataAdminController;
 use App\Http\Controllers\DataPenerimaController;
+use App\Http\Controllers\DataPengaduanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RankingResultController;
 use App\Http\Controllers\SubCriteriaController;
@@ -125,4 +126,13 @@ Route::prefix('data-admin')->name('admin.data_admin.')->middleware('role:pemerin
     Route::get('/edit/{id}', [DataAdminController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [DataAdminController::class, 'update'])->name('update');
     Route::delete('/destroy/{id}', [DataAdminController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('data-pengaduan')->name('admin.data_pengaduan.')->middleware('role:pemerintah_desa')->group(function () {
+    Route::get('/', [DataPengaduanController::class, 'index'])->name('index');
+    Route::get('/tambah', [DataPengaduanController::class, 'create'])->name('create');
+    Route::post('/store', [DataPengaduanController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [DataPengaduanController::class, 'edit'])->name('edit');
+    Route::patch('/update/{id}', [DataPengaduanController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [DataPengaduanController::class, 'destroy'])->name('destroy');
 });
