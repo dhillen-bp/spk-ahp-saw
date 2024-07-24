@@ -76,26 +76,28 @@
                 <span class="text-sm text-gray-400">Data</span>
                 <hr class="my-2 h-px border-0 bg-gray-400">
             </div>
-            <li>
-                <a href="/admin/data-admin"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
-                    @include('partials.icons._admin-icon', [
-                        'class' =>
-                            'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
-                    ])
-                    <span class="ms-3 flex-1 whitespace-nowrap">Data Admin</span>
-                </a>
-            </li>
-            <li>
-                <a href="/admin/data-pengguna"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
-                    @include('partials.icons._pengguna-icon', [
-                        'class' =>
-                            'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
-                    ])
-                    <span class="ms-3 flex-1 whitespace-nowrap">Data Pengguna</span>
-                </a>
-            </li>
+            @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+                <li>
+                    <a href="/admin/data-admin"
+                        class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                        @include('partials.icons._admin-icon', [
+                            'class' =>
+                                'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
+                        ])
+                        <span class="ms-3 flex-1 whitespace-nowrap">Data Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/data-pengaduan"
+                        class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                        @include('partials.icons._pengaduan-icon', [
+                            'class' =>
+                                'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
+                        ])
+                        <span class="ms-3 flex-1 whitespace-nowrap">Data Pengaduan</span>
+                    </a>
+                </li>
+            @endif
             <li>
                 <a href="/admin/data-penerima"
                     class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">

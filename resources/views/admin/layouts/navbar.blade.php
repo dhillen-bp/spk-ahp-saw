@@ -34,12 +34,12 @@
                         id="dropdown-user">
                         <div class="px-4 py-3" role="none">
                             <p class="text-center text-sm text-gray-900 dark:text-white" role="none">
-                                Nama
+                                {{ Auth::guard('admin')->user()->nama }}
                             </p>
-                            <p class="truncate text-center text-sm font-medium text-gray-900 dark:text-gray-300"
-                                role="none">
-                                Posisi
-                            </p>
+                            <span
+                                class="me-2 rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                                {{ Auth::guard('admin')->user()->role == 'pemerintah_desa' ? 'Pemerintah Desa' : 'RT/RW' }}
+                            </span>
                         </div>
                         <ul class="py-1" role="none">
                             <li>

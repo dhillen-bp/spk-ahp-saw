@@ -8,6 +8,7 @@ use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\CriteriaPriorityValueController;
 use App\Http\Controllers\CriteriaSelectedController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataAdminController;
 use App\Http\Controllers\DataPenerimaController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RankingResultController;
@@ -17,7 +18,7 @@ use App\Models\CriteriaPriorityValue;
 use App\Models\SubCriteria;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
+Route::get('/', [DashboardController::class, 'index'])->name('admin.index')->middleware('role:pemerintah_desa,rt_rw');
 
 Route::get('/login', [AuthController::class, 'login'])->name('admin.login');
 Route::post('/login', [AuthController::class, 'loginAction'])->name('admin.login.authenticate');
@@ -99,8 +100,6 @@ Route::prefix('pemeringkatan')->name('admin.pemeringkatan.')->middleware('role:p
         Route::delete('/destroy/{id}', [RankingResultController::class, 'destroy'])->name('destroy');
     });
 
-
-
     Route::get('/result/{criteria_selected_id}', [RankingResultController::class, 'showSAWResult'])->name('result');
     Route::post('/result', [RankingResultController::class, 'saveSAWResult'])->name('saveSAWResult')->middleware('role:pemerintah_desa');
 });
@@ -116,4 +115,14 @@ Route::prefix('data-penerima')->name('admin.penerima.')->middleware('role:pemeri
 
 Route::prefix('profil')->name('admin.profil.')->middleware('role:pemerintah_desa,rt_rw')->group(function () {
     Route::get('/', [ProfilController::class, 'index'])->name('index');
+    Route::patch('/', [ProfilController::class, 'update'])->name('update');
+});
+
+Route::prefix('data-admin')->name('admin.data_admin.')->middleware('role:pemerintah_desa')->group(function () {
+    Route::get('/', [DataAdminController::class, 'index'])->name('index');
+    Route::get('/tambah', [DataAdminController::class, 'create'])->name('create');
+    Route::post('/store', [DataAdminController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [DataAdminController::class, 'edit'])->name('edit');
+    Route::patch('/update/{id}', [DataAdminController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [DataAdminController::class, 'destroy'])->name('destroy');
 });
