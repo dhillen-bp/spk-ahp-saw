@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">EDIT PILIHAN PERBANDINGAN KRITERIA</h1>
+        <h1 class="my-4 text-3xl font-bold">TAMBAH PILIHAN TAHUN & KRITERIA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -19,9 +19,9 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <a href="{{ route('admin.perbandingan.index') }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Data
+                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Daftar
                             Pilihan
-                            Perbandingan
+                            Tahun &
                             Kriteria</a>
                     </div>
                 </li>
@@ -33,7 +33,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Edit Pilihan
-                            Perbandingan
+                            Tahun &
                             Kriteria</span>
                     </div>
                 </li>

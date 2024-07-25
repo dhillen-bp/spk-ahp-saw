@@ -121,7 +121,15 @@
                                 {{ $data->alternative->nama }}
                             </td>
                             @foreach ($data->alternative->alternativeValues as $value)
-                                <td class="px-6 py-4">{{ $value->nilai }}</td>
+                                @if ($value->criteria->subCriteria->isNotEmpty())
+                                    @foreach ($value->criteria->subCriteria as $subCriteria)
+                                        @if ($value->nilai === $subCriteria->nilai)
+                                            <td class="px-6 py-4">{{ $subCriteria->nama }}</td>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <td class="px-6 py-4">{{ $value->nilai }}</td>
+                                @endif
                             @endforeach
                             <td class="px-6 py-4">
                                 {{ $data->skor_total }}

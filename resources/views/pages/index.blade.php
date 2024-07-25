@@ -2,8 +2,8 @@
 
  @section('content')
      {{-- JUMBOTRON --}}
-     <section
-         class="bg-gray-700 bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-center bg-no-repeat bg-blend-multiply">
+     <section class="bg-gray-700 bg-cover bg-center bg-no-repeat bg-blend-multiply"
+         style="background-image: url('{{ asset('images/background/karangwuni-bg.jpg') }}');">
          <div class="mx-auto max-w-screen-xl px-4 py-24 text-center lg:py-56">
              <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-white md:text-5xl lg:text-6xl">
                  Website Desa Karangwuni</h1>
@@ -74,8 +74,8 @@
                  <dt class="mb-2 text-3xl font-extrabold">20</dt>
                  <dd class="text-white">Anggaran Tersedia</dd>
              </div>
-
          </dl>
+
      </section>
 
      {{-- GALERI --}}

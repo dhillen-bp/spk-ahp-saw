@@ -3,9 +3,8 @@
         <div class="md:flex md:justify-between">
             <div class="mb-6 w-full md:mb-0">
                 <a href="https://flowbite.com/" class="flex items-center">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="me-3 h-8" alt="FlowBite Logo" />
-                    <span class="self-center whitespace-nowrap text-2xl font-semibold text-white">Pemerintah
-                        Desa Karangwuni</span>
+                    <img src="{{ asset('images/logo/logo_kab_desa.png') }}" class="me-3 h-16" alt="FlowBite Logo" />
+
                 </a>
                 <div class="mt-4 flex">
                     <svg class="h-6 w-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"

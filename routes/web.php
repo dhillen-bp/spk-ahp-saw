@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Client\DataPenerimaController;
+use App\Http\Controllers\Client\DataPengaduanController;
+use App\Models\CriteriaSelected;
+use Database\Seeders\CriteriaSeeder;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,37 +18,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $countCriteria = CriteriaSelected::count();
+    $countPenerima = CriteriaSelected::count();
+    $availableBudget = 20000; // Replace with your logic to get the available budget
     return view('pages.index');
 });
 
-Route::prefix('profil')->group(function () {
-    Route::get('/', function () {
-        return view('pages.profil');
-    });
-    Route::get('/visi-misi', function () {
-        return view('pages.visi-misi');
-    });
-    Route::get('/struktur-organisasi', function () {
-        return view('pages.struktur-organisasi');
-    });
+Route::prefix('pengumuman')->name('pengumuman.')->group(function () {
+    Route::get('/penerima', [DataPenerimaController::class, 'index'])->name('penerima');
+    Route::get('/calon-penerima', [DataPenerimaController::class, 'viewCalonPenerima'])->name('calon_penerima');
 });
 
-Route::prefix('layanan-administrasi')->group(function () {
-    Route::get('/', function () {
-        return view('pages.layanan-administrasi');
-    });
-});
-
-Route::prefix('berita')->group(function () {
-    Route::get('/', function () {
-        return view('pages.berita');
-    });
-});
-
-Route::get('/pengaduan', function () {
-    return view('pages.pengaduan');
-});
-
-Route::get('/pengumuman', function () {
-    return view('pages.pengumuman');
+Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
+    Route::get('/', [DataPengaduanController::class, 'index'])->name('index');
+    Route::get('/detail/{id}', [DataPengaduanController::class, 'show'])->name('show');
+    Route::get('/tambah', [DataPengaduanController::class, 'create'])->name('create');
+    Route::post('/', [DataPengaduanController::class, 'store'])->name('store');
 });

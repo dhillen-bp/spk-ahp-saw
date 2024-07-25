@@ -23,7 +23,8 @@
                 </div>
 
                 <div class="mt-8 pb-4">
-                    <h3 class="text-center text-xl font-bold">Daftar Penerima BLT DD</h3>
+                    <h3 class="mb-2 text-center text-xl font-bold">Daftar Penerima BLT Dana Desa Tahun {{ $selectedYear }}
+                    </h3>
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div
@@ -36,8 +37,8 @@
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
-                                    </svg>
-                                    2024
+                                    </svg>Tahun
+                                    {{ $selectedYear }}
                                     <svg class="ms-2.5 h-2.5 w-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -51,27 +52,25 @@
                                     style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
                                     <ul class="space-y-1 p-3 text-sm text-gray-700 dark:text-gray-200"
                                         aria-labelledby="dropdownRadioButton">
-                                        <li>
-                                            <div
-                                                class="flex items-center rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <input id="filter-radio-example-1" type="radio" value=""
-                                                    name="filter-radio"
-                                                    class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800">
-                                                <label for="filter-radio-example-1"
-                                                    class="ms-2 w-full rounded text-sm font-medium text-gray-900 dark:text-gray-300">2023</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div
-                                                class="flex items-center rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <input checked="" id="filter-radio-example-2" type="radio"
-                                                    value="" name="filter-radio"
-                                                    class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800">
-                                                <label for="filter-radio-example-2"
-                                                    class="ms-2 w-full rounded text-sm font-medium text-gray-900 dark:text-gray-300">2024</label>
-                                            </div>
-                                        </li>
-
+                                        <form method="GET" action="{{ route('pengumuman.penerima') }}"
+                                            id="yearFilterForm">
+                                            @foreach ($criteriaSelected as $pilihan)
+                                                <li>
+                                                    <div
+                                                        class="flex items-center rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                        <input id="filter-radio-{{ $pilihan->nama }}" type="radio"
+                                                            value="{{ $pilihan->nama }}" name="tahun"
+                                                            class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800"
+                                                            {{ $pilihan->nama == $selectedYear ? 'checked' : '' }}
+                                                            onchange="document.getElementById('yearFilterForm').submit();">
+                                                        <label for="filter-radio-{{ $pilihan->nama }}"
+                                                            class="ms-2 w-full rounded text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                            {{ $pilihan->nama }}
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -91,68 +90,66 @@
                                     placeholder="Search for items">
                             </div>
                         </div>
-                        <table class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
-                            <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                        <a href="{{ route('pengumuman.calon_penerima') }}"
+                            class="mb-8 inline-block rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                            Lihat Data Calon Penerima {{ $selectedYear }}
+                        </a>
+
+                        <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+                            <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
-                                        Product name
+                                        ID
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Color
+                                        Nama
                                     </th>
+                                    @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
+                                        <th scope="col" class="px-6 py-3">
+                                            {{ $value->criteria->nama }}
+                                        </th>
+                                    @endforeach
                                     <th scope="col" class="px-6 py-3">
-                                        Category
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Price
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Action
+                                        Skor
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr
-                                    class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
+                            <tbody class="text-center">
+                                @foreach ($rankingResults as $data)
+                                    <tr
+                                        class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
+                                        <th class="px-6 py-4">
+                                            {{ $loop->iteration }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{ $data->alternative->nama }}
+                                        </td>
+                                        @foreach ($data->alternative->alternativeValues as $value)
+                                            @if ($value->criteria->subCriteria->isNotEmpty())
+                                                @foreach ($value->criteria->subCriteria as $subCriteria)
+                                                    @if ($value->nilai === $subCriteria->nilai)
+                                                        <td class="px-6 py-4">{{ $subCriteria->nama }}</td>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <td class="px-6 py-4">{{ $value->nilai }}</td>
+                                            @endif
+                                        @endforeach
+                                        <td class="px-6 py-4">
+                                            {{ $data->skor_total }}
+                                        </td>
+                                    </tr>
 
-                                    <th scope="row"
-                                        class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                        Apple MacBook Pro 17"
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Silver
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Laptop
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        $2999
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <a href="#"
-                                            class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                                    </td>
-
-                                <tr class="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-600">
-
-                                    <th scope="row"
-                                        class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                        Apple iMac 27"
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Silver
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        PC Desktop
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        $3999
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <a href="#"
-                                            class="font-medium text-blue-600 hover:underline dark:text-blue-500">Edit</a>
-                                    </td>
-                                </tr>
+                                    @component('admin.layouts.modal_aksi', [
+                                        'chooseName' => $data->alternative->nama,
+                                        'loopId' => $loop->iteration,
+                                        'chooseId' => $data->id,
+                                        'is_verified' => $data->is_verified,
+                                        'is_verified_desc' => $data->is_verified_desc,
+                                        'routeName' => 'admin.penerima.verifikasi',
+                                    ])
+                                    @endcomponent
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

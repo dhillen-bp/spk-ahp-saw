@@ -14,9 +14,9 @@
                     </svg>
                 </button>
                 <a href="https://flowbite.com" class="ms-2 flex md:me-24">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="me-3 h-8" alt="FlowBite Logo" />
-                    <span
-                        class="self-center whitespace-nowrap text-xl font-semibold text-white sm:text-2xl">Flowbite</span>
+                    <img src="{{ asset('images/logo/logo_kab_sukoharjo.png') }}" class="me-3 h-8" alt="FlowBite Logo" />
+                    <span class="self-center whitespace-nowrap text-xl font-semibold text-white">Desa
+                        Karangwuni</span>
                 </a>
             </div>
             <div class="flex items-center">
@@ -26,8 +26,11 @@
                             class="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                             aria-expanded="false" data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
-                            <img class="h-8 w-8 rounded-full"
-                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                            <div class="flex items-center gap-2">
+                                <img class="h-8 w-8 rounded-full" src="{{ asset('images/logo/profile_icon.png') }}"
+                                    alt="user photo">
+                                <p class="mr-4 text-white">{{ Auth::guard('admin')->user()->username }}</p>
+                            </div>
                         </button>
                     </div>
                     <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
