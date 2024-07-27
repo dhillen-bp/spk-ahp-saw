@@ -95,63 +95,66 @@
                             Lihat Data Calon Penerima {{ $selectedYear }}
                         </a>
 
-                        <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-                            <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        ID
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Nama
-                                    </th>
-                                    @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
+                        @if ($rankingResults->isNotEmpty())
+                            <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+                                <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
+                                    <tr>
                                         <th scope="col" class="px-6 py-3">
-                                            {{ $value->criteria->nama }}
+                                            ID
                                         </th>
-                                    @endforeach
-                                    <th scope="col" class="px-6 py-3">
-                                        Skor
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                @foreach ($rankingResults as $data)
-                                    <tr
-                                        class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
-                                        <th class="px-6 py-4">
-                                            {{ $loop->iteration }}
+                                        <th scope="col" class="px-6 py-3">
+                                            Nama
                                         </th>
-                                        <td class="px-6 py-4">
-                                            {{ $data->alternative->nama }}
-                                        </td>
-                                        @foreach ($data->alternative->alternativeValues as $value)
-                                            @if ($value->criteria->subCriteria->isNotEmpty())
-                                                @foreach ($value->criteria->subCriteria as $subCriteria)
-                                                    @if ($value->nilai === $subCriteria->nilai)
-                                                        <td class="px-6 py-4">{{ $subCriteria->nama }}</td>
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                <td class="px-6 py-4">{{ $value->nilai }}</td>
-                                            @endif
+                                        @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
+                                            <th scope="col" class="px-6 py-3">
+                                                {{ $value->criteria->nama }}
+                                            </th>
                                         @endforeach
-                                        <td class="px-6 py-4">
-                                            {{ $data->skor_total }}
-                                        </td>
+                                        <th scope="col" class="px-6 py-3">
+                                            Skor
+                                        </th>
                                     </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    @foreach ($rankingResults as $data)
+                                        <tr
+                                            class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
+                                            <th class="px-6 py-4">
+                                                {{ $loop->iteration }}
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                {{ $data->alternative->nama }}
+                                            </td>
+                                            @foreach ($data->alternative->alternativeValues as $value)
+                                                @if ($value->criteria->subCriteria->isNotEmpty())
+                                                    @foreach ($value->criteria->subCriteria as $subCriteria)
+                                                        @if ($value->nilai === $subCriteria->nilai)
+                                                            <td class="px-6 py-4">{{ $subCriteria->nama }}</td>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <td class="px-6 py-4">{{ $value->nilai }}</td>
+                                                @endif
+                                            @endforeach
+                                            <td class="px-6 py-4">
+                                                {{ $data->skor_total }}
+                                            </td>
+                                        </tr>
 
-                                    @component('admin.layouts.modal_aksi', [
-                                        'chooseName' => $data->alternative->nama,
-                                        'loopId' => $loop->iteration,
-                                        'chooseId' => $data->id,
-                                        'is_verified' => $data->is_verified,
-                                        'is_verified_desc' => $data->is_verified_desc,
-                                        'routeName' => 'admin.penerima.verifikasi',
-                                    ])
-                                    @endcomponent
-                                @endforeach
-                            </tbody>
-                        </table>
+                                        @component('admin.layouts.modal_aksi', [
+                                            'chooseName' => $data->alternative->nama,
+                                            'loopId' => $loop->iteration,
+                                            'chooseId' => $data->id,
+                                            'is_verified' => $data->is_verified,
+                                            'is_verified_desc' => $data->is_verified_desc,
+                                            'routeName' => 'admin.penerima.verifikasi',
+                                        ])
+                                        @endcomponent
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+
                     </div>
 
                 </div>

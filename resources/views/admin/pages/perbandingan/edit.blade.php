@@ -53,8 +53,19 @@
                     Nama</label>
                 <input type="text" id="nama" name="nama"
                     class="{{ $errors->has('nama') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
-                    value="{{ old('nama') ?? $kriteriaSelected->keterangan }}" />
+                    value="{{ old('nama') ?? $kriteriaSelected->nama }}" />
                 @error('nama')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="mb-5">
+                <label for="jumlah_penerima"
+                    class="{{ $errors->has('jumlah_penerima') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Jumlah Penerima</label>
+                <input type="number" id="jumlah_penerima" name="jumlah_penerima"
+                    class="{{ $errors->has('jumlah_penerima') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('jumlah_penerima') ?? $kriteriaSelected->jumlah_penerima }}" />
+                @error('jumlah_penerima')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>

@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\Client\DataPenerimaController;
 use App\Http\Controllers\Client\DataPengaduanController;
+use App\Models\Criteria;
 use App\Models\CriteriaSelected;
 use Database\Seeders\CriteriaSeeder;
 use Illuminate\Support\Facades\Route;
+
+use function App\Helpers\formatAngka;
+use function App\Helpers\getTotalKriteria;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +22,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $countCriteria = CriteriaSelected::count();
-    $countPenerima = CriteriaSelected::count();
-    $availableBudget = 20000; // Replace with your logic to get the available budget
-    return view('pages.index');
+    $currentYear = now()->year;
+
+    $countCriteria = getTotalKriteria($currentYear);
+    $checkPenerima = CriteriaSelected::where('nama', $currentYear)->first();
+    $countPenerima = $checkPenerima->jumlah_penerima ?? 0;
+    $availableBudget = formatAngka((300_000 * $countPenerima) * 12);
+
+    return view('pages.index', compact('countCriteria', 'countPenerima', 'availableBudget'));
 });
 
 Route::prefix('pengumuman')->name('pengumuman.')->group(function () {

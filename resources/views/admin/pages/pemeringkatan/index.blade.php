@@ -109,8 +109,10 @@
                                 @endforeach
                             </td>
                             <td class="min-w-[300px] px-6 py-4">
-                                <a href="{{ route('admin.pemeringkatan.result', $data->id) }}"
-                                    class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Perangkingan</a>
+                                @if ($isCriteriaValuesNotEmpty)
+                                    <a href="{{ route('admin.pemeringkatan.result', $data->id) }}"
+                                        class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Perangkingan</a>
+                                @endif
                                 <a href="{{ route('admin.perbandingan.edit', $data->id) }}"
                                     class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
                                 <button data-modal-target="delete-modal-{{ $loop->iteration }}"

@@ -22,69 +22,106 @@
     </div>
 
     <div class="grid grid-cols-2 gap-5 md:grid-cols-3">
+        <!-- Card 1: Kriteria -->
         <div class="max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
+            @php
+                $criteriaColorClass =
+                    $criteriaPercentageChange > 0
+                        ? 'text-green-500'
+                        : ($criteriaPercentageChange < 0
+                            ? 'text-red-500'
+                            : 'text-blue-500');
+            @endphp
             <div class="flex items-center justify-between">
                 <div>
                     <span class="mb-2 block text-lg tracking-tight text-gray-600 dark:text-white">Jumlah Kriteria</span>
-                    <span class="mb-2 block text-5xl font-bold tracking-tight text-gray-900 dark:text-white">5</span>
+                    <span
+                        class="mb-2 block text-5xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $countCriteriaCurrentYear }}</span>
                 </div>
 
                 <div class="flex flex-col items-center">
                     @include('partials.icons._kriteria-icon', [
-                        'class' => 'h-20 w-20 text-blue-500',
+                        'class' => 'h-20 w-20 ' . $criteriaColorClass,
                     ])
-                    <div class="flex text-blue-500">
-                        <span>0%</span>
-                        @include('partials.icons._arrow-right-icon', [
-                            'class' => 'h-6 w-6 text-blue-500',
-                        ])
-
-                        </svg>
+                    <div class="{{ $criteriaColorClass }} flex items-center">
+                        <span>{{ number_format($criteriaPercentageChange, 2) }}%</span>
+                        @if ($criteriaPercentageChange > 0)
+                            @include('partials.icons._arrow-up-icon', ['class' => 'h-6 w-6'])
+                        @elseif ($criteriaPercentageChange < 0)
+                            @include('partials.icons._arrow-down-icon', ['class' => 'h-6 w-6'])
+                        @else
+                            @include('partials.icons._arrow-right-icon', ['class' => 'h-6 w-6'])
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Card 2: Penerima -->
         <div class="max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
+            @php
+                $penerimaColorClass =
+                    $penerimaPercentageChange > 0
+                        ? 'text-green-500'
+                        : ($penerimaPercentageChange < 0
+                            ? 'text-red-500'
+                            : 'text-blue-500');
+            @endphp
             <div class="flex items-center justify-between">
                 <div>
                     <span class="mb-2 block text-lg tracking-tight text-gray-600 dark:text-white">Jumlah Penerima</span>
-                    <span class="mb-2 block text-5xl font-bold tracking-tight text-gray-900 dark:text-white">25</span>
+                    <span
+                        class="mb-2 block text-5xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $countPenerimaCurrentYear }}</span>
                 </div>
 
                 <div class="flex flex-col items-center">
                     @include('partials.icons.penerima-icon', [
-                        'class' => 'h-20 w-20 text-green-500',
+                        'class' => 'h-20 w-20 ' . $penerimaColorClass,
                     ])
-
-                    <div class="flex text-green-500">
-                        <span>5%</span>
-                        @include('partials.icons._arrow-up-icon', [
-                            'class' => 'h-6 w-6 text-green-500',
-                        ])
+                    <div class="{{ $penerimaColorClass }} flex items-center">
+                        <span>{{ number_format($penerimaPercentageChange, 2) }}%</span>
+                        @if ($penerimaPercentageChange > 0)
+                            @include('partials.icons._arrow-up-icon', ['class' => 'h-6 w-6'])
+                        @elseif ($penerimaPercentageChange < 0)
+                            @include('partials.icons._arrow-down-icon', ['class' => 'h-6 w-6'])
+                        @else
+                            @include('partials.icons._arrow-right-icon', ['class' => 'h-6 w-6'])
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Card 3: Anggaran -->
         <div class="max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
+            @php
+                $budgetColorClass =
+                    $budgetPercentageChange > 0
+                        ? 'text-green-500'
+                        : ($budgetPercentageChange < 0
+                            ? 'text-red-500'
+                            : 'text-blue-500');
+            @endphp
             <div class="flex items-center justify-between">
                 <div>
                     <span class="mb-2 block text-lg tracking-tight text-gray-600 dark:text-white">Anggaran Tersedia</span>
-                    <span
-                        class="mb-2 block text-3xl font-bold tracking-tight text-gray-900 dark:text-white">8.000.000</span>
+                    <span class="mb-2 block text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Rp
+                        {{ $formattedAvailableBudget }}</span>
                 </div>
 
                 <div class="flex flex-col items-center">
                     @include('partials.icons._money-icon', [
-                        'class' => 'h-20 w-20 text-green-500',
+                        'class' => 'h-20 w-20 ' . $budgetColorClass,
                     ])
-                    <div class="flex text-green-500">
-                        <span>3%</span>
-
-                        @include('partials.icons._arrow-up-icon', [
-                            'class' => 'h-6 w-6 text-green-500',
-                        ])
+                    <div class="{{ $budgetColorClass }} flex items-center">
+                        <span>{{ number_format($budgetPercentageChange, 2) }}%</span>
+                        @if ($budgetPercentageChange > 0)
+                            @include('partials.icons._arrow-up-icon', ['class' => 'h-6 w-6'])
+                        @elseif ($budgetPercentageChange < 0)
+                            @include('partials.icons._arrow-down-icon', ['class' => 'h-6 w-6'])
+                        @else
+                            @include('partials.icons._arrow-right-icon', ['class' => 'h-6 w-6'])
+                        @endif
                     </div>
                 </div>
             </div>

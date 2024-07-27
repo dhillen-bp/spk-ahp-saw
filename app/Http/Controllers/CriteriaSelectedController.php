@@ -64,6 +64,7 @@ class CriteriaSelectedController extends Controller
             $criteriaSelected = CriteriaSelected::create([
                 'nama' => $validated['nama'],
                 'keterangan' => $validated['keterangan'],
+                'jumlah_penerima' => $validated['jumlah_penerima'],
             ]);
 
             if ($request->has('criteria')) {
@@ -86,7 +87,7 @@ class CriteriaSelectedController extends Controller
             return redirect()->route('admin.perbandingan.index')->with('success_message', 'Data pilihan kriteria berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error_message', 'Data pilihan kriteria gagal ditambahkan!');
+            return redirect()->back()->withInput()->with('error_message', 'Data pilihan kriteria gagal ditambahkan!');
         }
     }
 
@@ -124,6 +125,7 @@ class CriteriaSelectedController extends Controller
             $criteriaSelected->update([
                 'nama' => $validated['nama'],
                 'keterangan' => $validated['keterangan'],
+                'jumlah_penerima' => $validated['jumlah_penerima'],
             ]);
 
             // Hapus kriteria sebelumnya yang terhubung dengan kriteria yang dipilih

@@ -14,10 +14,9 @@
                     <h3 class="text-center text-xl font-bold">Tata Cara Pengaduan</h3>
                     <div class="my-4">
                         <ol class="list-inside list-decimal space-y-2">
-                            <li>Buat akun di Web Desa Karangwuni dengan cara klik Daftar pada kanan atas. Jika sudah punya
-                                silahkan login.</li>
-                            <li>Masuk ke form pengaduan melalui link berikut.</li>
-                            <li>Isikan form pengaduan sesuai yang ingin anda adukan.</li>
+                            <li>Masuk ke halaman pengaduan.</li>
+                            <li>Tekan tombol Buat Aduan berwarna biru.</li>
+                            <li>Isikan form pengaduan sesuai yang ingin anda laporkan.</li>
                         </ol>
                     </div>
                 </div>

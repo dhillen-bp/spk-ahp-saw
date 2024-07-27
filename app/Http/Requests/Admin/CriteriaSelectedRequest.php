@@ -23,6 +23,7 @@ class CriteriaSelectedRequest extends FormRequest
     {
         return [
             'nama' => 'required|string|max:255',
+            'jumlah_penerima' => 'required',
             'keterangan' => 'string|required',
             'criteria' => 'required|array|min:1',
             'criteria.*' => 'exists:criteria,id',
@@ -33,6 +34,7 @@ class CriteriaSelectedRequest extends FormRequest
     {
         return [
             'nama.required' => 'Nama kriteria harus di isi!',
+            'jumlah_penerima.required' => 'Jumlah penerima harus di isi!',
             'keterangan.required' => 'Keterangan harus di isi!',
             'criteria.required' => 'Minimal pilih satu criteria.',
             'criteria.*.exists' => 'Salah satu criteria yang dipilih tidak valid.',

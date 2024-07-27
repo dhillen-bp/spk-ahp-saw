@@ -58,20 +58,20 @@
      <section class="bg-blue-700 p-6">
          <div class="mx-auto my-4 flex justify-center">
              <h2 class="inline-block rounded-full bg-white p-2 px-4 text-2xl font-bold text-blue-700">Data Terkait Penerima
-                 BLT Dana Desa 2024</h2>
+                 BLT Dana Desa {{ now()->year }}</h2>
          </div>
 
          <dl class="mx-auto grid max-w-screen-xl grid-cols-2 gap-8 p-4 text-gray-900 dark:text-white sm:grid-cols-3 sm:p-8">
              <div class="flex flex-col items-center justify-center">
-                 <dt class="mb-2 text-3xl font-extrabold">25</dt>
+                 <dt class="mb-2 text-3xl font-extrabold">{{ $countCriteria }}</dt>
                  <dd class="text-white">Jumlah Krieria</dd>
              </div>
              <div class="flex flex-col items-center justify-center">
-                 <dt class="mb-2 text-3xl font-extrabold">20</dt>
+                 <dt class="mb-2 text-3xl font-extrabold">{{ $countPenerima }}</dt>
                  <dd class="text-white">Jumlah Penerima</dd>
              </div>
              <div class="flex flex-col items-center justify-center">
-                 <dt class="mb-2 text-3xl font-extrabold">20</dt>
+                 <dt class="mb-2 text-3xl font-extrabold">Rp {{ $availableBudget }}</dt>
                  <dd class="text-white">Anggaran Tersedia</dd>
              </div>
          </dl>

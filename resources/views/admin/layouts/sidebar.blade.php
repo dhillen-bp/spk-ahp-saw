@@ -4,7 +4,7 @@
     <div class="h-full overflow-y-auto bg-blue-700 px-3 pb-4">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="/admin"
+                <a href="{{ route('admin.index') }}"
                     class="{{ Request::is('admin') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50 dark:hover:bg-gray-700">
                     @include('partials.icons._dashboard-icon', [
                         'class' =>
@@ -18,15 +18,14 @@
                 <hr class="my-2 h-px border-0 bg-gray-400">
             </div>
             <li>
-                <a href="/admin/kriteria"
+                <a href="{{ route('admin.kriteria.index') }}"
                     class="{{ Request::is('admin/kriteria*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._kriteria-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
                     ])
                     <span class="ms-3 flex-1 whitespace-nowrap">Data Kriteria</span>
-                    <span
-                        class="ms-3 inline-flex items-center justify-center rounded-full bg-gray-100 px-2 text-sm font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300">5</span>
+
                 </a>
             </li>
             <li>
@@ -62,7 +61,7 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/pemeringkatan"
+                <a href="{{ route('admin.pemeringkatan.index') }}"
                     class="{{ Request::is('admin/pemeringkatan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._pemeringkatan-icon', [
                         'class' =>
@@ -78,7 +77,7 @@
             </div>
             @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
                 <li>
-                    <a href="/admin/data-admin"
+                    <a href="{{ route('admin.data_admin.index') }}"
                         class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
                         @include('partials.icons._admin-icon', [
                             'class' =>
@@ -88,7 +87,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/data-pengaduan"
+                    <a href="{{ route('admin.data_pengaduan.index') }}"
                         class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
                         @include('partials.icons._pengaduan-icon', [
                             'class' =>
@@ -99,7 +98,7 @@
                 </li>
             @endif
             <li>
-                <a href="/admin/data-penerima"
+                <a href="{{ route('admin.penerima.index') }}"
                     class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons.penerima-icon', [
                         'class' =>
