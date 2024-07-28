@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\PenerimaVerifiedRequest;
 use App\Models\CriteriaSelected;
 use App\Models\RankingResult;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class DataPenerimaController extends Controller
@@ -109,5 +110,34 @@ class DataPenerimaController extends Controller
             ->paginate(10);
 
         return view('admin.pages.penerima.calon-penerima', compact('rankingResults', 'criteriaSelected', 'selectedYear'));
+    }
+
+    public function generatePDF(Request $request)
+    {
+        $selectedYear = ($request->input('tahun', date('Y')) ?? date('Y'));
+
+        $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
+
+        $rankingResults = RankingResult::with([
+            'alternative.alternativeValues.criteria.subCriteria',
+            'criteriaSelected'
+        ])
+            ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                $query->where('nama', $selectedYear);
+            })->where('is_verified', 1)->orderByDesc('skor_total')->get();
+
+        $data = [
+            'title' => 'Data Penerima BLT Dana Desa',
+            'date' => date('Y'),
+            'rankingResults' => $rankingResults
+        ];
+
+        // return dd($rankingResults);
+
+        $pdf = PDF::loadView('admin.pages.penerima.report', $data);
+
+        session()->flash('success_message', 'Laporan data penerima berhasil diexport ke PDF!');
+
+        return $pdf->download('laporan_penerima.pdf');
     }
 }

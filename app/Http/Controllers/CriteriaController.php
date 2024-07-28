@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\AlternativeRequest;
 use App\Http\Requests\Admin\CriteriaStoreRequest;
 use App\Models\Criteria;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -91,5 +92,22 @@ class CriteriaController extends Controller
         $kriteria->delete();
 
         return redirect()->route('admin.kriteria.index')->with('success_message', 'Data kriteria berhasil dihapus!');
+    }
+
+    public function generatePDF()
+    {
+        $criteria = Criteria::get();
+
+        $data = [
+            'title' => 'Kriteria Penerima BLT Dana Desa',
+            'date' => date('m/d/Y'),
+            'criteria' => $criteria
+        ];
+
+        $pdf = PDF::loadView('admin.pages.kriteria.report', $data);
+
+        session()->flash('success_message', 'Laporan kriteria berhasil diexport ke PDF!');
+
+        return $pdf->download('criteria_report.pdf');
     }
 }

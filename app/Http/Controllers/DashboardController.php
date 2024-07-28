@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $countPenerimaCurrentYear = $checkPenerima->jumlah_penerima ?? 0;
         $countPenerimaLastYear = $checkPenerimaLastYear->jumlah_penerima ?? 0;
 
-        if ($countPenerimaCurrentYear > 0) {
+        if ($countPenerimaLastYear > 0) {
             $penerimaPercentageChange = (($countPenerimaCurrentYear - $countPenerimaLastYear) / $countPenerimaLastYear) * 100;
         } else {
             $penerimaPercentageChange = $countPenerimaCurrentYear > 0 ? 100 : 0;

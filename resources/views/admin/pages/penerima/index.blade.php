@@ -72,7 +72,7 @@
                         placeholder="Search for items">
                 </div>
                 <div>
-                    <button type="button"
+                    <a href="{{ route('admin.penerima.report') }}"
                         class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
                         <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -80,7 +80,7 @@
                                 d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                         </svg>
                         Export
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -89,72 +89,88 @@
                 Lihat Data Calon Penerima {{ $selectedYear }}
             </a>
 
-            <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            ID
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Nama
-                        </th>
-                        @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
+            @if ($rankingResults->isNotEmpty())
+                <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
+                        <tr>
                             <th scope="col" class="px-6 py-3">
-                                {{ $value->criteria->nama }}
+                                ID
                             </th>
-                        @endforeach
-                        <th scope="col" class="px-6 py-3">
-                            Skor
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach ($rankingResults as $data)
-                        <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
-                            <th class="px-6 py-4">
-                                {{ $loop->iteration }}
+                            <th scope="col" class="px-6 py-3">
+                                Nama
                             </th>
-                            <td class="px-6 py-4">
-                                {{ $data->alternative->nama }}
-                            </td>
-                            @foreach ($data->alternative->alternativeValues as $value)
-                                @if ($value->criteria->subCriteria->isNotEmpty())
-                                    @foreach ($value->criteria->subCriteria as $subCriteria)
-                                        @if ($value->nilai === $subCriteria->nilai)
-                                            <td class="px-6 py-4">{{ $subCriteria->nama }}</td>
-                                        @endif
-                                    @endforeach
-                                @else
-                                    <td class="px-6 py-4">{{ $value->nilai }}</td>
-                                @endif
+                            @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
+                                <th scope="col" class="px-6 py-3">
+                                    {{ $value->criteria->nama }}
+                                </th>
                             @endforeach
-                            <td class="px-6 py-4">
-                                {{ $data->skor_total }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <button data-modal-target="aksi-modal-{{ $loop->iteration }}"
-                                    data-modal-toggle="aksi-modal-{{ $loop->iteration }}"
-                                    class="btn-warning rounded-lg px-2.5 py-1.5 text-xs" type="button">
-                                    Aksi
-                                </button>
-                            </td>
+                            <th scope="col" class="px-6 py-3">
+                                Skor
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                            </th>
                         </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach ($rankingResults as $data)
+                            <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
+                                <th class="px-6 py-4">
+                                    {{ $loop->iteration }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ $data->alternative->nama }}
+                                </td>
+                                @foreach ($data->alternative->alternativeValues as $value)
+                                    @if ($value->criteria->subCriteria->isNotEmpty())
+                                        @foreach ($value->criteria->subCriteria as $subCriteria)
+                                            @if ($value->nilai === $subCriteria->nilai)
+                                                <td class="px-6 py-4">{{ $subCriteria->nama }}</td>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @php
+                                            // Tentukan apakah kriteria ini adalah 'Jumlah Tanggungan' atau 'Usia'
+                                            $isDecimalColumn = in_array($value->criteria->nama, [
+                                                'Jumlah Tanggungan',
+                                                'Usia',
+                                            ]);
+                                        @endphp
 
-                        @component('admin.layouts.modal_aksi', [
-                            'chooseName' => $data->alternative->nama,
-                            'loopId' => $loop->iteration,
-                            'chooseId' => $data->id,
-                            'is_verified' => $data->is_verified,
-                            'is_verified_desc' => $data->is_verified_desc,
-                            'routeName' => 'admin.penerima.verifikasi',
-                        ])
-                        @endcomponent
-                    @endforeach
-                </tbody>
-            </table>
+                                        <td class="px-6 py-4">
+                                            @if ($isDecimalColumn)
+                                                {{ number_format($value->nilai, 0, '.', ',') }}
+                                            @else
+                                                {{ $value->nilai }}
+                                            @endif
+                                    @endif
+                                @endforeach
+                                <td class="px-6 py-4">
+                                    {{ $data->skor_total }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button data-modal-target="aksi-modal-{{ $loop->iteration }}"
+                                        data-modal-toggle="aksi-modal-{{ $loop->iteration }}"
+                                        class="btn-warning rounded-lg px-2.5 py-1.5 text-xs" type="button">
+                                        Aksi
+                                    </button>
+                                </td>
+                            </tr>
+
+                            @component('admin.layouts.modal_aksi', [
+                                'chooseName' => $data->alternative->nama,
+                                'loopId' => $loop->iteration,
+                                'chooseId' => $data->id,
+                                'is_verified' => $data->is_verified,
+                                'is_verified_desc' => $data->is_verified_desc,
+                                'routeName' => 'admin.penerima.verifikasi',
+                            ])
+                            @endcomponent
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+
         </div>
         {{-- PAGINATION --}}
         <div>

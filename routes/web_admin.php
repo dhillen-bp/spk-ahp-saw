@@ -35,6 +35,8 @@ Route::prefix('kriteria')->name('admin.kriteria.')->middleware('role:pemerintah_
         Route::get('/edit/{id}', [CriteriaController::class, 'edit'])->name('edit');
         Route::patch('/update/{id}', [CriteriaController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [CriteriaController::class, 'destroy'])->name('destroy');
+
+        Route::get('/report', [CriteriaController::class, 'generatePDF'])->name('report');
     });
 
     Route::prefix('sub')->name('sub.')->group(function () {
@@ -111,6 +113,7 @@ Route::prefix('data-penerima')->name('admin.penerima.')->middleware('role:pemeri
 
     Route::middleware('role:pemerintah_desa')->group(function () {
         Route::patch('/verifikasi/{id}', [DataPenerimaController::class, 'changeVerified'])->name('verifikasi');
+        Route::get('/report', [DataPenerimaController::class, 'generatePDF'])->name('report');
     });
 });
 
