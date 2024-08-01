@@ -20,7 +20,6 @@ class RankingResultController extends Controller
         $kriteriaSelected = CriteriaSelected::with('criteriaComparisons', 'criteriaPriorityValues')->paginate(10);
 
         $criteriaBySelected = [];
-        $isCriteriaValuesNotEmpty = true;
 
         foreach ($kriteriaSelected as $selected) {
             $kriteriaIds = collect();
@@ -28,13 +27,6 @@ class RankingResultController extends Controller
             foreach ($selected->criteriaComparisons as $comparison) {
                 $kriteriaIds->push($comparison->kriteria1_id);
                 $kriteriaIds->push($comparison->kriteria2_id);
-            }
-
-            foreach ($selected->criteriaPriorityValues as $priorityValue) {
-                if (empty($priorityValue->nilai)) {
-                    $isCriteriaValuesNotEmpty = false;
-                    break;
-                }
             }
 
             // Menghapus duplikat
@@ -47,7 +39,7 @@ class RankingResultController extends Controller
             $criteriaBySelected[$selected->id] = $criteriaNames;
         }
 
-        return view('admin.pages.pemeringkatan.index', compact('kriteriaSelected', 'criteriaBySelected', 'isCriteriaValuesNotEmpty'));
+        return view('admin.pages.pemeringkatan.index', compact('kriteriaSelected', 'criteriaBySelected'));
     }
 
     /**

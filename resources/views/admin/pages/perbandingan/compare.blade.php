@@ -180,6 +180,13 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <div class="mb-5 mt-5 block">
+                    <p class="mb-3">Contoh </p>
+                    <img src="{{ asset('images/keterangan/contoh_perbandingan.png') }}" alt="Contoh Perbandingan">
+                    Pada gambar diatas, karena bernilai 3 dan lebih condong ke Pekerjaan maka nilainya <b>Pekerjaan "sedikit
+                        lebih penting" daripada Pendapatan</b>
+                </div>
             </div>
         </div>
     </div>

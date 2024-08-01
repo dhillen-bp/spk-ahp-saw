@@ -109,6 +109,18 @@
                         <td class="border-2 border-gray-900">Semakin rendah nilai kriteria ini, semakin baik atau
                             menguntungkan suatu alternatif.</td>
                     </tr>
+                    <tr>
+                        <td class="border-2 border-gray-900">Pada konteks Penentuan Penerima Bantuan, maka seperti <b>jumlah
+                                tanggungan dan usia </b> cocok
+                            beratribut '<b>benefit</b>' karena semakin banyak nilainya maka keluarga tersebut semakin
+                            membutuhkan.
+                        </td>
+                        <td class="border-2 border-gray-900">Pada konteks Penentuan Penerima Bantuan, maka seperti
+                            <b> pendapatan </b> cocok
+                            beratribut '<b>cost</b>' karena semakin sedikit pendapatan maka keluarga tersebut semakin
+                            membutuhkan.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

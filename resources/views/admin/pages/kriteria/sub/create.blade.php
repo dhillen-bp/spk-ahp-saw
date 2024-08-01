@@ -123,8 +123,26 @@
                     </table>
                 </div>
 
+
+
             </div>
 
+            <div class="mb-5 mt-5 block">
+                <p class="mb-3 text-center font-bold">Keterangan Pengisian Form SubKriteria</p>
+                <div class="space-y-3">
+                    <p><span class="font-semibold">Nama SubKriteria</span>: Isikan dengan nama atau nilai dari kriteria,
+                        misal
+                        jika kriteria
+                        pekerjaan maka nama subkriteria nya 'Tidak Bekerja', 'Pekerjaan Tidak Tetap', 'Pekerjaan Tetap' </p>
+                    <p><span class="font-semibold">Nilai SubKriteria</span>: Untuk nilainya bisa diisikan angka,
+                        menyesuaikan
+                        atribut/jenis kriteria. Jika benefit maka mana subkriteria yang menjadi prioritas akan bernilai
+                        paling tinggi. Dan jika cost maka nama subkriteria yang menjadi priorirtas akan bernilai paling
+                        rendah. </p>
+                    <img src="{{ asset('images/keterangan/contoh_nilai_subkriteria.png') }}"
+                        alt="Contoh Nilai Subkriteria">
+                </div>
+            </div>
         </div>
     </div>
 @endsection
