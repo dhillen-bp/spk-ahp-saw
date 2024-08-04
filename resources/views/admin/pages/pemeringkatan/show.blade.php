@@ -43,7 +43,7 @@
 
     <div class="space-y-10 pb-6">
         {{-- TABEL BOBOT PRIORITAS --}}
-        <div class="rounded-lg bg-slate-50 p-4">
+        <div class="rounded-lg bg-slate-100 p-4">
             <h3 class="mb-4 text-lg font-bold">TABEL NILAI ALTERNATIF</h3>
             <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
                 <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
@@ -64,76 +64,94 @@
         </div>
 
         {{-- Tabel Nilai Alternatif --}}
-        <div class="rounded-lg bg-slate-50 p-4">
-            <h3 class="mb-4 text-lg font-bold">TABEL NILAI ALTERNATIF</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
-                    <tr class="border-2 border-gray-900">
-                        <th class="border-2 border-gray-900 px-6 py-4">Alternatif</th>
-                        @foreach ($criteria as $criterion)
-                            <th class="border-2 border-gray-900 px-6 py-4">{{ $criterion->nama }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach ($alternativeValues as $alternative => $values)
-                        <tr class="text-gray-900">
-                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $alternative }}</th>
-                            @foreach ($values as $criterion => $value)
-                                <td class="border-2 border-gray-900 px-6 py-4">{{ $value }}</td>
+        <div class="rounded-lg bg-slate-100 p-4">
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#alternativeTable">
+                <span class="toggle-sign float-right">-</span>TABEL NILAI ALTERNATIF
+            </h3>
+
+            <div id="alternativeTable" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                        <tr class="border-2 border-gray-900">
+                            <th class="border-2 border-gray-900 px-6 py-4">Alternatif</th>
+                            @foreach ($criteria as $criterion)
+                                <th class="border-2 border-gray-900 px-6 py-4">{{ $criterion->nama }}</th>
                             @endforeach
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach ($alternativeValues as $alternative => $values)
+                            <tr class="text-gray-900">
+                                <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $alternative }}</th>
+                                @foreach ($values as $criterion => $value)
+                                    <td class="border-2 border-gray-900 px-6 py-4">{{ $value }}</td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         {{-- Matriks Normalisasi Alternatif --}}
-        <div class="rounded-lg bg-slate-50 p-4">
-            <h3 class="mb-4 text-lg font-bold">MATRIKS NORMALISASI ALTERNATIF</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
-                    <tr class="border-2 border-gray-900">
-                        <th class="border-2 border-gray-900 px-6 py-4">Alternatif</th>
-                        @foreach ($criteria as $criterion)
-                            <th class="border-2 border-gray-900 px-6 py-4">{{ $criterion->nama }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach ($normalizedMatrix as $alternative => $values)
-                        <tr class="text-gray-900">
-                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $alternative }}</th>
-                            @foreach ($values as $criterion => $value)
-                                <td class="border-2 border-gray-900 px-6 py-4">{{ $value }}</td>
+        <div class="rounded-lg bg-slate-100 p-4">
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#normalizationTable">
+                <span class="toggle-sign float-right">-</span>MATRIKS NORMALISASI ALTERNATIF
+            </h3>
+            <div id="normalizationTable" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                        <tr class="border-2 border-gray-900">
+                            <th class="border-2 border-gray-900 px-6 py-4">Alternatif</th>
+                            @foreach ($criteria as $criterion)
+                                <th class="border-2 border-gray-900 px-6 py-4">{{ $criterion->nama }}</th>
                             @endforeach
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach ($normalizedMatrix as $alternative => $values)
+                            <tr class="text-gray-900">
+                                <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $alternative }}</th>
+                                @foreach ($values as $criterion => $value)
+                                    <td class="border-2 border-gray-900 px-6 py-4">{{ $value }}</td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
         </div>
 
         {{-- Hasil Perangkingan --}}
-        <div class="rounded-lg bg-slate-50 p-4">
-            <h3 class="mb-4 text-lg font-bold">HASIL PERANGKINGAN SAW</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
-                    <tr class="border-2 border-gray-900">
-                        <th class="border-2 border-gray-900 px-6 py-4">Nama Alternatif</th>
-                        <th class="border-2 border-gray-900 px-6 py-4">Skor</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach ($ranking as $id => $score)
-                        <tr class="text-gray-900">
-                            <td class="border-2 border-gray-900 px-6 py-4">{{ \App\Models\Alternative::find($id)->nama }}
-                            </td>
-                            <td class="border-2 border-gray-900 px-6 py-4">{{ $score }}</td>
+        <div class="rounded-lg bg-slate-100 p-4">
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#rankingTable">
+                <span class="toggle-sign float-right">-</span> HASIL PERANGKINGAN SAW
+            </h3>
+            <div id="rankingTable" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                        <tr class="border-2 border-gray-900">
+                            <th class="border-2 border-gray-900 px-6 py-4">No</th>
+                            <th class="border-2 border-gray-900 px-6 py-4">Nama Alternatif</th>
+                            <th class="border-2 border-gray-900 px-6 py-4">Skor</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach ($ranking as $id => $score)
+                            <tr class="text-gray-900">
+                                <td class="border-2 border-gray-900 px-6 py-4">{{ $loop->iteration }}</td>
+                                <td class="border-2 border-gray-900 px-6 py-4">
+                                    {{ \App\Models\Alternative::find($id)->nama }}
+                                </td>
+                                <td class="border-2 border-gray-900 px-6 py-4">{{ $score }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
+
 
         {{-- BUTTON SAVE --}}
         <form method="POST" action="{{ route('admin.pemeringkatan.saveSAWResult', $criteriaSelectedId) }}">
@@ -147,3 +165,16 @@
         </form>
     </div>
 @endsection
+
+@push('after-script')
+    <script type="module">
+        $(document).ready(function() {
+            $('.toggle-table').click(function() {
+                var target = $(this).data('target');
+                $(target).toggle();
+                var sign = $(target).is(':visible') ? '-' : '+';
+                $(this).find('.toggle-sign').text(sign);
+            });
+        });
+    </script>
+@endpush

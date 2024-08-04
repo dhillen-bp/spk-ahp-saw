@@ -18,13 +18,17 @@ class DataPenerimaController extends Controller
 
         $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
 
+        $jumlahPenerima = CriteriaSelected::select('jumlah_penerima')
+            ->where('nama', $selectedYear)
+            ->value('jumlah_penerima');
+
         $rankingResults = RankingResult::with([
             'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])
             ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
                 $query->where('nama', $selectedYear);
-            })->where('is_verified', 1)->orderByDesc('skor_total')
+            })->where('is_verified', 1)->orderByDesc('skor_total')->take($jumlahPenerima)
             ->paginate(10);
 
         return view('pages.pengumuman', compact('rankingResults', 'criteriaSelected', 'selectedYear'));
