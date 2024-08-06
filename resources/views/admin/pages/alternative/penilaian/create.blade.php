@@ -71,7 +71,8 @@
                                 class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
                                 <option class="text-gray-200" value="" disabled selected>-Pilih-</option>
                                 @foreach ($criteria->subcriteria as $sub)
-                                    <option value="{{ $sub->nilai }}">{{ $sub->nama }}</option>
+                                    <option value="{{ $sub->nilai }}">{{ $sub->nama }} - {{ $sub->nilai }}
+                                    </option>
                                 @endforeach
                             </select>
                         @else

@@ -57,159 +57,179 @@
     <div class="space-y-10 pb-6">
         <!-- Tabel Matriks Penjumlahan Kolom Kriteria -->
         <div class="rounded-lg bg-slate-50 p-4">
-            <h3 class="mb-4 text-lg font-bold">MATRIKS PENJUMLAHAN KOLOM KRITERIA</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
-                    <tr class="border-2 border-gray-900">
-                        <th class="border-2 border-gray-900 px-6 py-4">
-                            <!-- Empty for the left top corner of the table -->
-                        </th>
-                        @foreach ($columns as $column)
-                            <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach ($rows as $kriteria1 => $columnsData)
-                        <tr class="text-gray-900">
-                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
-                            @foreach ($columnsData as $kriteria2 => $nilai)
-                                <td class="border-2 border-gray-900 px-6 py-4">{{ $nilai }}</td>
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#sumColumnnMatrix">
+                <span class="toggle-sign float-right">-</span>MATRIKS PENJUMLAHAN KOLOM KRITERIA
+            </h3>
+            <div id="sumColumnnMatrix" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                        <tr class="border-2 border-gray-900">
+                            <th class="border-2 border-gray-900 px-6 py-4">
+                                <!-- Empty for the left top corner of the table -->
+                            </th>
+                            @foreach ($columns as $column)
+                                <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
                             @endforeach
                         </tr>
-                    @endforeach
-                    <tr class="bg-slate-900 text-white">
-                        <th class="border-2 border-gray-900 px-6 py-4">Jumlah</th>
-                        @foreach ($columns as $column)
-                            <td class="border-2 border-gray-900 px-6 py-4 font-bold">
-                                {{ array_sum(array_column($rows, $column)) }}</td>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach ($rows as $kriteria1 => $columnsData)
+                            <tr class="text-gray-900">
+                                <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
+                                @foreach ($columnsData as $kriteria2 => $nilai)
+                                    <td class="border-2 border-gray-900 px-6 py-4">{{ $nilai }}</td>
+                                @endforeach
+                            </tr>
                         @endforeach
-                    </tr>
-                </tbody>
-            </table>
+                        <tr class="bg-slate-900 text-white">
+                            <th class="border-2 border-gray-900 px-6 py-4">Jumlah</th>
+                            @foreach ($columns as $column)
+                                <td class="border-2 border-gray-900 px-6 py-4 font-bold">
+                                    {{ array_sum(array_column($rows, $column)) }}</td>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Tabel Matriks Normalisasi Kriteria -->
         <div class="rounded-lg bg-slate-50 p-4">
-            <h3 class="mb-4 text-lg font-bold">MATRIKS NORMALISASI KRITERIA</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
-                    <tr class="border-2 border-gray-900">
-                        <th class="border-2 border-gray-900 px-6 py-4">
-                            <!-- Empty for the left top corner of the table -->
-                        </th>
-                        @foreach ($columns as $column)
-                            <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
-                        @endforeach
-                        <th class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">Jumlah</th>
-                        <th class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">Nilai Prioritas</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach ($normalizedRows as $kriteria1 => $columnsData)
-                        <tr class="text-gray-900">
-                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
-                            @foreach ($columnsData as $kriteria2 => $nilai)
-                                <td class="border-2 border-gray-900 px-6 py-4">{{ $nilai }}</td>
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#normalizationMatrix">
+                <span class="toggle-sign float-right">-</span> MATRIKS NORMALISASI KRITERIA
+            </h3>
+            <div id="normalizationMatrix" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-xs text-gray-500 rtl:text-right">
+                    <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                        <tr class="border-2 border-gray-900">
+                            <th class="border-2 border-gray-900 px-6 py-4">
+                                <!-- Empty for the left top corner of the table -->
+                            </th>
+                            @foreach ($columns as $column)
+                                <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
                             @endforeach
-                            <td class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">
-                                {{ array_sum($columnsData) }}</td>
-                            <td class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">
-                                {{ $priorityValues[$kriteria1] }}</td>
+                            <th class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">Jumlah</th>
+                            <th class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">Nilai Prioritas</th>
                         </tr>
-                    @endforeach
-                    <tr class="{{ $totalPriorityValues == 1 || 1.0 ? 'bg-green-500' : 'bg-red-500' }} text-white">
-                        <th class="border-2 border-green-500 px-6 py-4">Total </th>
-                        @foreach ($columns as $column)
-                            <td class="border-2 border-green-500 px-6 py-4"></td>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach ($normalizedRows as $kriteria1 => $columnsData)
+                            <tr class="text-gray-900">
+                                <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
+                                @foreach ($columnsData as $kriteria2 => $nilai)
+                                    <td class="border-2 border-gray-900 px-6 py-4">{{ $nilai }}</td>
+                                @endforeach
+                                <td class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">
+                                    {{ array_sum($columnsData) }}</td>
+                                <td class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">
+                                    {{ $priorityValues[$kriteria1] }}</td>
+                            </tr>
                         @endforeach
-                        <td class="border-2 border-green-500 px-6 py-4"></td>
-                        <td class="border-2 border-green-500 px-6 py-4">{{ $totalPriorityValues }}</td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tr class="{{ $totalPriorityValues == 1 || 1.0 ? 'bg-green-500' : 'bg-red-500' }} text-white">
+                            <th class="border-2 border-green-500 px-6 py-4">Total </th>
+                            @foreach ($columns as $column)
+                                <td class="border-2 border-green-500 px-6 py-4"></td>
+                            @endforeach
+                            <td class="border-2 border-green-500 px-6 py-4"></td>
+                            <td class="border-2 border-green-500 px-6 py-4">{{ $totalPriorityValues }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
 
 
         <!-- Tabel Perhitungan Lambda Maks -->
         <div class="rounded-lg bg-slate-50 p-4">
-            <h3 class="mb-4 text-lg font-bold">PERHITUNGAN LAMBDA MAKS</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
-                    <tr class="border-2 border-gray-900">
-                        <th class="border-2 border-gray-900 px-6 py-4">Kriteria</th>
-                        @foreach ($columns as $column)
-                            <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
-                        @endforeach
-                        <th class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">Jumlah Per Baris</th>
-                        <th class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">Hasil Bagi</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @php
-                        $totalHasilBagi = 0;
-                    @endphp
-                    @foreach ($rows as $kriteria1 => $columnsData)
-                        <tr class="text-gray-900">
-                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
-                            @php
-                                $totalPerBaris = 0;
-                            @endphp
-                            @foreach ($columnsData as $kriteria2 => $nilai)
-                                @php
-                                    // Mengalikan nilai dengan nilai prioritas yang didapat sebelumnya
-                                    $nilaiPrioritas = $priorityValues[$kriteria2];
-                                    $nilaiKalikan = $nilai * $nilaiPrioritas;
-                                    $totalPerBaris += $nilaiKalikan;
-                                @endphp
-                                <td class="border-2 border-gray-900 px-6 py-4">{{ $nilaiKalikan }}</td>
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#lambdaMax">
+                <span class="toggle-sign float-right">-</span> PERHITUNGAN LAMBDA MAKS
+            </h3>
+            <div id="lambdaMax" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                        <tr class="border-2 border-gray-900">
+                            <th class="border-2 border-gray-900 px-6 py-4">Kriteria</th>
+                            @foreach ($columns as $column)
+                                <th class="border-2 border-gray-900 px-6 py-4">{{ $column }}</th>
                             @endforeach
-                            @php
-                                // Hitung hasil bagi berdasarkan total per baris dibagi nilai prioritas kriteria1
-                                $hasilBagi = $totalPerBaris / $priorityValues[$kriteria1];
-                                $totalHasilBagi += $hasilBagi;
-                            @endphp
-                            <td class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">{{ $totalPerBaris }}
-                            </td>
-                            <td class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">{{ $hasilBagi }}</td>
+                            <th class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">Jumlah Per Baris</th>
+                            <th class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">Hasil Bagi</th>
                         </tr>
-                    @endforeach
-                    <tr class="bg-slate-900 text-white">
-                        <th colspan="{{ count($columns) + 2 }}" class="border-2 border-gray-900 px-6 py-4">Total Hasil Bagi
-                        </th>
-                        <td class="border-2 border-gray-900 px-6 py-4">{{ $totalHasilBagi }}</td>
-                    </tr>
-                    <tr class="bg-slate-900 text-white">
-                        <th colspan="{{ count($columns) + 2 }}" class="border-2 border-gray-900 px-6 py-4">Lambda Maks
-                        </th>
-                        <td class="border-2 border-gray-900 px-6 py-4">{{ $lambdaMaks }}</td>
-                    </tr>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="text-center">
+                        @php
+                            $totalHasilBagi = 0;
+                        @endphp
+                        @foreach ($rows as $kriteria1 => $columnsData)
+                            <tr class="text-gray-900">
+                                <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">{{ $kriteria1 }}</th>
+                                @php
+                                    $totalPerBaris = 0;
+                                @endphp
+                                @foreach ($columnsData as $kriteria2 => $nilai)
+                                    @php
+                                        // Mengalikan nilai dengan nilai prioritas yang didapat sebelumnya
+                                        $nilaiPrioritas = $priorityValues[$kriteria2];
+                                        $nilaiKalikan = $nilai * $nilaiPrioritas;
+                                        $totalPerBaris += $nilaiKalikan;
+                                    @endphp
+                                    <td class="border-2 border-gray-900 px-6 py-4">{{ $nilaiKalikan }}</td>
+                                @endforeach
+                                @php
+                                    // Hitung hasil bagi berdasarkan total per baris dibagi nilai prioritas kriteria1
+                                    $hasilBagi = $totalPerBaris / $priorityValues[$kriteria1];
+                                    $totalHasilBagi += $hasilBagi;
+                                @endphp
+                                <td class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">
+                                    {{ $totalPerBaris }}
+                                </td>
+                                <td class="border-2 border-gray-700 bg-slate-900 px-6 py-4 text-white">{{ $hasilBagi }}
+                                </td>
+                            </tr>
+                        @endforeach
+                        <tr class="bg-slate-900 text-white">
+                            <th colspan="{{ count($columns) + 2 }}" class="border-2 border-gray-900 px-6 py-4">Total
+                                Hasil
+                                Bagi
+                            </th>
+                            <td class="border-2 border-gray-900 px-6 py-4">{{ $totalHasilBagi }}</td>
+                        </tr>
+                        <tr class="bg-slate-900 text-white">
+                            <th colspan="{{ count($columns) + 2 }}" class="border-2 border-gray-900 px-6 py-4">Lambda
+                                Maks
+                            </th>
+                            <td class="border-2 border-gray-900 px-6 py-4">{{ $lambdaMaks }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
 
 
         <!-- Konsistensi -->
         <div class="rounded-lg bg-slate-50 p-4">
-            <h3 class="text-lg font-bold">KONSISTENSI</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-800 rtl:text-right">
-                <tbody>
-                    <tr>
-                        <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">Lambda Maks</th>
-                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $lambdaMaks }}</td>
-                    </tr>
-                    <tr>
-                        <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">CI</th>
-                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $ci }}</td>
-                    </tr>
-                    <tr>
-                        <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">CR</th>
-                        <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $cr }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#consistencyChecking">
+                <span class="toggle-sign float-right">-</span> MENGUKUR KONSISTENSI
+            </h3>
+            <div id="consistencyChecking" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-800 rtl:text-right">
+                    <tbody>
+                        <tr>
+                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">Lambda Maks</th>
+                            <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $lambdaMaks }}</td>
+                        </tr>
+                        <tr>
+                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">CI</th>
+                            <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $ci }}</td>
+                        </tr>
+                        <tr>
+                            <th class="border-2 border-gray-900 bg-blue-200 px-6 py-4">CR</th>
+                            <td class="border-2 border-gray-900 px-6 py-4 font-semibold">{{ $cr }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         @if ($cr < 0.1)
@@ -257,3 +277,16 @@
         @endif
     </div>
 @endsection
+
+@push('after-script')
+    <script type="module">
+        $(document).ready(function() {
+            $('.toggle-table').click(function() {
+                var target = $(this).data('target');
+                $(target).toggle();
+                var sign = $(target).is(':visible') ? '-' : '+';
+                $(this).find('.toggle-sign').text(sign);
+            });
+        });
+    </script>
+@endpush

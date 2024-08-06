@@ -21,6 +21,8 @@ class RankingResultController extends Controller
 
         $criteriaBySelected = [];
 
+        $alternativeValues = AlternativeValue::select('alternative_id')->distinct()->get();
+
         foreach ($kriteriaSelected as $selected) {
             $kriteriaIds = collect();
 
@@ -39,7 +41,7 @@ class RankingResultController extends Controller
             $criteriaBySelected[$selected->id] = $criteriaNames;
         }
 
-        return view('admin.pages.pemeringkatan.index', compact('kriteriaSelected', 'criteriaBySelected'));
+        return view('admin.pages.pemeringkatan.index', compact('kriteriaSelected', 'criteriaBySelected', 'alternativeValues'));
     }
 
     /**

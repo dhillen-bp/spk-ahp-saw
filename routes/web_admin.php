@@ -114,6 +114,7 @@ Route::prefix('data-penerima')->name('admin.penerima.')->middleware('role:pemeri
     Route::middleware('role:pemerintah_desa')->group(function () {
         Route::patch('/verifikasi/{id}', [DataPenerimaController::class, 'changeVerified'])->name('verifikasi');
         Route::get('/report', [DataPenerimaController::class, 'generatePDF'])->name('report');
+        Route::get('/report_calon', [DataPenerimaController::class, 'generatePDFCalon'])->name('report_calon');
     });
 });
 

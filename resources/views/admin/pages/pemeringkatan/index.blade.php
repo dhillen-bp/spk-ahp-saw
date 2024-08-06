@@ -109,7 +109,7 @@
                                 @endforeach
                             </td>
                             <td class="min-w-[300px] px-6 py-4">
-                                @if ($data->criteriaPriorityValues->isNotEmpty())
+                                @if ($data->criteriaPriorityValues->isNotEmpty() && $alternativeValues->count() > 2)
                                     <a href="{{ route('admin.pemeringkatan.result', $data->id) }}"
                                         class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Perangkingan</a>
                                 @endif

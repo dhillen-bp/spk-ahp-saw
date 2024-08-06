@@ -44,23 +44,34 @@
     <div class="space-y-10 pb-6">
         {{-- TABEL BOBOT PRIORITAS --}}
         <div class="rounded-lg bg-slate-100 p-4">
-            <h3 class="mb-4 text-lg font-bold">TABEL NILAI ALTERNATIF</h3>
-            <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
-                    <tr class="border-2 border-gray-900">
-                        @foreach ($criteriaPriorityValue as $priority)
-                            <th class="border-2 border-gray-900 px-6 py-4">{{ $priority->criteria->nama }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <tr class="text-gray-900">
-                        @foreach ($criteriaPriorityValue as $priority)
-                            <td class="border-2 border-gray-900 px-6 py-4">{{ round($priority->nilai * 100, 3) }} %</td>
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
+            <h3 class="toggle-table mb-4 cursor-pointer text-lg font-bold" data-target="#criteriaTable">
+                <span class="toggle-sign float-right">-</span>TABEL KRITERIA
+            </h3>
+            <div id="criteriaTable" class="table-container">
+                <table class="w-full border-2 border-gray-900 text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="border-2 border-gray-900 bg-blue-200 text-center font-bold text-gray-900">
+                        <tr class="border-2 border-gray-900">
+                            @foreach ($criteriaPriorityValue as $priority)
+                                <th class="border-2 border-gray-900 px-6 py-4">{{ $priority->criteria->nama }}</th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr class="text-gray-900">
+                            @foreach ($criteriaPriorityValue as $priority)
+                                <td class="border-2 border-gray-900 px-6 py-4"> <span
+                                        class="{{ $priority->criteria->atribut == 'benefit' ? 'badge-benefit' : 'badge-cost' }}">
+                                        {{ ucfirst($priority->criteria->atribut) }}</span></td>
+                            @endforeach
+                        </tr>
+                        <tr class="text-gray-900">
+                            @foreach ($criteriaPriorityValue as $priority)
+                                <td class="border-2 border-gray-900 px-6 py-4">{{ round($priority->nilai * 100, 3) }} %</td>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         {{-- Tabel Nilai Alternatif --}}

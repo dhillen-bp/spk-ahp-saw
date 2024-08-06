@@ -144,4 +144,33 @@ class DataPenerimaController extends Controller
 
         return $pdf->download('laporan_penerima.pdf');
     }
+
+    public function generatePDFCalon(Request $request)
+    {
+        $selectedYear = ($request->input('tahun', date('Y')) ?? date('Y'));
+
+        $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
+
+        $rankingResults = RankingResult::with([
+            'alternative.alternativeValues.criteria.subCriteria',
+            'criteriaSelected'
+        ])
+            ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                $query->where('nama', $selectedYear);
+            })->orderByDesc('skor_total')->get();
+
+        $data = [
+            'title' => 'Data Calon Penerima BLT Dana Desa',
+            'date' => date('Y'),
+            'rankingResults' => $rankingResults
+        ];
+
+        // return dd($rankingResults);
+
+        $pdf = PDF::loadView('admin.pages.penerima.report-calon', $data);
+
+        session()->flash('success_message', 'Laporan data pcalon enerima berhasil diexport ke PDF!');
+
+        return $pdf->download('laporan_calon_penerima.pdf');
+    }
 }
