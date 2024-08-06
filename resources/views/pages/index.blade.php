@@ -35,14 +35,14 @@
              <h2 class="inline-block rounded-full bg-white p-2 px-4 text-2xl font-bold">Cek Penerima Bantuan</h2>
          </div>
 
-         <form class="mx-auto mb-4 mt-8 flex max-w-md items-center">
+         <form id="searchForm" class="mx-auto mb-4 mt-8 flex max-w-md items-center">
              <label for="simple-search" class="sr-only">Search</label>
              <div class="relative w-full">
-                 <input type="text" id="simple-search"
+                 <input type="text" id="simple-search" name="query"
                      class="block w-full rounded-full border border-gray-300 bg-gray-50 p-2.5 py-3 ps-5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                      placeholder="Masukkan NIK atau Nama Anda" required />
              </div>
-             <button type="submit"
+             <button type="submit" data-modal-target="searchModal" data-modal-toggle="searchModal"
                  class="ms-2 rounded-full border border-blue-700 bg-blue-700 p-3 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                  <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                      viewBox="0 0 20 20">
@@ -53,7 +53,40 @@
              </button>
          </form>
 
+         {{-- MODAL --}}
+         <div id="searchModal" tabindex="-1" aria-hidden="true"
+             class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+             <div class="relative max-h-full w-full max-w-2xl p-4">
+                 <!-- Modal content -->
+                 <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+                     <!-- Modal header -->
+                     <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+                         <h3 id="modalTitle" class="text-xl font-semibold text-gray-900 dark:text-white">
+                             Cek Data Penerima
+                         </h3>
+                         <button type="button"
+                             class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                             data-modal-hide="searchModal">
+                             <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 14 14">
+                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                             </svg>
+                             <span class="sr-only">Close modal</span>
+                         </button>
+                     </div>
+                     <!-- Modal body -->
+                     <div class="space-y-4 p-4 md:p-5">
+                         <p id="modalBody" class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+
+                         </p>
+
+                     </div>
+                 </div>
+             </div>
+         </div>
      </section>
+
 
      <section class="bg-blue-700 p-6">
          <div class="mx-auto my-4 flex justify-center">
@@ -105,3 +138,39 @@
          </div>
      </section>
  @endsection
+
+ @push('after-script')
+     <script type="module">
+         $(document).ready(function() {
+             $('#searchForm').on('submit', function(e) {
+                 e.preventDefault();
+                 const query = $('#simple-search').val();
+
+                 $.ajax({
+                     url: '{{ route('search') }}',
+                     type: 'GET',
+                     data: {
+                         query: query,
+                     },
+                     success: function(response) {
+                         // Menangkap dan menggunakan data yang dikirim dari server
+                         console.log(response.html);
+                         $('#modalBody').html(response.html);
+                         $('#searchModal').removeClass('hidden');
+                         $('#searchModal').addClass('flex');
+                     },
+                     error: function(xhr, status, error) {
+                         console.log(error);
+                         $('#modalBody').text('Data yang anda cari tidak ditemukan!');
+                         $('#searchModal').addClass('flex');
+                         $('#searchModal').removeClass('hidden');
+                     }
+                 });
+             });
+
+             $('#closeModal').on('click', function() {
+                 $('#searchModal').addClass('hidden');
+             });
+         });
+     </script>
+ @endpush

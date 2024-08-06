@@ -25,7 +25,7 @@
     @endif
 
     @include('layouts.script')
-    @yield('after-script')
+    @stack('after-script')
 
 </body>
 

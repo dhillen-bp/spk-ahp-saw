@@ -23,7 +23,7 @@
             $('#topNavbar').addClass('opacity-70');
 
             if (scrollPosition >= 384) {
-                console.log("Hello 96");
+                // console.log("position 96");
                 $('#topNavbar').removeClass('opacity-70');
                 $('#topNavbar').addClass('opacity-100');
             }
