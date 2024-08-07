@@ -34,9 +34,10 @@ class CriteriaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AlternativeRequest $request)
+    public function store(CriteriaStoreRequest $request)
     {
         $validated = $request->validated();
+
 
         $kriteria = Criteria::create($validated);
 

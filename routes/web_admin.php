@@ -45,6 +45,11 @@ Route::prefix('kriteria')->name('admin.kriteria.')->middleware('role:pemerintah_
         Route::get('/edit/{id}', [SubCriteriaController::class, 'edit'])->name('edit');
         Route::patch('/update/{id}', [SubCriteriaController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [SubCriteriaController::class, 'destroy'])->name('destroy');
+
+        Route::get('/compare/{id}', [SubCriteriaController::class, 'compareShow'])->name('compare');
+        Route::patch('/compare/{criteriaId}', [SubCriteriaController::class, 'updateSubCriteriaComparison'])->name('compare_update');
+        Route::get('/show/{criteriaId}', [SubCriteriaController::class, 'showAHP'])->name('compareCalculate');
+        Route::patch('/compare-result/{criteriaId}', [SubCriteriaController::class, 'updateSubCriteriaValue'])->name('compareSaveValue');
     });
 });
 

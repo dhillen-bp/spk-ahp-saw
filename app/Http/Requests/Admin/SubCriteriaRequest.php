@@ -24,7 +24,7 @@ class SubCriteriaRequest extends FormRequest
         return [
             'nama' => 'required|string|max:255',
             'criteria_id' => 'nullable|exists:criteria,id',
-            'nilai' => 'required|numeric',
+            'nilai' => 'nullable|numeric',
         ];
     }
 
@@ -32,7 +32,7 @@ class SubCriteriaRequest extends FormRequest
     {
         return [
             'nama.required' => 'Nama subkriteria harus di isi!',
-            'nilai.required' => 'Nilai subkriteria harus di isi!',
+            'nilai.numeric' => 'Nilai subkriteria harus angka!',
             'criteria_id.exists' => 'Criteria ID harus sesuai dengan data pada tabel criteria!',
         ];
     }

@@ -38,9 +38,12 @@
         </nav>
     </div>
 
-    <div class="my-3 flex justify-center">
+    <div class="my-3 flex justify-between">
         <a href="{{ route('admin.kriteria.sub.create', $criteria->id) }}"
             class="mb-2 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Tambah
+            Sub Kriteria</a>
+        <a href="{{ route('admin.kriteria.sub.compare', $criteria->id) }}"
+            class="mb-2 me-2 rounded-lg bg-purple-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Perbandingan
             Sub Kriteria</a>
     </div>
 
@@ -88,7 +91,13 @@
                                     <div class="flex items-center justify-between">
                                         <li>{{ $subcriteria->nama }} -
                                             <span
-                                                class="me-2 rounded bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-300">{{ round($subcriteria->nilai) }}</span>
+                                                class="me-2 rounded bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-300">
+                                                @if (fmod($subcriteria->nilai, 1) == 0)
+                                                    {{ round($subcriteria->nilai) }}
+                                                @else
+                                                    {{ $subcriteria->nilai }}
+                                                @endif
+                                            </span>
                                         </li>
                                         <div class="my-auto">
                                             <a href="{{ route('admin.kriteria.sub.edit', $subcriteria->id) }}"
