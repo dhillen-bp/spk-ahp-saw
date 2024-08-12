@@ -24,7 +24,7 @@ class SubCriteriaController extends Controller
      */
     public function create($criteria_id)
     {
-        $subCriteria = Criteria::findOrFail($criteria_id);
+        $criteria = Criteria::findOrFail($criteria_id);
         return view('admin.pages.kriteria.sub.create', compact('criteria', 'criteria_id'));
     }
 

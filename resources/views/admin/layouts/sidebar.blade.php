@@ -49,33 +49,37 @@
                     <span class="ms-3">Nilai Alternatif</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('admin.perbandingan.index') }}"
-                    class="{{ Request::is('admin/perbandingan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
-                    @include('partials.icons._perbandingan-icon', [
-                        'class' =>
-                            'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
-                    ])
-
-                    <span class="ms-3 flex-1 whitespace-nowrap">Perbandingan</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.pemeringkatan.index') }}"
-                    class="{{ Request::is('admin/pemeringkatan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
-                    @include('partials.icons._pemeringkatan-icon', [
-                        'class' =>
-                            'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
-                    ])
-
-                    <span class="ms-3 flex-1 whitespace-nowrap">Pemeringkatan</span>
-                </a>
-            </li>
-            <div class="">
-                <span class="text-sm text-gray-400">Data</span>
-                <hr class="my-2 h-px border-0 bg-gray-400">
-            </div>
             @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+                <li>
+                    <a href="{{ route('admin.perbandingan.index') }}"
+                        class="{{ Request::is('admin/perbandingan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
+                        @include('partials.icons._perbandingan-icon', [
+                            'class' =>
+                                'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
+                        ])
+
+                        <span class="ms-3 flex-1 whitespace-nowrap">Perbandingan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.pemeringkatan.index') }}"
+                        class="{{ Request::is('admin/pemeringkatan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                        @include('partials.icons._pemeringkatan-icon', [
+                            'class' =>
+                                'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
+                        ])
+
+                        <span class="ms-3 flex-1 whitespace-nowrap">Pemeringkatan</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+                <div class="">
+                    <span class="text-sm text-gray-400">Data</span>
+                    <hr class="my-2 h-px border-0 bg-gray-400">
+                </div>
+
                 <li>
                     <a href="{{ route('admin.data_admin.index') }}"
                         class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
@@ -96,17 +100,17 @@
                         <span class="ms-3 flex-1 whitespace-nowrap">Data Pengaduan</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.penerima.index') }}"
+                        class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                        @include('partials.icons.penerima-icon', [
+                            'class' =>
+                                'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
+                        ])
+                        <span class="ms-3 flex-1 whitespace-nowrap">Data Penerima</span>
+                    </a>
+                </li>
             @endif
-            <li>
-                <a href="{{ route('admin.penerima.index') }}"
-                    class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
-                    @include('partials.icons.penerima-icon', [
-                        'class' =>
-                            'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
-                    ])
-                    <span class="ms-3 flex-1 whitespace-nowrap">Data Penerima</span>
-                </a>
-            </li>
         </ul>
     </div>
 </aside>

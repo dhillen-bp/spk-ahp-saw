@@ -59,11 +59,14 @@
                         @else
                             @php
                                 $isDecimalColumn = in_array($value->criteria->nama, ['Jumlah Tanggungan', 'Usia']);
+                                $isMoney = in_array($value->criteria->nama, ['Pendapatan']);
                             @endphp
 
                             <td class="px-6 py-4">
                                 @if ($isDecimalColumn)
                                     {{ number_format($value->nilai, 0, '.', ',') }}
+                                @elseif ($isMoney)
+                                    {{ 'Rp ' . number_format($value->nilai, 0, ',', '.') }}
                                 @else
                                     {{ $value->nilai }}
                                 @endif

@@ -87,7 +87,12 @@
                         <th scope="col" class="border px-6 py-3 uppercase" rowspan="2" class="align-middle">
                             Nama
                         </th>
-                        <th colspan="{{ count($criterias) }}" class="border px-6 py-3 uppercase">
+                        @php
+                            $filteredCriterias = $criterias->filter(
+                                fn($criteria) => $criteria->alternativeValues->isNotEmpty(),
+                            );
+                        @endphp
+                        <th colspan="{{ $filteredCriterias->count() }}" class="border px-6 py-3 uppercase">
                             Kriteria
                         </th>
                         <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
@@ -95,7 +100,7 @@
                         </th>
                     </tr>
                     <tr>
-                        @foreach ($criterias as $criteria)
+                        @foreach ($filteredCriterias as $criteria)
                             <th scope="col" class="border px-6 py-3">
                                 {{ $criteria->nama }}
                             </th>
@@ -111,19 +116,29 @@
                             <td class="border px-6 py-4">
                                 {{ $data->nama }}
                             </td>
-                            @foreach ($data->alternativeValues as $alternativeValue)
+                            @foreach ($filteredCriterias as $criteria)
+                                @php
+                                    $alternativeValue = $data->alternativeValues->firstWhere(
+                                        'criteria_id',
+                                        $criteria->id,
+                                    );
+                                @endphp
                                 <td class="border px-6 py-4">
-                                    @if ($alternativeValue->criteria->subCriteria->isNotEmpty())
-                                        @php
-                                            $subCriteriaName =
-                                                $alternativeValue->criteria->subCriteria->firstWhere(
-                                                    'nilai',
-                                                    $alternativeValue->nilai,
-                                                )->nama ?? 'N/A';
-                                        @endphp
-                                        {{ $subCriteriaName . ' - ' . $alternativeValue->nilai }}
+                                    @if ($alternativeValue)
+                                        @if ($alternativeValue->criteria->subCriteria->isNotEmpty())
+                                            @php
+                                                $subCriteriaName =
+                                                    $alternativeValue->criteria->subCriteria->firstWhere(
+                                                        'nilai',
+                                                        $alternativeValue->nilai,
+                                                    )->nama ?? 'N/A';
+                                            @endphp
+                                            {{ $subCriteriaName . ' - ' . $alternativeValue->nilai }}
+                                        @else
+                                            {{ $alternativeValue->nilai ?? 'N/A' }}
+                                        @endif
                                     @else
-                                        {{ $alternativeValue->nilai ?? 'N/A' }}
+                                        N/A
                                     @endif
                                 </td>
                             @endforeach
@@ -135,6 +150,7 @@
                     @endforeach
                 </tbody>
             </table>
+
 
 
         </div>

@@ -24,7 +24,7 @@ class AlternativeValueStoreRequest extends FormRequest
         return [
             'alternative_id' => 'required|exists:alternatives,id',
             'criteria_values' => 'required|array',
-            'criteria_values.*' => 'required|numeric',
+            'criteria_values.*' => 'nullable|numeric',
         ];
     }
 
@@ -35,7 +35,7 @@ class AlternativeValueStoreRequest extends FormRequest
             'alternative_id.exists' => 'Nama Alternatif yang dipilih tidak valid.',
             'criteria_values.required' => 'Nilai Kriteria wajib diisi.',
             'criteria_values.array' => 'Nilai Kriteria harus berupa array.',
-            'criteria_values.*.required' => 'Nilai untuk setiap kriteria wajib diisi.',
+            // 'criteria_values.*.required' => 'Nilai untuk setiap kriteria wajib diisi.',
             'criteria_values.*.numeric' => 'Nilai untuk setiap kriteria harus berupa angka.',
         ];
     }
