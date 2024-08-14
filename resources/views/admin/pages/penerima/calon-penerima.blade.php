@@ -69,7 +69,7 @@
                     </form>
                 </div>
 
-                <label for="table-search" class="sr-only">Search</label>
+                {{-- <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div
                         class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 left-0 flex items-center ps-3 rtl:right-0">
@@ -83,7 +83,8 @@
                     <input type="text" id="table-search"
                         class="block w-80 rounded-lg border border-gray-300 bg-white p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Search for items">
-                </div>
+                </div> --}}
+
                 <div>
                     <a href="{{ route('admin.penerima.report_calon') }}"
                         class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">

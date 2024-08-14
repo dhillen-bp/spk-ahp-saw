@@ -74,7 +74,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <label for="table-search" class="sr-only">Search</label>
+
+                            {{-- <label for="table-search" class="sr-only">Search</label>
                             <div class="relative">
                                 <div
                                     class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 left-0 flex items-center ps-3 rtl:right-0">
@@ -88,7 +89,8 @@
                                 <input type="text" id="table-search"
                                     class="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                                     placeholder="Search for items">
-                            </div>
+                            </div> --}}
+
                         </div>
                         <a href="{{ route('pengumuman.calon_penerima') }}"
                             class="mb-8 inline-block rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
