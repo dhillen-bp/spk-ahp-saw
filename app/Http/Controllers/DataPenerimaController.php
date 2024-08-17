@@ -24,6 +24,13 @@ class DataPenerimaController extends Controller
             ->value('jumlah_penerima');
 
         $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
             'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])
@@ -102,15 +109,24 @@ class DataPenerimaController extends Controller
     {
         $selectedYear = $request->input('tahun', date('Y'));
 
+
         $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
 
         $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
             'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])
             ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
                 $query->where('nama', $selectedYear);
-            })->orderByDesc('skor_total')
+            })
+            ->orderByDesc('skor_total')
             ->paginate(10);
 
         return view('admin.pages.penerima.calon-penerima', compact('rankingResults', 'criteriaSelected', 'selectedYear'));

@@ -55,7 +55,7 @@
 
                 <div class="flex w-[160px] items-center justify-center gap-4 rounded-lg bg-blue-600 py-[5px]">
                     <label for="tahun" class="block text-sm font-medium text-white">Tahun</label>
-                    <form method="GET" action="{{ route('admin.penerima.index') }}">
+                    <form method="GET" action="{{ route('admin.penerima.calon') }}">
                         <select name="tahun" id="tahun"
                             class="block rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                             onchange="this.form.submit()">
@@ -147,6 +147,7 @@
                                 <td class="px-6 py-4">
                                     {{ $data->alternative->nama }}
                                 </td>
+
                                 @foreach ($data->alternative->alternativeValues as $value)
                                     @if ($value->criteria->subCriteria->isNotEmpty())
                                         @foreach ($value->criteria->subCriteria as $subCriteria)
@@ -158,6 +159,7 @@
                                         <td class="px-6 py-4">{{ $value->nilai }}</td>
                                     @endif
                                 @endforeach
+
                                 <td class="px-6 py-4">
                                     {{ $data->skor_total }}
                                 </td>

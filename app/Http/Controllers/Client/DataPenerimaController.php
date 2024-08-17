@@ -23,6 +23,13 @@ class DataPenerimaController extends Controller
             ->value('jumlah_penerima');
 
         $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
             'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])
@@ -41,6 +48,13 @@ class DataPenerimaController extends Controller
         $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
 
         $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
             'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])

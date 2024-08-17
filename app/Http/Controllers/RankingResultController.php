@@ -99,13 +99,19 @@ class RankingResultController extends Controller
         list($normalizedMatrix, $ranking) = $this->calculateSAW($criteriaSelectedId);
 
         // Ambil data kriteria untuk header tabel
-        $criteria = Criteria::all();
+        $criteria = Criteria::whereHas('criteriaPriorityValues', function ($query) use ($criteriaSelectedId) {
+            $query->where('criteria_selected_id', $criteriaSelectedId);
+        })->get();
 
         $criteriaPriorityValue = CriteriaPriorityValue::with('criteria')->where('criteria_selected_id', $criteriaSelectedId)->get();
 
         // Ambil nilai alternatif dari database
         $alternativeValues = [];
-        $alternatives = AlternativeValue::with('alternative')->get();
+        $alternatives = AlternativeValue::whereHas('criteria', function ($query) use ($criteriaSelectedId) {
+            $query->whereHas('criteriaPriorityValues', function ($subQuery) use ($criteriaSelectedId) {
+                $subQuery->where('criteria_selected_id', $criteriaSelectedId);
+            });
+        })->with('alternative')->get();
         foreach ($alternatives as $alternative) {
             $alternativeValues[$alternative->alternative->nama][$alternative->criteria_id] = $alternative->nilai;
         }
@@ -115,8 +121,13 @@ class RankingResultController extends Controller
 
     public function calculateSAW($criteriaSelectedId)
     {
-        $alternatives = Alternative::all();
-        $criteria = Criteria::all();
+        $alternatives = Alternative::whereHas('alternativeValues', function ($query) {
+            $query->whereNotNull('nilai');
+        })->get();
+
+        $criteria = Criteria::whereHas('criteriaPriorityValues', function ($query) use ($criteriaSelectedId) {
+            $query->where('criteria_selected_id', $criteriaSelectedId);
+        })->get();
 
         // Buat matriks keputusan
         $decisionMatrix = [];
@@ -154,7 +165,9 @@ class RankingResultController extends Controller
         foreach ($normalizedMatrix as $altId => $values) {
             $weightedMatrix[$altId] = 0;
             foreach ($values as $criteriaName => $normalizedValue) {
-                $criteriaId = Criteria::where('nama', $criteriaName)->first()->id;
+                $criteriaId = Criteria::whereHas('criteriaPriorityValues', function ($query) use ($criteriaSelectedId) {
+                    $query->where('criteria_selected_id', $criteriaSelectedId);
+                })->where('nama', $criteriaName)->first()->id;
                 $weightedMatrix[$altId] += $normalizedValue * $weights[$criteriaId];
             }
         }

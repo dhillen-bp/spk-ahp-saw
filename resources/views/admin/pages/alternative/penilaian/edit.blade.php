@@ -68,7 +68,7 @@
                                 <option class="text-gray-200" value="" disabled selected>-Pilih-</option>
                                 @foreach ($criteria->subcriteria as $sub)
                                     <option value="{{ $sub->nilai }}" {{ $sub->nilai == $nilai ? 'selected' : '' }}>
-                                        {{ $sub->nama }}</option>
+                                        {{ $sub->nama }} - {{ $sub->nilai }}</option>
                                 @endforeach
                             </select>
                         @else

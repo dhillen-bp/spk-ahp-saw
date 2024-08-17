@@ -42,7 +42,7 @@
         <a href="{{ route('admin.kriteria.sub.create', $criteria->id) }}"
             class="mb-2 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Tambah
             Sub Kriteria</a>
-        @if ($criteria->subCriteria->isNotEmpty())
+        @if ($criteria->subCriteria->isNotEmpty() && $criteria->subCriteria->count() > 1)
             <a href="{{ route('admin.kriteria.sub.compare', $criteria->id) }}"
                 class="mb-2 me-2 rounded-lg bg-purple-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Perbandingan
                 Sub Kriteria</a>

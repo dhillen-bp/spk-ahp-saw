@@ -66,7 +66,7 @@
                         placeholder="Search for items">
                 </div> --}}
 
-                <div>
+                {{-- <div>
                     <button type="button"
                         class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
                         <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
@@ -76,7 +76,7 @@
                         </svg>
                         Export
                     </button>
-                </div>
+                </div> --}}
             </div>
             <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
                 <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">

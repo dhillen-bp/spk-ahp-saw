@@ -120,20 +120,12 @@
 
          <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-6">
              <div>
-                 <img class="h-auto max-w-full rounded-lg"
-                     src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" alt="">
+                 <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/galeri/penyaluran_2023.jpeg') }}"
+                     alt="">
              </div>
              <div>
-                 <img class="h-auto max-w-full rounded-lg"
-                     src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-             </div>
-             <div>
-                 <img class="h-auto max-w-full rounded-lg"
-                     src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-             </div>
-             <div>
-                 <img class="h-auto max-w-full rounded-lg"
-                     src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
+                 <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/galeri/penyaluran2_2023.jpeg') }}"
+                     alt="">
              </div>
          </div>
      </section>

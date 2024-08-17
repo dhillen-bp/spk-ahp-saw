@@ -64,7 +64,7 @@
                         class="block w-80 rounded-lg border border-gray-300 bg-white p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Search for items">
                 </div> --}}
-
+                {{--
                 <div>
                     <a href="{{ route('admin.kriteria.report') }}"
                         class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
@@ -76,65 +76,66 @@
                         Export
                     </a>
                 </div>
-            </div>
-            <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            ID
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Nama
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Atribut
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach ($kriteria as $data)
-                        <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
-                            <th class="px-6 py-4">
-                                {{ $loop->iteration }}
+            </div> --}}
+
+                <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+                    <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                ID
                             </th>
-                            <td class="px-6 py-4">
-                                {{ $data->nama }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="{{ $data->atribut == 'benefit' ? 'badge-benefit' : 'badge-cost' }}">
-                                    {{ ucfirst($data->atribut) }}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="{{ route('admin.kriteria.show', $data->id) }}"
-                                    class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
-                                <a href="{{ route('admin.kriteria.edit', $data->id) }}"
-                                    class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
-                                <button data-modal-target="delete-modal-{{ $loop->iteration }}"
-                                    data-modal-toggle="delete-modal-{{ $loop->iteration }}"
-                                    class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>
-                            </td>
+                            <th scope="col" class="px-6 py-3">
+                                Nama
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Atribut
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                            </th>
                         </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach ($kriteria as $data)
+                            <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
+                                <th class="px-6 py-4">
+                                    {{ $loop->iteration }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ $data->nama }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="{{ $data->atribut == 'benefit' ? 'badge-benefit' : 'badge-cost' }}">
+                                        {{ ucfirst($data->atribut) }}</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <a href="{{ route('admin.kriteria.show', $data->id) }}"
+                                        class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
+                                    <a href="{{ route('admin.kriteria.edit', $data->id) }}"
+                                        class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
+                                    <button data-modal-target="delete-modal-{{ $loop->iteration }}"
+                                        data-modal-toggle="delete-modal-{{ $loop->iteration }}"
+                                        class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>
+                                </td>
+                            </tr>
 
-                        @component('admin.layouts.modal_delete', [
-                            'deleteMessage' => "Anda yakin menghapus data = $data->nama?",
-                            'loopId' => $loop->iteration,
-                            'deletedId' => $data->id,
-                            'routeName' => 'admin.kriteria.destroy',
-                        ])
-                        @endcomponent
-                    @endforeach
-                </tbody>
-            </table>
+                            @component('admin.layouts.modal_delete', [
+                                'deleteMessage' => "Anda yakin menghapus data = $data->nama?",
+                                'loopId' => $loop->iteration,
+                                'deletedId' => $data->id,
+                                'routeName' => 'admin.kriteria.destroy',
+                            ])
+                            @endcomponent
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            {{-- PAGINATION --}}
+            <div>
+                {{ $kriteria->links('vendor.pagination.tailwind') }}
+            </div>
         </div>
-        {{-- PAGINATION --}}
-        <div>
-            {{ $kriteria->links('vendor.pagination.tailwind') }}
-        </div>
-    </div>
-@endsection
+    @endsection
 
-@push('after-script')
-@endpush
+    @push('after-script')
+    @endpush

@@ -80,6 +80,10 @@ class AlternativeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Hapus semua AlternativeValue berdasarkan alternative_id
+        Alternative::where('id', $id)->delete();
+
+        return redirect()->route('admin.alternative.index')
+            ->with('success', 'Data  alternatif berhasil dihapus!');
     }
 }

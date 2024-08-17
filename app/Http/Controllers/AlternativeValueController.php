@@ -86,6 +86,7 @@ class AlternativeValueController extends Controller
      */
     public function update(AlternativeValueStoreRequest $request,  $id)
     {
+
         $validated = $request->validated();
 
         $alternative = Alternative::findOrFail($id);
