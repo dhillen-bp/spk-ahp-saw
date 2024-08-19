@@ -136,7 +136,7 @@
                                                 @endphp
                                                 {{ $subCriteriaName . ' - ' . $alternativeValue->nilai }}
                                             @else
-                                                {{ $alternativeValue->nilai ?? 'N/A' }}
+                                                {{ number_format($alternativeValue->nilai, 0, '.', '.') ?? 'N/A' }}
                                             @endif
                                         @else
                                             N/A

@@ -169,12 +169,28 @@
                                         class="btn-primary rounded-lg px-2.5 py-1.5 text-xs" type="button">
                                         Keterangan
                                     </button>
+
+                                    <button data-modal-target="aksi-modal-{{ $loop->iteration }}"
+                                        data-modal-toggle="aksi-modal-{{ $loop->iteration }}"
+                                        class="btn-warning rounded-lg px-2.5 py-1.5 text-xs" type="button">
+                                        Aksi
+                                    </button>
                                 </td>
                             </tr>
 
                             @component('admin.layouts.modal_keterangan_penerima', [
                                 'loopId' => $loop->iteration,
                                 'data' => $data,
+                            ])
+                            @endcomponent
+
+                            @component('admin.layouts.modal_aksi', [
+                                'chooseName' => $data->alternative->nama,
+                                'loopId' => $loop->iteration,
+                                'chooseId' => $data->id,
+                                'is_verified' => $data->is_verified,
+                                'is_verified_desc' => $data->is_verified_desc,
+                                'routeName' => 'admin.penerima.verifikasi',
                             ])
                             @endcomponent
                         @endforeach

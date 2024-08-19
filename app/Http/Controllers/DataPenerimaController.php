@@ -97,11 +97,16 @@ class DataPenerimaController extends Controller
 
         $penerima = RankingResult::findOrFail($id);
 
+        if (isset($validated['is_verified']) && $validated['is_verified'] == 1) {
+            $validated['is_verified_desc'] = null;
+        }
+
         $penerimaUpdated = $penerima->update($validated);
 
         if ($penerimaUpdated) {
             return redirect()->route('admin.penerima.index')->with('success_message', 'Verifikasi Data Penerima berhasil diperbarui!');
         }
+
         return redirect()->back()->with('error_message', 'Verifikasi Data Penerima gagal diperbarui!');
     }
 
@@ -139,6 +144,13 @@ class DataPenerimaController extends Controller
         $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
 
         $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
             'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])
@@ -168,6 +180,13 @@ class DataPenerimaController extends Controller
         $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
 
         $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
             'alternative.alternativeValues.criteria.subCriteria',
             'criteriaSelected'
         ])

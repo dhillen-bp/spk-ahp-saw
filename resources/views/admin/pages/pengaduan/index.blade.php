@@ -111,7 +111,7 @@
                                 {{ $data->judul }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $data->deskripsi }}
+                                {{ strlen($data->deskripsi) > 20 ? substr($data->deskripsi, 0, 20) . '...' : $data->deskripsi }}
                             </td>
 
                             <td class="px-6 py-4">
