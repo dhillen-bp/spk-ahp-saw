@@ -42,4 +42,9 @@ class Criteria extends Model
     {
         return $this->hasMany(SubCriteria::class, 'criteria_id');
     }
+
+    public function pengaduan(): HasMany
+    {
+        return $this->hasMany(Pengaduan::class, 'criteria_id');
+    }
 }

@@ -70,5 +70,7 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
     Route::get('/', [DataPengaduanController::class, 'index'])->name('index');
     Route::get('/detail/{id}', [DataPengaduanController::class, 'show'])->name('show');
     Route::get('/tambah', [DataPengaduanController::class, 'create'])->name('create');
+    Route::post('/checkNik', [DataPengaduanController::class, 'checkNik'])->name('checkNik');
+    Route::get('/get-criteria-details/{id}', [DataPengaduanController::class, 'getDetails'])->name('getDetails');
     Route::post('/', [DataPengaduanController::class, 'store'])->name('store');
 });

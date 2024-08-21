@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alternative;
+use App\Models\AlternativeValue;
 use App\Models\CitizenReport;
+use App\Models\Criteria;
+use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 
 class DataPengaduanController extends Controller
@@ -13,7 +17,7 @@ class DataPengaduanController extends Controller
      */
     public function index()
     {
-        $pengaduan = CitizenReport::paginate(10);
+        $pengaduan = Pengaduan::with('alternative', 'criteria')->paginate(10);
         return view('pages.pengaduan', compact('pengaduan'));
     }
 
@@ -22,7 +26,9 @@ class DataPengaduanController extends Controller
      */
     public function create()
     {
-        return view('pages.pengaduan-create');
+        $criterias = Criteria::with('subCriteria', 'alternativeValues')->get();
+
+        return view('pages.pengaduan-create', compact('criterias'));
     }
 
     /**
@@ -32,23 +38,42 @@ class DataPengaduanController extends Controller
     {
         $validated = $request->validate(
             [
-                'judul' => ['required'],
-                'pengirim' => ['nullable'],
-                'deskripsi' => ['required'],
+                'nik' => 'required|string',
+                'criteria_to_edit' => 'required|exists:criteria,id',
+                'new_value' => 'required|string',
+                'deskripsi_aduan' => 'nullable|string',
             ],
             [
-                'judul.required' => 'Judul aduan harus diisi.',
-                'deskripsi.required' => 'Deskripsi aduan harus diisi.',
+                'nik.required' => 'NIK anda  harus diisi.',
+                'new_value.required' => 'Data pembaruan anda harus diisi.',
+                'criteria_to_edit.required' => 'Data kriteria yang akan diperbarui anda harus diisi.',
             ]
         );
 
-        if (($validated['pengirim'] == '' || null)) {
-            $validated['pengirim'] = 'Anonim';
+        // Ambil nilai lama berdasarkan NIK dan kriteria yang dipilih
+        $oldValue = AlternativeValue::whereHas('alternative', function ($query) use ($validated) {
+            $query->where('nik', $validated['nik']);
+        })
+            ->where('criteria_id', $validated['criteria_to_edit'])
+            ->value('nilai');
+
+        // Jika nilai lama tidak ditemukan, Anda bisa menangani situasi ini
+        if ($oldValue === null) {
+            $oldValue = ''; // Atau nilai default lain
         }
 
-        $report = CitizenReport::create($validated);
+        // Gunakan create untuk menyimpan data
+        $aduan = Pengaduan::create([
+            'nik' => $validated['nik'],
+            'criteria_id' => $validated['criteria_to_edit'],
+            'old_value' => $oldValue, // Pastikan Anda menentukan nilai lama dengan benar
+            'new_value' => $validated['new_value'],
+            'status' => 'menunggu', // Status default
+            'deskripsi_aduan' => $validated['deskripsi_aduan'] ?? null,
+            'keterangan_balasan' => $validated['keterangan_balasan'] ?? null,
+        ]);
 
-        if ($report) {
+        if ($aduan) {
             return redirect()->route('pengaduan.index')->with('success_message', 'Aduan anda berhasil ditambahkan!');
         }
         return redirect()->back()->with('error_message', 'Aduan anda gagal ditambahkan!');
@@ -59,7 +84,7 @@ class DataPengaduanController extends Controller
      */
     public function show(string $id)
     {
-        $pengaduan = CitizenReport::findOrFail($id);
+        $pengaduan = Pengaduan::with('alternative', 'criteria')->findOrFail($id);
         return view('pages.pengaduan-detail', compact('pengaduan'));
     }
 
@@ -85,5 +110,45 @@ class DataPengaduanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function checkNik(Request $request)
+    {
+        $request->validate([
+            'nik' => 'required|exists:alternatives,nik',
+        ]);
+
+        $alternative = Alternative::with('alternativeValues')->where('nik', $request->nik)->first();
+
+        if ($alternative) {
+            // Membuat array untuk menyimpan nilai kriteria
+            $criteriaValues = $alternative->alternativeValues->pluck('nilai', 'criteria_id');
+
+            return response()->json([
+                'status' => 'success',
+                'nama' => $alternative->nama,
+                'criteria_values' => $criteriaValues,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'NIK tidak ditemukan.',
+        ], 404);
+    }
+
+    // CriteriaController.php
+    public function getDetails($id)
+    {
+        $criteria = Criteria::with('subcriteria')->find($id);
+
+        if (!$criteria) {
+            return response()->json(['status' => 'error', 'message' => 'Kriteria tidak ditemukan'], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'subcriteria' => $criteria->subcriteria
+        ]);
     }
 }

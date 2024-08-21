@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\AlternativeValue;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CriteriaSeeder::class,
             SubCriteriaSeeder::class,
-            AdminSeeder::class
+            AdminSeeder::class,
+            AlternativeSeeder::class,
+            CriteriaSelectedSeeder::class,
+            CriteriaComparisonSeeder::class,
+            AlternativeValueSeeder::class,
         ]);
     }
 }

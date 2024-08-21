@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CriteriaSelected;
 use App\Models\RankingResult;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class DataPenerimaController extends Controller
 {
@@ -36,9 +38,21 @@ class DataPenerimaController extends Controller
             ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
                 $query->where('nama', $selectedYear);
             })->where('is_verified', 1)->orderByDesc('skor_total')->take($jumlahPenerima)
-            ->paginate(10);
+            ->get();
 
-        return view('pages.pengumuman', compact('rankingResults', 'criteriaSelected', 'selectedYear'));
+        // Mendapatkan halaman saat ini
+        $page = Paginator::resolveCurrentPage();
+
+        // Membagi koleksi ke halaman dengan jumlah item per halaman
+        $paginatedResults = new LengthAwarePaginator(
+            $rankingResults->forPage($page, $perPage = 10), // Data untuk halaman ini
+            $rankingResults->count(), // Total item dalam koleksi
+            $perPage, // Jumlah item per halaman
+            $page, // Halaman saat ini
+            ['path' => Paginator::resolveCurrentPath()] // URL path untuk pagination
+        );
+
+        return view('pages.pengumuman', compact('paginatedResults', 'criteriaSelected', 'selectedYear'));
     }
 
     public function viewCalonPenerima(Request $request)

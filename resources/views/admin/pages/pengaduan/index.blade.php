@@ -85,13 +85,16 @@
                             ID
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Judul
+                            Kriteria yang diadukan
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Deskripsi
+                            Nama Warga
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Pengirim
+                            Data Lama
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Data Baru
                         </th>
                         <th scope="col" class="px-6 py-3">
                             status
@@ -108,22 +111,40 @@
                                 {{ $loop->iteration }}
                             </th>
                             <td class="px-6 py-4">
-                                {{ $data->judul }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ strlen($data->deskripsi) > 20 ? substr($data->deskripsi, 0, 20) . '...' : $data->deskripsi }}
+                                {{ $data->criteria->nama }}
                             </td>
 
                             <td class="px-6 py-4">
-                                {{ $data->pengirim }}
+                                {{ $data->alternative->nama }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ $data->old_value }}
                             </td>
                             <td class="px-6 py-4">
-                                <span class="{{ $data->status == 'menunggu' ? 'badge-benefit' : 'badge-cost' }}">
-                                    {{ $data->status }}</span>
+                                {{ $data->new_value }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                <span
+                                    class="@if ($data->status == 'menunggu') badge-warning
+                                    @elseif($data->status == 'disetujui')
+                                        badge-success
+                                    @elseif($data->status == 'ditolak')
+                                        badge-danger @endif">
+                                    {{ $data->status }}
+                                </span>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="{{ route('admin.data_pengaduan.edit', $data->id) }}"
-                                    class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
+                                @if ($data->status != 'disetujui')
+                                    <a href="{{ route('admin.data_pengaduan.editAsAgree', $data->id) }}"
+                                        class="btn-success rounded-lg px-2.5 py-1.5 text-xs">Setuju</a>
+                                @endif
+
+                                @if ($data->status != 'ditolak')
+                                    <a href="{{ route('admin.data_pengaduan.editAsDisAgree', $data->id) }}"
+                                        class="btn-pink rounded-lg px-2.5 py-1.5 text-xs">Tolak</a>
+                                @endif
                                 <button data-modal-target="delete-modal-{{ $loop->iteration }}"
                                     data-modal-toggle="delete-modal-{{ $loop->iteration }}"
                                     class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>

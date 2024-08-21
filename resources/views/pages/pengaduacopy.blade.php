@@ -33,7 +33,7 @@
 
                                 <div class="flex items-center justify-between gap-1">
                                     <h5 class="mb-4 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                                        Data {{ $data->criteria->nama }} Salah
+                                        {{ $data->judul }}
                                     </h5>
                                     @if ($data->status == 'selesai')
                                         <span class="badge-success">
@@ -68,7 +68,7 @@
                                                     clip-rule="evenodd" />
                                             </svg>
 
-                                            <span class="text-sm">{{ $data->alternative->nama }}</span>
+                                            <span class="text-sm">{{ $data->pengirim }}</span>
                                         </div>
                                     </div>
                                 </div>

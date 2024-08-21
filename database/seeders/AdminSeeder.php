@@ -23,11 +23,25 @@ class AdminSeeder extends Seeder
                 'desc' => 'admin / developer',
             ],
             [
-                'nama' => 'Pak RT',
-                'username' => 'rt01',
+                'nama' => 'Wachid Mardiyanto',
+                'username' => 'rt1rw3',
                 'password' => Hash::make('123'),
                 'role' => 'rt_rw',
-                'desc' => 'Test user as RT/RW',
+                'desc' => 'KETUA RT 001 RW 003',
+            ],
+            [
+                'nama' => 'Ikhwanto S.Ag',
+                'username' => 'rt2rw3',
+                'password' => Hash::make('123'),
+                'role' => 'rt_rw',
+                'desc' => 'KETUA RT 002 RW 003',
+            ],
+            [
+                'nama' => 'Samino',
+                'username' => 'rt3rw3',
+                'password' => Hash::make('123'),
+                'role' => 'rt_rw',
+                'desc' => 'KETUA RT 003 RW 003',
             ],
         ];
 

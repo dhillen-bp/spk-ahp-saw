@@ -15,32 +15,52 @@ class SubCriteriaSeeder extends Seeder
     {
         $data = [
             [
+                'nama' => "Rendah (dibawah UMR)",
+                'nilai' => 5,
+                'criteria_id' => 1
+            ],
+            [
+                'nama' => "Cukup (sesuai UMR)",
+                'nilai' => 3,
+                'criteria_id' => 1
+            ],
+            [
+                'nama' => "Lebih (diatas UMR)",
+                'nilai' => 1,
+                'criteria_id' => 1
+            ],
+            [
                 'nama' => "Tidak Bekerja",
                 'nilai' => 5,
                 'criteria_id' => 2
             ],
             [
-                'nama' => "Pekerjaan Tidak Tetap",
+                'nama' => "Pelajar",
+                'nilai' => 4,
+                'criteria_id' => 2
+            ],
+            [
+                'nama' => "Buruh Harian Lepas",
                 'nilai' => 3,
                 'criteria_id' => 2
             ],
             [
-                'nama' => "Pekerjaan Tetap",
+                'nama' => "Buruh Tani/Ternak",
+                'nilai' => 2,
+                'criteria_id' => 2
+            ],
+            [
+                'nama' => "Karyawan Swasta",
                 'nilai' => 1,
                 'criteria_id' => 2
             ],
             [
-                'nama' => "Ada lebih dari 1",
+                'nama' => "Penyakit Kronis/Difabel/ODGJ",
                 'nilai' => 5,
                 'criteria_id' => 5
             ],
             [
-                'nama' => "Ada 1",
-                'nilai' => 3,
-                'criteria_id' => 5
-            ],
-            [
-                'nama' => "Tidak Mempunyai",
+                'nama' => "Tidak Ada",
                 'nilai' => 1,
                 'criteria_id' => 5
             ],
@@ -50,17 +70,17 @@ class SubCriteriaSeeder extends Seeder
                 'criteria_id' => 6
             ],
             [
-                'nama' => "Janda atau Yatim Piatu",
+                'nama' => "Yatim Piatu",
                 'nilai' => 4,
                 'criteria_id' => 6
             ],
             [
-                'nama' => "Duda",
+                'nama' => "Janda",
                 'nilai' => 3,
                 'criteria_id' => 6
             ],
             [
-                'nama' => "Keluarga Lengkap",
+                'nama' => "-",
                 'nilai' => 1,
                 'criteria_id' => 6
             ],

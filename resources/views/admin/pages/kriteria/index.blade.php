@@ -40,15 +40,16 @@
         <div class="relative overflow-x-auto sm:rounded-lg">
             <div class="flex-column flex flex-wrap items-center justify-between space-y-4 pb-4 sm:flex-row sm:space-y-0">
 
-                <a href="{{ route('admin.kriteria.create') }}"
-                    class="text- mb-2 me-2 flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                    <span>
-                        @include('partials.icons._plus-icons', [
-                            'class' => 'h-5 w-5 text-white',
-                        ])
-                    </span>
-                    Tambah Kriteria</a>
-
+                @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+                    <a href="{{ route('admin.kriteria.create') }}"
+                        class="text- mb-2 me-2 flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                        <span>
+                            @include('partials.icons._plus-icons', [
+                                'class' => 'h-5 w-5 text-white',
+                            ])
+                        </span>
+                        Tambah Kriteria</a>
+                @endif
                 {{-- <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div

@@ -141,7 +141,9 @@ Route::prefix('data-pengaduan')->name('admin.data_pengaduan.')->middleware('role
     Route::get('/', [DataPengaduanController::class, 'index'])->name('index');
     Route::get('/tambah', [DataPengaduanController::class, 'create'])->name('create');
     Route::post('/store', [DataPengaduanController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [DataPengaduanController::class, 'edit'])->name('edit');
-    Route::patch('/update/{id}', [DataPengaduanController::class, 'update'])->name('update');
+    Route::get('/edit/{id}/setuju', [DataPengaduanController::class, 'editAsAgree'])->name('editAsAgree');
+    Route::get('/edit/{id}/tolak', [DataPengaduanController::class, 'editAsDisAgree'])->name('editAsDisAgree');
+    Route::patch('/update/{id}/setuju', [DataPengaduanController::class, 'updateAsAgree'])->name('updateAsAgree');
+    Route::patch('/update/{id}/tolak', [DataPengaduanController::class, 'updateAsDisAgree'])->name('updateAsDisAgree');
     Route::delete('/destroy/{id}', [DataPengaduanController::class, 'destroy'])->name('destroy');
 });

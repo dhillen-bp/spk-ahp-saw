@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('alternative_id');
             $table->unsignedBigInteger('criteria_selected_id');
-            $table->decimal('skor_total', 8, 3);
+            $table->double('skor_total', 16, 7);
             $table->boolean('is_verified')->default(1);
             $table->string('is_verified_desc')->nullable();
 

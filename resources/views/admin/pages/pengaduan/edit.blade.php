@@ -40,33 +40,66 @@
 
     <div class="grid grid-cols-1 space-y-5 md:grid-cols-5 md:space-x-10 md:space-y-0">
 
-        <form method="POST" action="{{ route('admin.data_pengaduan.update', $report->id) }}"
-            class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3">
+        @php
+            $routeName = request()->route()->getName();
+            $actionRoute =
+                $routeName == 'admin.data_pengaduan.editAsDisAgree'
+                    ? route('admin.data_pengaduan.updateAsDisAgree', $report->id)
+                    : route('admin.data_pengaduan.updateAsAgree', $report->id);
+        @endphp
+
+
+        <form method="POST" action="{{ $actionRoute }}" class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3">
             @csrf
             @method('PATCH')
             <div class="mb-5">
-                <label for="judul"
-                    class="{{ $errors->has('judul') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Judul Aduan </label>
-                <input type="text" id="judul" name="judul"
-                    class="{{ $errors->has('judul') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
-                    value="{{ old('judul') ?? $report->judul }}" />
-                @error('judul')
+                <label for="alternative"
+                    class="{{ $errors->has('alternative') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Data warga yang diminta untuk diperbaiki </label>
+                <input type="text" id="alternative" name="alternative" readonly
+                    class="{{ $errors->has('alternative') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('alternative') ?? $report->alternative->nama }}" />
+                @error('alternative')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mb-5">
-                <label for="pengirim"
-                    class="{{ $errors->has('pengirim') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Username </label>
-                <input type="text" id="pengirim" name="pengirim"
-                    class="{{ $errors->has('pengirim') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
-                    value="{{ old('pengirim') ?? $report->pengirim }}" />
-                @error('pengirim')
+                <label for="criteria_id"
+                    class="{{ $errors->has('criteria_id') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Data Kriteria yang Salah</label>
+                <input type="text" id="criteria_id" name="criteria_id" readonly
+                    class="{{ $errors->has('criteria_id') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('criteria_id') ?? $report->criteria->nama }}" />
+                @error('criteria_id')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
+
             <div class="mb-5">
+                <label for="old_value"
+                    class="{{ $errors->has('old_value') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Nilai pada Kriteria yang Lama</label>
+                <input type="text" id="old_value" name="old_value" readonly
+                    class="{{ $errors->has('old_value') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('old_value') ?? $report->old_value }}" />
+                @error('old_value')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-5">
+                <label for="new_value"
+                    class="{{ $errors->has('new_value') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Nilai pada Kriteria yang Baru</label>
+                <input type="text" id="new_value" name="new_value" readonly
+                    class="{{ $errors->has('new_value') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('new_value') ?? $report->new_value }}" />
+                @error('new_value')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- <div class="mb-5">
                 <label for="status"
                     class="{{ $errors->has('status') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Status</label>
@@ -88,19 +121,37 @@
                 @error('role')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> --}}
+
             <div class="mb-5">
                 <label for="deskripsi"
                     class="{{ $errors->has('deskripsi') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Deskripsi Pengguna</label>
-                <textarea id="deskripsi" rows="4" name="deskripsi"
+                    Deskripsi aduan</label>
+                <textarea id="deskripsi" rows="4" name="deskripsi" readonly
                     class="{{ $errors->has('deskripsi') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">{{ old('deskripsi') ?? $report->deskripsi }}</textarea>
                 @error('deskripsi')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
-            <button type="submit"
-                class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Simpan</button>
+
+            <div class="mb-5">
+                <label for="keterangan_balasan"
+                    class="{{ $errors->has('keterangan_balasan') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Keterangan Balasann</label>
+                <textarea id="keterangan_balasan" rows="4" name="keterangan_balasan"
+                    class="{{ $errors->has('keterangan_balasan') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">{{ old('keterangan_balasan') ?? $report->keterangan_balasan }}</textarea>
+                @error('keterangan_balasan')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+            @if ($routeName == 'admin.data_pengaduan.editAsAgree')
+                <button type="submit"
+                    class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Setujui</button>
+            @else
+                <button type="submit"
+                    class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Tolak</button>
+            @endif
+
         </form>
 
         <div class="col-span-2 rounded-lg bg-blue-50 p-4">

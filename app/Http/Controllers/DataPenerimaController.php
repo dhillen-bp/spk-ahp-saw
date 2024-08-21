@@ -7,6 +7,8 @@ use App\Models\CriteriaSelected;
 use App\Models\RankingResult;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class DataPenerimaController extends Controller
 {
@@ -36,10 +38,23 @@ class DataPenerimaController extends Controller
         ])
             ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
                 $query->where('nama', $selectedYear);
-            })->where('is_verified', 1)->orderByDesc('skor_total')->take($jumlahPenerima)
-            ->paginate(10);
+            })->where('is_verified', 1)->orderByDesc('skor_total')
+            ->take($jumlahPenerima)->get();
 
-        return view('admin.pages.penerima.index', compact('rankingResults', 'criteriaSelected', 'selectedYear'));
+
+        // Mendapatkan halaman saat ini
+        $page = Paginator::resolveCurrentPage();
+
+        // Membagi koleksi ke halaman dengan jumlah item per halaman
+        $paginatedResults = new LengthAwarePaginator(
+            $rankingResults->forPage($page, $perPage = 10), // Data untuk halaman ini
+            $rankingResults->count(), // Total item dalam koleksi
+            $perPage, // Jumlah item per halaman
+            $page, // Halaman saat ini
+            ['path' => Paginator::resolveCurrentPath()] // URL path untuk pagination
+        );
+
+        return view('admin.pages.penerima.index', compact('paginatedResults', 'criteriaSelected', 'selectedYear'));
     }
 
 

@@ -156,7 +156,21 @@
                                             @endif
                                         @endforeach
                                     @else
-                                        <td class="px-6 py-4">{{ $value->nilai }}</td>
+                                        @php
+                                            // Tentukan apakah kriteria ini adalah 'Jumlah Tanggungan' atau 'Usia'
+                                            $isDecimalColumn = in_array($value->criteria->nama, [
+                                                'Jumlah Anggota Keluarga',
+                                                'Usia',
+                                            ]);
+                                        @endphp
+
+                                        <td class="px-6 py-4">
+                                            @if ($isDecimalColumn)
+                                                {{ number_format($value->nilai, 0, '.', ',') }}
+                                            @else
+                                                {{ $value->nilai }}
+                                            @endif
+                                        </td>
                                     @endif
                                 @endforeach
 

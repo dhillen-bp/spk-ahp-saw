@@ -105,7 +105,7 @@
                     @foreach ($alternatives as $data)
                         <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
                             <th class="px-6 py-4">
-                                {{ $loop->iteration }}
+                                {{ ($alternatives->currentPage() - 1) * $alternatives->perPage() + $loop->iteration }}
                             </th>
                             <td class="px-6 py-4">
                                 {{ $data->nik }}

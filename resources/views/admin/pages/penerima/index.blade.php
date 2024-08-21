@@ -90,7 +90,7 @@
                 Lihat Data Calon Penerima {{ $selectedYear }}
             </a>
 
-            @if ($rankingResults->isNotEmpty())
+            @if ($paginatedResults->isNotEmpty())
                 <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
                     <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
                         <tr>
@@ -100,7 +100,7 @@
                             <th scope="col" class="px-6 py-3">
                                 Nama
                             </th>
-                            @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
+                            @foreach ($paginatedResults->first()->alternative->alternativeValues as $value)
                                 <th scope="col" class="px-6 py-3">
                                     {{ $value->criteria->nama }}
                                 </th>
@@ -114,10 +114,10 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        @foreach ($rankingResults as $data)
+                        @foreach ($paginatedResults as $data)
                             <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
                                 <th class="px-6 py-4">
-                                    {{ $loop->iteration }}
+                                    {{ ($paginatedResults->currentPage() - 1) * $paginatedResults->perPage() + $loop->iteration }}
                                 </th>
                                 <td class="px-6 py-4">
                                     {{ $data->alternative->nama }}
@@ -133,7 +133,7 @@
                                         @php
                                             // Tentukan apakah kriteria ini adalah 'Jumlah Tanggungan' atau 'Usia'
                                             $isDecimalColumn = in_array($value->criteria->nama, [
-                                                'Jumlah Tanggungan',
+                                                'Jumlah Anggota Keluarga',
                                                 'Usia',
                                             ]);
                                         @endphp
@@ -144,6 +144,7 @@
                                             @else
                                                 {{ $value->nilai }}
                                             @endif
+                                        </td>
                                     @endif
                                 @endforeach
                                 <td class="px-6 py-4">
@@ -175,7 +176,7 @@
         </div>
         {{-- PAGINATION --}}
         <div>
-            {{ $rankingResults->links('vendor.pagination.tailwind') }}
+            {{ $paginatedResults->links('vendor.pagination.tailwind') }}
         </div>
     </div>
 @endsection

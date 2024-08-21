@@ -35,7 +35,7 @@
 
     <div class="mt-8 pb-4">
         <div class="mb-2 flex justify-between">
-            <h3 class="mb-2 text-xl font-bold">Tabel Data Alternative</h3>
+            <h3 class="mb-2 text-xl font-bold">Tabel Data Penilaian Alternative</h3>
         </div>
 
         <div class="relative overflow-x-auto sm:rounded-lg">
@@ -48,7 +48,7 @@
                             'class' => 'h-5 w-5 text-white',
                         ])
                     </span>
-                    Tambah Alternative</a>
+                    Tambah Penilaian Alternative</a>
 
                 {{-- <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
@@ -111,9 +111,9 @@
                     <tbody class="text-center">
                         @foreach ($alternatives as $data)
                             <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
-                                <td class="border px-6 py-4">
-                                    {{ $loop->iteration }}
-                                </td>
+                                <th class="px-6 py-4">
+                                    {{ ($alternatives->currentPage() - 1) * $alternatives->perPage() + $loop->iteration }}
+                                </th>
                                 <td class="border px-6 py-4">
                                     {{ $data->nama }}
                                 </td>

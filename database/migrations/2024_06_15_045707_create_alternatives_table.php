@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('alternatives', function (Blueprint $table) {
             $table->id();
-            $table->string('nik')->nullable();
+            $table->string('nik')->unique();
             $table->string('nama');
             $table->string('alamat');
-            $table->string('kontak');
+            $table->string('kontak')->nullable();
             $table->timestamps();
         });
     }
