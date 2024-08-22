@@ -49,9 +49,19 @@
         @endphp
 
 
-        <form method="POST" action="{{ $actionRoute }}" class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3">
+        {{-- <form method="POST" action="{{ $actionRoute }}" class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3"> --}}
+        <form method="POST" action="{{ route('admin.data_pengaduan.update', $report->id) }}"
+            class="mx-auto w-full rounded-lg bg-blue-50 p-4 md:col-span-3">
             @csrf
             @method('PATCH')
+            <div class="mb-5">
+                <label for="nik"
+                    class="{{ $errors->has('nik') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    NIK </label>
+                <input type="text" id="nik" name="nik" readonly
+                    class="{{ $errors->has('nik') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('nik') ?? $report->alternative->nik }}" />
+            </div>
             <div class="mb-5">
                 <label for="alternative"
                     class="{{ $errors->has('alternative') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
@@ -59,9 +69,6 @@
                 <input type="text" id="alternative" name="alternative" readonly
                     class="{{ $errors->has('alternative') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('alternative') ?? $report->alternative->nama }}" />
-                @error('alternative')
-                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                @enderror
             </div>
             <div class="mb-5">
                 <label for="criteria_id"
@@ -78,10 +85,24 @@
             <div class="mb-5">
                 <label for="old_value"
                     class="{{ $errors->has('old_value') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Nilai pada Kriteria yang Lama</label>
-                <input type="text" id="old_value" name="old_value" readonly
-                    class="{{ $errors->has('old_value') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
-                    value="{{ old('old_value') ?? $report->old_value }}" />
+                    Nilai yang Salah</label>
+                @if ($report->criteria->subCriteria->isNotEmpty())
+                    {{-- {{ dd($report->criteria->subcriteria) }} --}}
+                    <select id="old_value" name="old_value" class="mt-2 block w-full rounded-lg border p-2.5 text-sm"
+                        disabled>
+                        @foreach ($report->criteria->subCriteria as $subCriteria)
+                            @if ($subCriteria->nilai == $report->old_value)
+                                <option value="{{ $subCriteria->nilai }}" selected disabled>{{ $subCriteria->nama }} -
+                                    {{ $subCriteria->nilai }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                @else
+                    <input type="text" id="old_value" name="old_value" readonly
+                        class="{{ $errors->has('old_value') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                        value="{{ $report->criteria->nama == 'Jumlah Anggota Keluarga' || $report->criteria->nama == 'Usia' ? number_format($report->old_value, 0, '.', ',') : $report->old_value }}" />
+                @endif
                 @error('old_value')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
@@ -90,16 +111,67 @@
             <div class="mb-5">
                 <label for="new_value"
                     class="{{ $errors->has('new_value') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Nilai pada Kriteria yang Baru</label>
-                <input type="text" id="new_value" name="new_value" readonly
-                    class="{{ $errors->has('new_value') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
-                    value="{{ old('new_value') ?? $report->new_value }}" />
+                    Nilai yang Dibenarkan Warga</label>
+                @if ($report->criteria->subCriteria->isNotEmpty())
+                    {{-- {{ dd($report->criteria->subcriteria) }} --}}
+                    <select id="new_value" name="new_value" class="mt-2 block w-full rounded-lg border p-2.5 text-sm"
+                        disabled>
+                        @foreach ($report->criteria->subCriteria as $subCriteria)
+                            @if ($subCriteria->nilai == $report->new_value)
+                                <option value="{{ $subCriteria->nilai }}" selected disabled>{{ $subCriteria->nama }} -
+                                    {{ $subCriteria->nilai }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                @else
+                    <input type="text" id="new_value" name="new_value" readonly
+                        class="{{ $errors->has('new_value') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                        value="{{ $report->criteria->nama == 'Jumlah Anggota Keluarga' || $report->criteria->nama == 'Usia' ? number_format($report->new_value, 0, '.', ',') : $report->new_value }}" />
+                @endif
                 @error('new_value')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
 
-            {{-- <div class="mb-5">
+            <div class="mb-5">
+                <label for="deskripsi_aduan"
+                    class="{{ $errors->has('deskripsi_aduan') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Deskripsi aduan</label>
+                <textarea id="deskripsi_aduan" rows="4" name="deskripsi_aduan" readonly
+                    class="{{ $errors->has('deskripsi_aduan') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">{{ old('deskripsi_aduan') ?? $report->deskripsi_aduan }}</textarea>
+                @error('deskripsi_aduan')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <hr class="my-5">
+            <div class="mb-5">
+                <label for="fix_value"
+                    class="{{ $errors->has('fix_value') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Masukkan Data yang Benar/Sesuai</label>
+                @if ($report->criteria->subCriteria->isNotEmpty())
+                    {{-- {{ dd($report->criteria->subcriteria) }} --}}
+                    <select id="fix_value" name="fix_value" class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
+                        <option disabled selected>-Pilih-</option>
+                        @foreach ($report->criteria->subCriteria as $subCriteria)
+                            <option value="{{ $subCriteria->nilai }}">{{ $subCriteria->nama }} -
+                                {{ $subCriteria->nilai }}
+                            </option>
+                        @endforeach
+                    </select>
+                @else
+                    <input type="text" id="fix_value" name="fix_value"
+                        class="{{ $errors->has('fix_value') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                        value="{{ old('fix_value') }}" />
+                @endif
+
+                @error('fix_value')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-5">
                 <label for="status"
                     class="{{ $errors->has('status') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Status</label>
@@ -108,28 +180,18 @@
                     <option selected disabled>-Pilih Status-</option>
                     <option value="menunggu"
                         {{ old('status') == 'menunggu' ? 'selected' : ($report->status == 'menunggu' ? 'selected' : '') }}>
-                        Menunggu</option>
-                    <option value="diproses"
-                        {{ old('status') == 'diproses' ? 'selected' : ($report->status == 'diproses' ? 'selected' : '') }}>
-                        Diproses
+                        Menunggu
                     </option>
-                    <option value="selesai"
-                        {{ old('status') == 'selesai' ? 'selected' : ($report->status == 'selesai' ? 'selected' : '') }}>
-                        Selesai
+                    <option value="disetujui"
+                        {{ old('status') == 'disetujui' ? 'selected' : ($report->status == 'disetujui' ? 'selected' : '') }}>
+                        Disetujui
+                    </option>
+                    <option value="ditolak"
+                        {{ old('status') == 'ditolak' ? 'selected' : ($report->status == 'ditolak' ? 'selected' : '') }}>
+                        Ditolak
                     </option>
                 </select>
-                @error('role')
-                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                @enderror
-            </div> --}}
-
-            <div class="mb-5">
-                <label for="deskripsi"
-                    class="{{ $errors->has('deskripsi') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Deskripsi aduan</label>
-                <textarea id="deskripsi" rows="4" name="deskripsi" readonly
-                    class="{{ $errors->has('deskripsi') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">{{ old('deskripsi') ?? $report->deskripsi }}</textarea>
-                @error('deskripsi')
+                @error('status')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
@@ -144,40 +206,25 @@
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
-            @if ($routeName == 'admin.data_pengaduan.editAsAgree')
+            <button type="submit"
+                class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Simpan</button>
+            {{-- @if ($routeName == 'admin.data_pengaduan.editAsAgree')
                 <button type="submit"
                     class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Setujui</button>
             @else
                 <button type="submit"
                     class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Tolak</button>
-            @endif
+            @endif --}}
 
         </form>
 
         <div class="col-span-2 rounded-lg bg-blue-50 p-4">
-            <h3 class="text-center text-lg font-bold">Keterangan Atribut</h3>
-            <table class="my-4 w-full border-2 border-gray-900 text-left rtl:text-right">
-                <thead>
-                    <tr>
-                        <th class="w-1/2 border-2 border-gray-900 text-center">Benefit</th>
-                        <th class="w-1/2 border-2 border-gray-900 text-center">Cost</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm">
-                    <tr>
-                        <td class="border-2 border-gray-900">Atribut benefit adalah kriteria yang diinginkan untuk
-                            dimaksimalkan.</td>
-                        <td class="border-2 border-gray-900">Atribut cost adalah kriteria yang diinginkan untuk
-                            diminimalkan.</td>
-                    </tr>
-                    <tr>
-                        <td class="border-2 border-gray-900">Semakin tinggi nilai kriteria ini, semakin baik atau
-                            menguntungkan suatu alternatif.</td>
-                        <td class="border-2 border-gray-900">Semakin rendah nilai kriteria ini, semakin baik atau
-                            menguntungkan suatu alternatif.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h3 class="text-center text-lg font-bold">Keterangan Pemeriksaan Aduan</h3>
+            <ul>
+                <ol>1. Periksa Data Warga yang di adukan</ol>
+                <ol>2. Masukkan nilai yang benar jika ternyata ada kesalahn data</ol>
+                <ol>3. Ubah status aduan (menyesuaikan pemeriksaan)</ol>
+            </ul>
         </div>
     </div>
 @endsection

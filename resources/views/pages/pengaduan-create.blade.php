@@ -198,7 +198,11 @@
                 newValueContainer.innerHTML = '';
 
                 if (selectedCriteriaId) {
-                    fetch(`/pengaduan/get-criteria-details/${selectedCriteriaId}`)
+                    // Use Blade to generate the base route URL without selectedCriteriaId
+                    const baseUrl = `{{ route('pengaduan.getDetails', ':id') }}`.replace(':id',
+                        selectedCriteriaId);
+
+                    fetch(baseUrl)
                         .then(response => response.json())
                         .then(data => {
                             if (data.status === 'success') {

@@ -120,6 +120,8 @@ Route::prefix('data-penerima')->name('admin.penerima.')->middleware('role:pemeri
         Route::patch('/verifikasi/{id}', [DataPenerimaController::class, 'changeVerified'])->name('verifikasi');
         Route::get('/report', [DataPenerimaController::class, 'generatePDF'])->name('report');
         Route::get('/report_calon', [DataPenerimaController::class, 'generatePDFCalon'])->name('report_calon');
+        Route::get('/export_excel', [DataPenerimaController::class, 'exportExcel'])->name('exportExcel');
+        Route::get('/export_excel_calon', [DataPenerimaController::class, 'exportExcelCalon'])->name('exportExcelCalon');
     });
 });
 
@@ -141,8 +143,10 @@ Route::prefix('data-pengaduan')->name('admin.data_pengaduan.')->middleware('role
     Route::get('/', [DataPengaduanController::class, 'index'])->name('index');
     Route::get('/tambah', [DataPengaduanController::class, 'create'])->name('create');
     Route::post('/store', [DataPengaduanController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [DataPengaduanController::class, 'edit'])->name('edit');
     Route::get('/edit/{id}/setuju', [DataPengaduanController::class, 'editAsAgree'])->name('editAsAgree');
     Route::get('/edit/{id}/tolak', [DataPengaduanController::class, 'editAsDisAgree'])->name('editAsDisAgree');
+    Route::patch('/update/{id}', [DataPengaduanController::class, 'update'])->name('update');
     Route::patch('/update/{id}/setuju', [DataPengaduanController::class, 'updateAsAgree'])->name('updateAsAgree');
     Route::patch('/update/{id}/tolak', [DataPengaduanController::class, 'updateAsDisAgree'])->name('updateAsDisAgree');
     Route::delete('/destroy/{id}', [DataPengaduanController::class, 'destroy'])->name('destroy');

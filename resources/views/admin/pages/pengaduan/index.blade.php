@@ -40,7 +40,7 @@
 
         <div class="relative overflow-x-auto sm:rounded-lg">
             <div class="flex-column flex flex-wrap items-center justify-between space-y-4 pb-4 sm:flex-row sm:space-y-0">
-
+                {{--
                 <a href="{{ route('admin.data_pengaduan.create') }}"
                     class="text- mb-2 me-2 flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
                     <span>
@@ -48,7 +48,7 @@
                             'class' => 'h-5 w-5 text-white',
                         ])
                     </span>
-                    Tambah Pengaduan</a>
+                    Tambah Pengaduan</a> --}}
 
                 {{-- <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
@@ -136,15 +136,10 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4">
-                                @if ($data->status != 'disetujui')
-                                    <a href="{{ route('admin.data_pengaduan.editAsAgree', $data->id) }}"
-                                        class="btn-success rounded-lg px-2.5 py-1.5 text-xs">Setuju</a>
-                                @endif
 
-                                @if ($data->status != 'ditolak')
-                                    <a href="{{ route('admin.data_pengaduan.editAsDisAgree', $data->id) }}"
-                                        class="btn-pink rounded-lg px-2.5 py-1.5 text-xs">Tolak</a>
-                                @endif
+                                <a href="{{ route('admin.data_pengaduan.editAsAgree', $data->id) }}"
+                                    class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Periksa</a>
+
                                 <button data-modal-target="delete-modal-{{ $loop->iteration }}"
                                     data-modal-toggle="delete-modal-{{ $loop->iteration }}"
                                     class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>
@@ -152,7 +147,7 @@
                         </tr>
 
                         @component('admin.layouts.modal_delete', [
-                            'deleteMessage' => "Anda yakin menghapus data = $data->nama?",
+                            'deleteMessage' => "Anda yakin menghapus data dengan id = $data->id?",
                             'loopId' => $loop->iteration,
                             'deletedId' => $data->id,
                             'routeName' => 'admin.data_pengaduan.destroy',

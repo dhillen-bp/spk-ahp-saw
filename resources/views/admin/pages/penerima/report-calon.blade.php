@@ -7,7 +7,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         body {
-            font-size: 10px;
+            font-size: 8px;
             /* Mengatur ukuran font keseluruhan */
         }
     </style>
@@ -75,7 +75,7 @@
                     <td>
                         {{ $data->skor_total }}
                     </td>
-                    <td>{{ $data->is_verified == 1 ? 'Lolos' : 'Tidak Memenuhi Syarat' }}</td>
+                    <td>{{ $data->is_verified == 1 ? 'Memunih Syarat' : 'Tidak Memenuhi Syarat' }}</td>
                     <td>{{ $data->is_verified_desc != null ? $data->is_verified_desc : '-' }}</td>
                 </tr>
             @endforeach

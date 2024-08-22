@@ -223,4 +223,70 @@ class DataPenerimaController extends Controller
 
         return $pdf->download('laporan_calon_penerima.pdf');
     }
+
+    public function exportExcel(Request $request)
+    {
+        $selectedYear = ($request->input('tahun', date('Y')) ?? date('Y'));
+
+        $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
+
+        $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
+            'alternative.alternativeValues.criteria.subCriteria',
+            'criteriaSelected'
+        ])
+            ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                $query->where('nama', $selectedYear);
+            })->where('is_verified', 1)->orderByDesc('skor_total')->get();
+
+        $data = [
+            'title' => 'Data Penerima BLT Dana Desa',
+            'date' => date('Y'),
+            'rankingResults' => $rankingResults
+        ];
+
+        // return dd($rankingResults);
+
+        session()->flash('success_message', 'Laporan data penerima berhasil diexport ke PDF!');
+        return view('admin.pages.penerima.export-excel', compact('rankingResults'));
+    }
+
+    public function exportExcelCalon(Request $request)
+    {
+        $selectedYear = ($request->input('tahun', date('Y')) ?? date('Y'));
+
+        $criteriaSelected = CriteriaSelected::select('nama', 'id')->distinct()->get();
+
+        $rankingResults = RankingResult::with([
+            'alternative.alternativeValues' => function ($query) use ($selectedYear) {
+                $query->whereHas('criteria.criteriaPriorityValues', function ($query) use ($selectedYear) {
+                    $query->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                        $query->where('nama', $selectedYear);
+                    });
+                });
+            },
+            'alternative.alternativeValues.criteria.subCriteria',
+            'criteriaSelected'
+        ])
+            ->whereHas('criteriaSelected', function ($query) use ($selectedYear) {
+                $query->where('nama', $selectedYear);
+            })->orderByDesc('skor_total')->get();
+
+        $data = [
+            'title' => 'Data Penerima BLT Dana Desa',
+            'date' => date('Y'),
+            'rankingResults' => $rankingResults
+        ];
+
+        // return dd($rankingResults);
+
+        session()->flash('success_message', 'Laporan data calon penerima berhasil diexport ke PDF!');
+        return view('admin.pages.penerima.export-excel-calon', compact('rankingResults'));
+    }
 }

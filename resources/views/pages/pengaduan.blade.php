@@ -35,7 +35,7 @@
                                     <h5 class="mb-4 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                                         Data {{ $data->criteria->nama }} Salah
                                     </h5>
-                                    @if ($data->status == 'selesai')
+                                    @if ($data->status == 'disetujui')
                                         <span class="badge-success">
                                             {{ $data->status }}</span>
                                     @elseif($data->status == 'diproses')

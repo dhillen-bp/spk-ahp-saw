@@ -15,7 +15,10 @@ class DataPengaduanController extends Controller
      */
     public function index()
     {
-        $reports = Pengaduan::paginate(10);
+        $reports = Pengaduan::orderByRaw("FIELD(status, 'menunggu', 'disetujui', 'ditolak')")
+            ->orderBy('created_at', 'asc')
+            ->paginate(10);
+
         return view('admin.pages.pengaduan.index', compact('reports'));
     }
 
@@ -58,6 +61,14 @@ class DataPengaduanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    public function edit(string $id)
+    {
+        $report = Pengaduan::with('alternative', 'criteria.subCriteria')->findOrFail($id);
+
+        return view('admin.pages.pengaduan.edit', compact('report'));
+    }
+
     public function editAsAgree(string $id)
     {
         $report = Pengaduan::with('alternative', 'criteria')->findOrFail($id);
@@ -75,6 +86,61 @@ class DataPengaduanController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    public function update(Request $request, string $id)
+    {
+        $validated = $request->validate(
+            [
+                'keterangan_balasan' => 'nullable|string',
+                'fix_value' => 'required|numeric',
+                'status' => 'required|in:menunggu,disetujui,ditolak',
+            ],
+            [
+
+                'status.required' => 'Status harus diisi!',
+                'fix_value.required' => 'Nilai harus diisi!',
+                'status.in' => 'Nilai status harus menunggu, disetujui, atau ditolak!',
+            ]
+        );
+
+        // Temukan laporan pengaduan berdasarkan ID
+        $report = Pengaduan::findOrFail($id);
+        $report->status = $validated['status'];
+
+        // Cek apakah new_value sama dengan fix_value
+        if ($report->new_value == $validated['fix_value']) {
+            // Jika nilai sama, update alternative_value
+            $alternativeValue = AlternativeValue::whereHas('alternative', function ($query) use ($report) {
+                $query->where('nik', $report->nik);
+            })
+                ->where('criteria_id', $report->criteria_id)
+                ->first();
+
+            if ($alternativeValue) {
+                $alternativeValue->nilai = $validated['fix_value'];
+                $alternativeValueUpdated = $alternativeValue->save();
+
+                if ($alternativeValueUpdated) {
+                    // Simpan perubahan pada report
+                    $report->keterangan_balasan = $validated['keterangan_balasan'];
+                    $report->keterangan_balasan = $validated['keterangan_balasan'] . " Data Kriteria yang anda nyatakan salah {$report->old_value}, lalu data yang anda minta perbarui {$report->new_value} sesuai, karena setelah pemeriksaan data anda yang benar {$validated['fix_value']}";
+                    $report->save();
+
+                    return redirect()->route('admin.data_pengaduan.index')->with('success_message', 'Data pengaduan berhasil diubah!');
+                }
+            }
+        } else {
+            // Jika nilai berbeda, tambahkan pesan default ke keterangan_balasan
+            $report->keterangan_balasan = $validated['keterangan_balasan'] . " Data Kriteria yang anda nyatakan salah {$report->old_value}, lalu data yang anda minta perbarui {$report->new_value} tidak sesuai, karena setelah pemeriksaan data anda yang benar {$validated['fix_value']}";
+            $report->save();
+
+            return redirect()->route('admin.data_pengaduan.index')->with('success_message', 'Data pengaduan berhasil diubah');
+        }
+
+        return redirect()->back()->with('error_message', 'Data pengaduan gagal diubah!');
+    }
+
+
     public function updateAsAgree(Request $request, string $id)
     {
         $validated = $request->validate([
@@ -141,7 +207,7 @@ class DataPengaduanController extends Controller
      */
     public function destroy(string $id)
     {
-        $report = CitizenReport::findOrFail($id);
+        $report = Pengaduan::findOrFail($id);
         $report->delete();
 
         return redirect()->route('admin.data_pengaduan.index')->with('success_message', 'Data pengaduan berhasil dihapus!');
