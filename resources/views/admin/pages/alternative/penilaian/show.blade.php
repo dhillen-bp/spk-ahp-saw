@@ -83,9 +83,9 @@
                                                 $alternativeValue->nilai,
                                             )->nama ?? 'N/A';
                                     @endphp
-                                    {{ $subCriteriaName . ' - ' . $alternativeValue->nilai }}
+                                    {{ $subCriteriaName . ' (' . $alternativeValue->nilai . ')' }}
                                 @else
-                                    {{ $alternativeValue->nilai ?? 'N/A' }}
+                                    {{ number_format($alternativeValue->nilai, 0, '.', '.') ?? 'N/A' }}
                                 @endif
                             </td>
                         </tr>
