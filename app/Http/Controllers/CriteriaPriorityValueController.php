@@ -101,17 +101,16 @@ class CriteriaPriorityValueController extends Controller
             // Baris C2 kolom C1 = nilai_kriteria2
 
             // Memperbaiki logika pengisian matriks
-            $rows[$name1][$name2] = $record->nilai_kriteria1;
-            $rows[$name2][$name1] =  $record->nilai_kriteria2;
+            $rows[$name1][$name2] = round($record->nilai_kriteria1, 3);
+            $rows[$name2][$name1] = round($record->nilai_kriteria2, 3);
         }
 
         return [$rows, $columns];
     }
 
-
     public function calculateNormalizedMatrixAndPriorityValues($rows, $columns)
     {
-        // Calculate column sums
+        // Menghitung jumlah kolom
         $columnSums = array_fill_keys($columns, 0);
         foreach ($columns as $column) {
             foreach ($rows as $row) {
@@ -119,39 +118,38 @@ class CriteriaPriorityValueController extends Controller
             }
         }
 
-        // Calculate normalized matrix and priority values
+        // Menghitung matriks normalisasi dan nilai prioritas
         $normalizedRows = [];
-        $priorityValues = array_fill_keys(array_keys($rows), 0); // Initialize priority values with 0
+        $priorityValues = array_fill_keys(array_keys($rows), 0); // Inisialisasi nilai prioritas dengan 0
 
         foreach ($rows as $kriteria1 => $columnsData) {
             $normalizedRow = [];
             foreach ($columnsData as $kriteria2 => $nilai) {
                 if ($columnSums[$kriteria2] != 0) {
-                    $normalizedValue = $nilai / $columnSums[$kriteria2];
+                    // Membulatkan hasil normalisasi hingga 3 angka di belakang koma
+                    $normalizedValue = round($nilai / $columnSums[$kriteria2], 3);
                 } else {
-                    $normalizedValue = 0; // Handle division by zero
+                    $normalizedValue = 0; // Penanganan pembagian dengan nol
                 }
-                $normalizedValue = $normalizedValue; // Round to 3 decimal places
                 $normalizedRow[$kriteria2] = $normalizedValue;
                 $priorityValues[$kriteria1] += $normalizedValue;
             }
             $normalizedRows[$kriteria1] = $normalizedRow;
         }
 
-        // Calculate average for priority values
+        // Menghitung rata-rata untuk nilai prioritas dan membulatkan hingga 3 angka di belakang koma
         foreach ($priorityValues as $kriteria => $value) {
-            $priorityValues[$kriteria] = round($value / count($columns), 3); // Round to 3 decimal places
+            $priorityValues[$kriteria] = round($value / count($columns), 3);
         }
 
         return [$normalizedRows, $priorityValues];
     }
 
-
     public function calculateLambdaMaks($rows, $priorityValues)
     {
         $lambdaMaks = 0;
 
-        // Calculate sum of weighted sums per row
+        // Menghitung jumlah bobot per baris
         $sumOfWeightedSums = [];
         foreach ($rows as $kriteria1 => $columnsData) {
             $totalPerBaris = 0;
@@ -161,13 +159,13 @@ class CriteriaPriorityValueController extends Controller
                 $nilaiKalikan = $nilai * $nilaiPrioritas;
                 $totalPerBaris += $nilaiKalikan;
             }
-            // Hitung hasil bagi berdasarkan total per baris dibagi nilai prioritas kriteria pertama
-            $hasilBagi = $totalPerBaris / $priorityValues[$kriteria1];
+            // Membulatkan hasil bagi hingga 3 angka di belakang koma
+            $hasilBagi = round($totalPerBaris / $priorityValues[$kriteria1], 3);
             $sumOfWeightedSums[$kriteria1] = $hasilBagi;
         }
 
-        // Calculate Lambda Maks
-        $lambdaMaks = array_sum($sumOfWeightedSums) / count($rows);
+        // Menghitung Lambda Maks dan membulatkan hingga 3 angka di belakang koma
+        $lambdaMaks = round(array_sum($sumOfWeightedSums) / count($rows), 3);
 
         return $lambdaMaks;
     }
@@ -175,7 +173,7 @@ class CriteriaPriorityValueController extends Controller
 
     public function calculateConsistencyIndex($lambdaMaks, $n)
     {
-        return ($lambdaMaks - $n) / ($n - 1);
+        return round(($lambdaMaks - $n) / ($n - 1), 3);
     }
 
     public function calculateConsistencyRatio($ci, $n)
@@ -184,8 +182,9 @@ class CriteriaPriorityValueController extends Controller
         $riValues = [1 => 0.00, 2 => 0.00, 3 => 0.58, 4 => 0.90, 5 => 1.12, 6 => 1.24, 7 => 1.32, 8 => 1.41, 9 => 1.45, 10 => 1.49];
         $ri = isset($riValues[$n]) ? $riValues[$n] : 1.49; // Default RI untuk ukuran matriks lebih dari 10
 
-        return $ci / $ri;
+        return round($ci / $ri, 3);
     }
+
 
     // Simpan Priority Value
     public function savePriorityValue(Request $request, $criteriaSelectedId)

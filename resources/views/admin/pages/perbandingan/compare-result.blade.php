@@ -177,8 +177,9 @@
                                 @endforeach
                                 @php
                                     // Hitung hasil bagi berdasarkan total per baris dibagi nilai prioritas kriteria1
-                                    $hasilBagi = $totalPerBaris / $priorityValues[$kriteria1];
+                                    $hasilBagi = round($totalPerBaris / $priorityValues[$kriteria1], 3);
                                     $totalHasilBagi += $hasilBagi;
+
                                 @endphp
                                 <td class="border-2 border-gray-700 bg-slate-800 px-6 py-4 text-white">
                                     {{ $totalPerBaris }}
