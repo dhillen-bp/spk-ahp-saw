@@ -47,9 +47,21 @@
             <div class="mb-5">
                 <label for="alternative_id"
                     class="{{ $errors->has('alternative_id') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Nama Alternatif:</label>
+                    Nama Warga:</label>
                 <input type="hidden" id="alternative_id" name="alternative_id" value="{{ $alternative->id }}">
-                <p class="block w-full rounded-lg border bg-white p-2.5 text-sm">{{ $alternative->nama }}</p>
+                <p class="block w-full rounded-lg border bg-gray-100 p-2.5 text-sm">{{ $alternative->nama }}</p>
+            </div>
+            <div class="mb-5">
+                <label for="nik" class="mb-2 block text-sm font-medium text-gray-900">
+                    NIK:</label>
+                <input type="text" id="nik" name="nik" disabled value="{{ $alternative->nik }}"
+                    class="block w-full cursor-not-allowed rounded-lg border border-gray-300 bg-gray-100 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+            </div>
+            <div class="mb-5">
+                <label for="alamat" class="mb-2 block text-sm font-medium text-gray-900">
+                    Alamat:</label>
+                <input type="text" id="alamat" name="alamat" disabled value="{{ $alternative->alamat }}"
+                    class="block w-full cursor-not-allowed rounded-lg border border-gray-300 bg-gray-100 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
             </div>
             <div class="mb-5">
                 <label for="criteria_values"

@@ -30,13 +30,12 @@
             </li>
             <li>
                 <a href="{{ route('admin.alternative.index') }}"
-                    class="{{ Request::is('admin/alternative*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
+                    class="{{ Request::is('admin/alternative*') && !Request::is('admin/alternative/penilaian*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                     @include('partials.icons._warga-icon', [
                         'class' =>
                             'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
                     ])
                     <span class="ms-3 flex-1 whitespace-nowrap">Data Warga</span>
-
                 </a>
             </li>
             <li>
@@ -49,6 +48,7 @@
                     <span class="ms-3">Penilaian Warga</span>
                 </a>
             </li>
+
             @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
                 <li>
                     <a href="{{ route('admin.perbandingan.index') }}"
@@ -82,7 +82,7 @@
 
                 <li>
                     <a href="{{ route('admin.data_admin.index') }}"
-                        class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                        class="{{ Request::is('admin/data-admin*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
                         @include('partials.icons._admin-icon', [
                             'class' =>
                                 'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
@@ -92,7 +92,7 @@
                 </li>
                 <li>
                     <a href="{{ route('admin.data_pengaduan.index') }}"
-                        class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                        class="{{ Request::is('admin/data-pengaduan*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                         @include('partials.icons._pengaduan-icon', [
                             'class' =>
                                 'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
@@ -102,7 +102,7 @@
                 </li>
                 <li>
                     <a href="{{ route('admin.penerima.index') }}"
-                        class="group flex items-center rounded-lg p-2 text-gray-300 hover:bg-blue-500 hover:text-gray-50">
+                        class="{{ Request::is('admin/data-penerima*') ? 'text-gray-50' : 'text-gray-300' }} group flex items-center rounded-lg p-2 hover:bg-blue-500 hover:text-gray-50">
                         @include('partials.icons.penerima-icon', [
                             'class' =>
                                 'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',

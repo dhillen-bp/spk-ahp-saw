@@ -19,7 +19,15 @@
                 </li>
             </ol>
         </nav>
+        <div class="mt-4 text-gray-900">
+            <p>Selamat Datang <span class="font-bold">{{ Auth::guard('admin')->user()->nama }}</span>, sebagai
+                <span class="font-bold">
+                    {{ Auth::guard('admin')->user()->role == 'pemerintah_desa' ? 'Pemerintah Desa' : 'RT/RW' }}</span>
+            </p>
+            <p>Berikut adalah data tahun {{ \Carbon\Carbon::now()->year }}</p>
+        </div>
     </div>
+
 
     <div class="grid grid-cols-2 gap-5 md:grid-cols-3">
         <!-- Card 1: Kriteria -->

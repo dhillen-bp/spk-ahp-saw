@@ -39,21 +39,23 @@
     </div>
 
     <div class="mx-auto w-full py-4 lg:w-[700px]">
-        <div class="flex justify-between">
-            <a href="{{ route('admin.alternative.penilaian.edit', $alternative->id) }}"
-                class="btn-warning rounded-lg px-2.5 py-2 text-sm">Edit</a>
-            <button data-modal-target="delete-modal-{{ $alternative->id }}"
-                data-modal-toggle="delete-modal-{{ $alternative->id }}"
-                class="btn-danger rounded-lg px-2.5 py-2 text-sm">Hapus</button>
+        @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+            <div class="flex justify-between">
+                <a href="{{ route('admin.alternative.penilaian.edit', $alternative->id) }}"
+                    class="btn-warning rounded-lg px-2.5 py-2 text-sm">Edit</a>
+                <button data-modal-target="delete-modal-{{ $alternative->id }}"
+                    data-modal-toggle="delete-modal-{{ $alternative->id }}"
+                    class="btn-danger rounded-lg px-2.5 py-2 text-sm">Hapus</button>
 
-            @component('admin.layouts.modal_delete', [
-                'deleteMessage' => "Anda yakin menghapus data = $alternative->nama?",
-                'loopId' => $alternative->id,
-                'deletedId' => $alternative->id,
-                'routeName' => 'admin.alternative.penilaian.destroy',
-            ])
-            @endcomponent
-        </div>
+                @component('admin.layouts.modal_delete', [
+                    'deleteMessage' => "Anda yakin menghapus data = $alternative->nama?",
+                    'loopId' => $alternative->id,
+                    'deletedId' => $alternative->id,
+                    'routeName' => 'admin.alternative.penilaian.destroy',
+                ])
+                @endcomponent
+            </div>
+        @endif
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-left rtl:text-right dark:text-gray-400">
@@ -64,6 +66,30 @@
                         </th>
                         <th scope="col" class="px-6 py-4">
                             {{ $alternative->nama }}
+                        </th>
+                    </tr>
+                    <tr class="border-b">
+                        <th scope="col" class="text-nowrap bg-gray-50 px-6 py-4 uppercase dark:bg-gray-800">
+                            NIK
+                        </th>
+                        <th scope="col" class="px-6 py-4 font-normal">
+                            {{ $alternative->nik }}
+                        </th>
+                    </tr>
+                    <tr class="border-b">
+                        <th scope="col" class="text-nowrap bg-gray-50 px-6 py-4 uppercase dark:bg-gray-800">
+                            Alamat
+                        </th>
+                        <th scope="col" class="px-6 py-4 font-normal">
+                            {{ $alternative->alamat }}
+                        </th>
+                    </tr>
+                    <tr class="border-b">
+                        <th scope="col" class="text-nowrap bg-gray-50 px-6 py-4 uppercase dark:bg-gray-800">
+                            Kontak
+                        </th>
+                        <th scope="col" class="px-6 py-4 font-normal">
+                            {{ $alternative->kontak ?? '-' }}
                         </th>
                     </tr>
                 </thead>

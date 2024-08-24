@@ -139,7 +139,7 @@ class RankingResultController extends Controller
                     ->first();
                 $row[$criterion->nama] = $alternativeValue ? $alternativeValue->nilai : 0;
             }
-            $decisionMatrix[$alternative->id] = $row;  // Menggunakan ID sebagai kunci
+            $decisionMatrix[$alternative->id] = $row;
         }
 
         // Normalisasi matriks keputusan
@@ -149,12 +149,14 @@ class RankingResultController extends Controller
             if ($criterion->atribut === 'benefit') {
                 $maxValue = max($column);
                 foreach ($decisionMatrix as $altId => $values) {
-                    $normalizedMatrix[$altId][$criterion->nama] = $values[$criterion->nama] / $maxValue;
+                    $normalizedValue = $values[$criterion->nama] / $maxValue;
+                    $normalizedMatrix[$altId][$criterion->nama] = round($normalizedValue, 7);
                 }
             } else { // Atribut 'cost'
                 $minValue = min($column);
                 foreach ($decisionMatrix as $altId => $values) {
-                    $normalizedMatrix[$altId][$criterion->nama] = $minValue / $values[$criterion->nama];
+                    $normalizedValue = $minValue / $values[$criterion->nama];
+                    $normalizedMatrix[$altId][$criterion->nama] = round($normalizedValue, 7);
                 }
             }
         }
@@ -168,7 +170,7 @@ class RankingResultController extends Controller
                 $criteriaId = Criteria::whereHas('criteriaPriorityValues', function ($query) use ($criteriaSelectedId) {
                     $query->where('criteria_selected_id', $criteriaSelectedId);
                 })->where('nama', $criteriaName)->first()->id;
-                $weightedMatrix[$altId] += $normalizedValue * $weights[$criteriaId];
+                $weightedMatrix[$altId] += round($normalizedValue * $weights[$criteriaId], 7);
             }
         }
 
@@ -177,6 +179,7 @@ class RankingResultController extends Controller
 
         return [$normalizedMatrix, $weightedMatrix];
     }
+
 
     public function saveSAWResult(Request $request)
     {

@@ -47,25 +47,45 @@
             <div class="mb-5">
                 <label for="alternative_id"
                     class="{{ $errors->has('alternative_id') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Nama Alternatif:</label>
+                    Nama Alternatif: <span class="font-bold text-red-500">*</span></label>
                 <select id="alternative_id" name="alternative_id"
                     class="{{ $errors->has('alternative_id') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">
                     <option selected disabled>-Pilih-</option>
                     @foreach ($alternatives as $alternative)
-                        <option value="{{ $alternative->id }}">{{ $alternative->nama }}</option>
+                        <option value="{{ $alternative->id }}" data-nik="{{ $alternative->nik }}"
+                            data-alamat="{{ $alternative->alamat }}">
+                            {{ $alternative->nama }}
+                        </option>
                     @endforeach
                 </select>
                 @error('alternative_id')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
+
+            <div class="mb-5">
+                <label for="nik" class="mb-2 block text-sm font-medium text-gray-900">
+                    NIK</label>
+                <input type="number" id="nik" name="nik" disabled
+                    class="input-default block w-full rounded-lg border p-2.5 text-sm" />
+            </div>
+
+            <div class="mb-5">
+                <label for="alamat" class="mb-2 block text-sm font-medium text-gray-900">
+                    Alamat</label>
+                <input type="text" id="alamat" name="alamat" disabled
+                    class="input-default block w-full rounded-lg border p-2.5 text-sm" />
+            </div>
+
+
             <div class="mb-5">
                 <label for="criteria_values"
                     class="{{ $errors->has('criteria_values') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Nilai Kriteria:</label>
+                    Penilaian Berdasarkan Kriteria:</label>
                 @foreach ($criterias as $criteria)
                     <div class="my-4 rounded-lg border border-blue-500 px-2 py-3 shadow-sm">
-                        <label for="nilai_{{ $criteria->id }}" class="text-sm">{{ $criteria->nama }}</label>
+                        <label for="nilai_{{ $criteria->id }}" class="text-sm">{{ $criteria->nama }} <span
+                                class="font-bold text-red-500">*</span></label>
                         @if ($criteria->subcriteria->isNotEmpty())
                             <select id="nilai_{{ $criteria->id }}" name="criteria_values[{{ $criteria->id }}]"
                                 class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
@@ -96,3 +116,20 @@
         </div>
     </div>
 @endsection
+
+@push('after-script')
+    <script type="module">
+        document.getElementById('alternative_id').addEventListener('change', function() {
+            // Ambil option yang dipilih
+            var selectedOption = this.options[this.selectedIndex];
+
+            // Ambil data dari option yang dipilih
+            var nik = selectedOption.getAttribute('data-nik');
+            var alamat = selectedOption.getAttribute('data-alamat');
+
+            // Set nilai input NIK dan Alamat
+            document.getElementById('nik').value = nik;
+            document.getElementById('alamat').value = alamat;
+        });
+    </script>
+@endpush

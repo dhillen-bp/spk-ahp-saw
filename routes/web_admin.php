@@ -75,9 +75,10 @@ Route::prefix('perbandingan')->name('admin.perbandingan.')->middleware('role:pem
 Route::prefix('alternative')->name('admin.alternative.')->middleware('role:pemerintah_desa,rt_rw')->group(function () {
     Route::get('/', [AlternativeController::class, 'index'])->name('index');
 
+    Route::get('/tambah', [AlternativeController::class, 'create'])->name('create');
+    Route::post('/store', [AlternativeController::class, 'store'])->name('store');
+
     Route::middleware('role:pemerintah_desa')->group(function () {
-        Route::get('/tambah', [AlternativeController::class, 'create'])->name('create');
-        Route::post('/store', [AlternativeController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('edit');
         Route::patch('/update/{id}', [AlternativeController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [AlternativeController::class, 'destroy'])->name('destroy');
@@ -87,9 +88,10 @@ Route::prefix('alternative')->name('admin.alternative.')->middleware('role:pemer
         Route::get('/', [AlternativeValueController::class, 'index'])->name('index');
         Route::get('/detail/{id}', [AlternativeValueController::class, 'show'])->name('show');
 
+        Route::get('/tambah', [AlternativeValueController::class, 'create'])->name('create');
+        Route::post('/store', [AlternativeValueController::class, 'store'])->name('store');
+
         Route::middleware('role:pemerintah_desa')->group(function () {
-            Route::get('/tambah', [AlternativeValueController::class, 'create'])->name('create');
-            Route::post('/store', [AlternativeValueController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [AlternativeValueController::class, 'edit'])->name('edit');
             Route::patch('/update/{id}', [AlternativeValueController::class, 'update'])->name('update');
             Route::delete('/destroy/{id}', [AlternativeValueController::class, 'destroy'])->name('destroy');

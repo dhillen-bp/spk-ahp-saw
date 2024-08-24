@@ -109,14 +109,18 @@
                                     <span class="{{ $data->atribut == 'benefit' ? 'badge-benefit' : 'badge-cost' }}">
                                         {{ ucfirst($data->atribut) }}</span>
                                 </td>
+
                                 <td class="px-6 py-4">
                                     <a href="{{ route('admin.kriteria.show', $data->id) }}"
                                         class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
-                                    <a href="{{ route('admin.kriteria.edit', $data->id) }}"
-                                        class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
-                                    <button data-modal-target="delete-modal-{{ $loop->iteration }}"
-                                        data-modal-toggle="delete-modal-{{ $loop->iteration }}"
-                                        class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>
+                                    @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+                                        <a href="{{ route('admin.kriteria.edit', $data->id) }}"
+                                            class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
+
+                                        <button data-modal-target="delete-modal-{{ $loop->iteration }}"
+                                            data-modal-toggle="delete-modal-{{ $loop->iteration }}"
+                                            class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>
+                                    @endif
                                 </td>
                             </tr>
 

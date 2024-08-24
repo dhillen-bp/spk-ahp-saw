@@ -19,7 +19,7 @@
                         <div class="w-full">
                             <label for="nik"
                                 class="{{ $errors->has('nik') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                                Masukkan NIK anda: </label>
+                                Masukkan NIK anda: <span class="font-bold text-red-500">*</span></label>
                             <input type="text" id="nik" name="nik"
                                 class="{{ $errors->has('nik') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                                 value="{{ old('nik') }}" />
@@ -81,7 +81,7 @@
 
                     <div class="mb-5">
                         <label for="criteria_to_edit" class="mb-2 block text-sm font-medium text-gray-900">
-                            Kriteria yang akan diubah:
+                            Kriteria yang akan diubah: <span class="font-bold text-red-500">*</span>
                         </label>
                         <select id="criteria_to_edit" name="criteria_to_edit"
                             class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
@@ -94,7 +94,7 @@
 
                     <div class="mb-5">
                         <label for="new_value" class="mb-2 block text-sm font-medium text-gray-900">
-                            Nilai Baru:
+                            Nilai Baru: <span class="font-bold text-red-500">*</span>
                         </label>
                         <div id="new_value_container">
                             <input type="number" id="new_value" name="new_value" min="0"
@@ -209,7 +209,7 @@
                                 if (data.subcriteria.length > 0) {
                                     // Handle subcriteria
                                     const options = data.subcriteria.map(sub =>
-                                        `<option value="${sub.nilai}">${sub.nama} - ${sub.nilai}</option>`
+                                        `<option value="${sub.nilai}">${sub.nama} (${sub.nilai})</option>`
                                     ).join('');
 
                                     // Create select element
