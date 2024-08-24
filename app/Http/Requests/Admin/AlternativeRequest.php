@@ -23,9 +23,10 @@ class AlternativeRequest extends FormRequest
     {
         return [
             'nama' => 'required|string|max:255',
-            'nik' => 'string|nullable',
+            'nik' => 'required|string',
+            'no_kk' => 'required|string',
             'alamat' => 'required|string|',
-            'kontak' => 'nullable|numeric',
+            'jenis_kelamin' => 'nullable|in:L,P',
         ];
     }
 
@@ -33,9 +34,10 @@ class AlternativeRequest extends FormRequest
     {
         return [
             'nama.required' => 'Nama warga harus di isi!',
+            'nik.required' => 'NIK warga harus di isi!',
+            'no_kk.required' => 'No KK warga harus di isi!',
             'alamat.required' => 'Alamat harus di isi!',
-            'kontak.required' => 'Kontak harus di isi!',
-            'kontak.numeric' => 'Nomor Kontak harus angka!',
+            'jenis_kelamin.in' => 'Jenis Kelamin harus L (Laki-Laki) atau P (Perempuan)!',
         ];
     }
 }

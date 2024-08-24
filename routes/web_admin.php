@@ -77,6 +77,9 @@ Route::prefix('alternative')->name('admin.alternative.')->middleware('role:pemer
 
     Route::get('/tambah', [AlternativeController::class, 'create'])->name('create');
     Route::post('/store', [AlternativeController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('edit');
+    Route::patch('/update/{id}', [AlternativeController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [AlternativeController::class, 'destroy'])->name('destroy');
 
     Route::middleware('role:pemerintah_desa')->group(function () {
         Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('edit');

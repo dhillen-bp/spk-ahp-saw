@@ -20,7 +20,7 @@
                         </svg>
                         <a href="{{ route('admin.alternative.index') }}"
                             class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Data
-                            Alternative</a>
+                            Warga</a>
                     </div>
                 </li>
                 <li aria-current="page">
@@ -31,7 +31,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Tambah
-                            Alternative</span>
+                            Warga</span>
                     </div>
                 </li>
             </ol>
@@ -47,7 +47,7 @@
                 <label for="nik"
                     class="{{ $errors->has('nik') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     NIK</label>
-                <input type="text" id="nik" name="nik"
+                <input type="number" id="nik" name="nik" required
                     class="{{ $errors->has('nik') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('nik') }}" />
                 @error('nik')
@@ -55,10 +55,21 @@
                 @enderror
             </div>
             <div class="mb-5">
+                <label for="no_kk"
+                    class="{{ $errors->has('no_kk') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    No KK</label>
+                <input type="number" id="no_kk" name="no_kk" required
+                    class="{{ $errors->has('no_kk') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
+                    value="{{ old('no_kk') }}" />
+                @error('no_kk')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="mb-5">
                 <label for="nama"
                     class="{{ $errors->has('nama') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Nama Warga</label>
-                <input type="text" id="nama" name="nama"
+                <input type="text" id="nama" name="nama" required
                     class="{{ $errors->has('nama') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('nama') }}" />
                 @error('nama')
@@ -69,7 +80,7 @@
                 <label for="alamat"
                     class="{{ $errors->has('alamat') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Alamat</label>
-                <input type="text" id="alamat" name="alamat"
+                <input type="text" id="alamat" name="alamat" required
                     class="{{ $errors->has('alamat') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('alamat') }}" />
                 @error('alamat')
@@ -77,13 +88,16 @@
                 @enderror
             </div>
             <div class="mb-5">
-                <label for="kontak"
-                    class="{{ $errors->has('kontak') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
-                    Kontak</label>
-                <input type="kontak" id="kontak" name="kontak"
-                    class="{{ $errors->has('kontak') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
-                    value="{{ old('kontak') }}" />
-                @error('kontak')
+                <label for="jenis_kelamin"
+                    class="{{ $errors->has('jenis_kelamin') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
+                    Jenis Kelamin</label>
+                <select id="jenis_kelamin" name="jenis_kelamin"
+                    class="{{ $errors->has('jenis_kelamin') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm">
+                    <option selected disabled>-Pilih Jenis Kelamin-</option>
+                    <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-Laki</option>
+                    <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                </select>
+                @error('jenis_kelamin')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>

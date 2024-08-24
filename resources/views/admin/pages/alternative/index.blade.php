@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">DATA ALTERNATIVE</h1>
+        <h1 class="my-4 text-3xl font-bold">DATA WARGA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -26,7 +26,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Data
-                            Alternative</span>
+                            Warga</span>
                     </div>
                 </li>
             </ol>
@@ -35,7 +35,7 @@
 
     <div class="mt-8 pb-4">
         <div class="mb-2 flex justify-between">
-            <h3 class="mb-2 text-xl font-bold">Tabel Data Alternative</h3>
+            <h3 class="mb-2 text-xl font-bold">Tabel Data Warga</h3>
         </div>
 
         <div class="relative overflow-x-auto sm:rounded-lg">
@@ -48,7 +48,7 @@
                             'class' => 'h-5 w-5 text-white',
                         ])
                     </span>
-                    Tambah Alternative</a>
+                    Tambah Warga</a>
 
                 {{-- <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
@@ -88,13 +88,16 @@
                             NIK
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            No KK
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             Nama
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Alamat
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Kontak
+                            Jenis Kelamin
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Action
@@ -111,16 +114,19 @@
                                 {{ $data->nik }}
                             </td>
                             <td class="px-6 py-4">
+                                {{ $data->no_kk }}
+                            </td>
+                            <td class="px-6 py-4">
                                 {{ $data->nama }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ $data->alamat }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $data->kontak }}
+                                {{ $data->jenis_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}
                             </td>
                             <td class="px-6 py-4">
-                                <a href="" class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
+                                {{-- <a href="" class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a> --}}
                                 <a href="{{ route('admin.alternative.edit', $data->id) }}"
                                     class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
                                 <button data-modal-target="delete-modal-{{ $loop->iteration }}"

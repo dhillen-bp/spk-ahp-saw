@@ -62,7 +62,7 @@
                 <thead class="text-sm text-gray-900 dark:text-gray-400">
                     <tr class="border-b">
                         <th scope="col" class="text-nowrap bg-gray-50 px-6 py-4 uppercase dark:bg-gray-800">
-                            Nama Alternative
+                            Nama Warga
                         </th>
                         <th scope="col" class="px-6 py-4">
                             {{ $alternative->nama }}
@@ -78,6 +78,14 @@
                     </tr>
                     <tr class="border-b">
                         <th scope="col" class="text-nowrap bg-gray-50 px-6 py-4 uppercase dark:bg-gray-800">
+                            No KK
+                        </th>
+                        <th scope="col" class="px-6 py-4 font-normal">
+                            {{ $alternative->no_kk }}
+                        </th>
+                    </tr>
+                    <tr class="border-b">
+                        <th scope="col" class="text-nowrap bg-gray-50 px-6 py-4 uppercase dark:bg-gray-800">
                             Alamat
                         </th>
                         <th scope="col" class="px-6 py-4 font-normal">
@@ -86,10 +94,10 @@
                     </tr>
                     <tr class="border-b">
                         <th scope="col" class="text-nowrap bg-gray-50 px-6 py-4 uppercase dark:bg-gray-800">
-                            Kontak
+                            Jenis Kelamin
                         </th>
                         <th scope="col" class="px-6 py-4 font-normal">
-                            {{ $alternative->kontak ?? '-' }}
+                            {{ $alternative->jenis_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}
                         </th>
                     </tr>
                 </thead>

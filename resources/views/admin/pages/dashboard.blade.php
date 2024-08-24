@@ -19,12 +19,14 @@
                 </li>
             </ol>
         </nav>
-        <div class="mt-4 text-gray-900">
-            <p>Selamat Datang <span class="font-bold">{{ Auth::guard('admin')->user()->nama }}</span>, sebagai
+        <div class="mt-4 space-y-3 text-gray-900">
+            <p class="text-xl">Selamat Datang <span class="font-bold">{{ Auth::guard('admin')->user()->nama }}</span>,
+                sebagai
                 <span class="font-bold">
                     {{ Auth::guard('admin')->user()->role == 'pemerintah_desa' ? 'Pemerintah Desa' : 'RT/RW' }}</span>
             </p>
-            <p>Berikut adalah data tahun {{ \Carbon\Carbon::now()->year }}</p>
+            <p class="text-xl">Berikut adalah Data <span class="font-bold"> Tahun {{ \Carbon\Carbon::now()->year }} </span>
+            </p>
         </div>
     </div>
 

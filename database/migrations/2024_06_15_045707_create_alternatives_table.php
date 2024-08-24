@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('alternatives', function (Blueprint $table) {
             $table->id();
             $table->string('nik')->unique();
+            $table->string('no_kk');
             $table->string('nama');
             $table->string('alamat');
-            $table->string('kontak')->nullable();
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
             $table->timestamps();
         });
     }
