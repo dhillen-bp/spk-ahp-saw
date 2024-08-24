@@ -70,15 +70,14 @@ class AlternativeValueController extends Controller
     public function edit($id)
     {
         // Memuat data alternatif beserta nilai kriterianya
-        $alternative = Alternative::with('alternativeValues')->findOrFail($id);
+        $alternative = Alternative::with('alternativeValues.criteria')->findOrFail($id);
 
-        // Memuat semua kriteria beserta subkriteria
-        $criterias = Criteria::with('subCriteria')->get();
+
 
         // Memuat alternatif yang tidak memiliki nilai atau selain yang sedang diedit
         $alternatives = Alternative::whereDoesntHave('alternativeValues')->orWhere('id', $id)->get();
 
-        return view('admin.pages.alternative.penilaian.edit', compact('alternative', 'criterias', 'alternatives'));
+        return view('admin.pages.alternative.penilaian.edit', compact('alternative', 'alternatives'));
     }
 
     /**
@@ -104,7 +103,7 @@ class AlternativeValueController extends Controller
         }
 
         // Redirect kembali ke halaman index dengan pesan sukses
-        return redirect()->route('admin.alternative.penilaian.index')->with('success', 'Penilaian alternatif berhasil diperbarui.');
+        return redirect()->route('admin.alternative.penilaian.index')->with('success_message', 'Penilaian alternatif berhasil diperbarui.');
     }
 
     /**
@@ -116,6 +115,6 @@ class AlternativeValueController extends Controller
         AlternativeValue::where('alternative_id', $id)->delete();
 
         return redirect()->route('admin.alternative.penilaian.index')
-            ->with('success', 'Data penilaian alternatif berhasil dihapus!');
+            ->with('success_message', 'Data penilaian alternatif berhasil dihapus!');
     }
 }

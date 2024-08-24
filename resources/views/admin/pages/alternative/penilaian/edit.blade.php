@@ -67,29 +67,35 @@
                 <label for="criteria_values"
                     class="{{ $errors->has('criteria_values') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     Nilai Kriteria:</label>
-                @foreach ($criterias as $criteria)
+
+                @foreach ($alternative->alternativeValues as $alternativeValue)
+                    @php
+                        $criteria = $alternativeValue->criteria;
+                    @endphp
                     <div class="my-4 rounded-lg border border-blue-500 px-2 py-3 shadow-sm">
                         <label for="nilai_{{ $criteria->id }}" class="text-sm">{{ $criteria->nama }}</label>
-                        @php
-                            $nilai =
-                                $alternative->alternativeValues->firstWhere('criteria_id', $criteria->id)->nilai ?? '';
-                        @endphp
+
                         @if ($criteria->subcriteria->isNotEmpty())
                             <select id="nilai_{{ $criteria->id }}" name="criteria_values[{{ $criteria->id }}]"
                                 class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
                                 <option class="text-gray-200" value="" disabled selected>-Pilih-</option>
                                 @foreach ($criteria->subcriteria as $sub)
-                                    <option value="{{ $sub->nilai }}" {{ $sub->nilai == $nilai ? 'selected' : '' }}>
-                                        {{ $sub->nama }} - {{ $sub->nilai }}</option>
+                                    <option value="{{ $sub->nilai }}"
+                                        {{ $sub->nilai == $alternativeValue->nilai ? 'selected' : '' }}>
+                                        {{ $sub->nama }} ({{ $sub->nilai }})
+                                    </option>
                                 @endforeach
                             </select>
                         @else
                             <input type="number" id="nilai_{{ $criteria->id }}"
-                                name="criteria_values[{{ $criteria->id }}]" min="0" value="{{ $nilai }}"
+                                name="criteria_values[{{ $criteria->id }}]" min="0"
+                                value="{{ $criteria->nama == 'Usia' || $criteria->nama == 'Jumlah Anggota Keluarga' ? number_format($alternativeValue->nilai, 0, '.', '.') : $alternativeValue->nilai }}"
                                 class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
                         @endif
+
                     </div>
                 @endforeach
+
                 @error('criteria_values')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror

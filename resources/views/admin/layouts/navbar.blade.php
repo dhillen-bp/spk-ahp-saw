@@ -13,7 +13,7 @@
                         </path>
                     </svg>
                 </button>
-                <a href="https://flowbite.com" class="ms-2 flex md:me-24">
+                <a href="#" class="ms-2 flex md:me-24">
                     <img src="{{ asset('images/logo/logo_kab_sukoharjo.png') }}" class="me-3 h-8" alt="FlowBite Logo" />
                     <span class="self-center whitespace-nowrap text-xl font-semibold text-white">Desa
                         Karangwuni</span>

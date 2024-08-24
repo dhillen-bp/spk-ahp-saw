@@ -20,7 +20,7 @@
                             <label for="nik"
                                 class="{{ $errors->has('nik') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                                 Masukkan NIK anda: <span class="font-bold text-red-500">*</span></label>
-                            <input type="text" id="nik" name="nik"
+                            <input type="number" id="nik" name="nik"
                                 class="{{ $errors->has('nik') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                                 value="{{ old('nik') }}" />
                             <p id="nikError" class="mt-2 text-sm text-red-600"></p>
@@ -61,18 +61,19 @@
                                             class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
                                             <option class="text-gray-200" value="" disabled selected>-Pilih-</option>
                                             @foreach ($criteria->subcriteria as $sub)
-                                                <option value="{{ $sub->nilai }}">{{ $sub->nama }} -
-                                                    {{ $sub->nilai }}
+                                                <option value="{{ $sub->nilai }}">{{ $sub->nama }} (
+                                                    {{ $sub->nilai }})
                                                 </option>
                                             @endforeach
                                         </select>
                                     @else
                                         <input type="number" id="nilai_{{ $criteria->id }}" disabled
                                             name="criteria_values[{{ $criteria->id }}]" min="0"
-                                            class="mt-2 block w-full rounded-lg border p-2.5 text-sm">
+                                            class="mt-2 block w-full rounded-lg border bg-gray-100 p-2.5 text-sm text-gray-900">
                                     @endif
                                 </div>
                             @endforeach
+
                             @error('criteria_values')
                                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                             @enderror
@@ -90,6 +91,9 @@
                                 <option value="{{ $criteria->id }}">{{ $criteria->nama }}</option>
                             @endforeach
                         </select>
+                        @error('criteria_to_edit')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="mb-5">
@@ -100,6 +104,9 @@
                             <input type="number" id="new_value" name="new_value" min="0"
                                 class="mt-2 block w-full cursor-not-allowed rounded-lg border p-2.5 text-sm" disabled>
                         </div>
+                        @error('new_value')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="mb-5">
@@ -164,14 +171,21 @@
                 })
                 .then(data => {
                     if (data.status === 'success') {
-                        namaInput.value = data.nama;
+                        // Update name input
+                        namaInput.value = data.nama || '';
 
                         // Update criteria values
                         const criteriaValues = data.criteria_values;
                         for (const [criteriaId, value] of Object.entries(criteriaValues)) {
                             const inputElement = document.getElementById(`nilai_${criteriaId}`);
                             if (inputElement) {
-                                inputElement.value = value;
+                                // Check if criteriaId is 3 or 4 to round the value
+                                if (criteriaId == 3 || criteriaId == 4) {
+                                    inputElement.value = Math.round(value);
+                                } else {
+                                    inputElement.value = value;
+                                }
+                                // Uncomment if you want to enable the input field
                                 // inputElement.disabled = false;
                             }
                         }
@@ -184,6 +198,8 @@
                 });
         });
     </script>
+
+
 
     {{-- TAMPIL KRITERIA YANG DIPILIH --}}
     <script type="module">

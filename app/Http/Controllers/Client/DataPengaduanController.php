@@ -44,12 +44,12 @@ class DataPengaduanController extends Controller
                 'deskripsi_aduan' => 'nullable|string',
             ],
             [
-                'nik.required' => 'NIK anda  harus diisi.',
+                'nik.required' => 'NIK anda harus diisi.',
                 'new_value.required' => 'Data pembaruan anda harus diisi.',
                 'criteria_to_edit.required' => 'Data kriteria yang akan diperbarui anda harus diisi.',
             ]
         );
-
+        dd($validated);
         // Ambil nilai lama berdasarkan NIK dan kriteria yang dipilih
         $oldValue = AlternativeValue::whereHas('alternative', function ($query) use ($validated) {
             $query->where('nik', $validated['nik']);

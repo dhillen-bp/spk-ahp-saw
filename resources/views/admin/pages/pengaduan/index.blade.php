@@ -85,10 +85,10 @@
                             ID
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Kriteria yang diadukan
+                            Nama Warga
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Nama Warga
+                            Kriteria yang diadukan
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Data Lama
@@ -111,18 +111,16 @@
                                 {{ $loop->iteration }}
                             </th>
                             <td class="px-6 py-4">
-                                {{ $data->criteria->nama }}
-                            </td>
-
-                            <td class="px-6 py-4">
                                 {{ $data->alternative->nama }}
                             </td>
-
                             <td class="px-6 py-4">
-                                {{ $data->old_value }}
+                                {{ $data->criteria->nama }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $data->new_value }}
+                                {{ $data->criteria->nama == 'Usia' || $data->criteria->nama == 'Jumlah Anggota Keluarga' ? number_format($data->old_value, 0, '.', '.') : $data->old_value }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $data->criteria->nama == 'Usia' || $data->criteria->nama == 'Jumlah Anggota Keluarga' ? number_format($data->new_value, 0, '.', '.') : $data->new_value }}
                             </td>
 
                             <td class="px-6 py-4">
