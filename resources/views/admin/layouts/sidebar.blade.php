@@ -58,7 +58,7 @@
                                 'h-6 w-6 flex-shrink text-gray-300 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white',
                         ])
 
-                        <span class="ms-3 flex-1 whitespace-nowrap">Perbandingan</span>
+                        <span class="ms-3 flex-1 whitespace-nowrap">Perbandingan Kriteria</span>
                     </a>
                 </li>
                 <li>

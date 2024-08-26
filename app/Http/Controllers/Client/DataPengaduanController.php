@@ -49,7 +49,7 @@ class DataPengaduanController extends Controller
                 'criteria_to_edit.required' => 'Data kriteria yang akan diperbarui anda harus diisi.',
             ]
         );
-        dd($validated);
+        // dd($validated);
         // Ambil nilai lama berdasarkan NIK dan kriteria yang dipilih
         $oldValue = AlternativeValue::whereHas('alternative', function ($query) use ($validated) {
             $query->where('nik', $validated['nik']);

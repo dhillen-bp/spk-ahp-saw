@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">EDIT PENILAIAN ALTERNATIVE</h1>
+        <h1 class="my-4 text-3xl font-bold">EDIT PENILAIAN WARGA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -21,7 +21,7 @@
                         <a href="{{ route('admin.alternative.penilaian.index') }}"
                             class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Data
                             Penilaian
-                            Alternative</a>
+                            Warga</a>
                     </div>
                 </li>
                 <li aria-current="page">
@@ -32,7 +32,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Edit Penilaian
-                            Alternative</span>
+                            Warga</span>
                     </div>
                 </li>
             </ol>

@@ -14,11 +14,11 @@
                 class="rounded-full bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Kembali</a>
             <h2 class="mb-2 mt-7 text-2xl font-bold text-gray-900">Data {{ $pengaduan->criteria->nama }} Salah</h2>
             <div class="mb-4"><strong class="text-gray-700"> Status:</strong>
-                @if ($pengaduan->status == 'selesai')
+                @if ($pengaduan->status == 'disetujui')
                     <span class="badge-success">
                         {{ $pengaduan->status }}</span>
-                @elseif($pengaduan->status == 'diproses')
-                    <span class="badge-primary">
+                @elseif($pengaduan->status == 'ditolak')
+                    <span class="badge-danger">
                         {{ $pengaduan->status }}</span>
                 @else
                     <span class="badge-warning">

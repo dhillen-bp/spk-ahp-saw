@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">DATA PENILAIAN ALTERNATIVE</h1>
+        <h1 class="my-4 text-3xl font-bold">DATA PENILAIAN WARGA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -26,7 +26,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">Data Penilaian
-                            Alternative</span>
+                            Warga</span>
                     </div>
                 </li>
             </ol>
@@ -35,7 +35,7 @@
 
     <div class="mt-8 pb-4">
         <div class="mb-2 flex justify-between">
-            <h3 class="mb-2 text-xl font-bold">Tabel Data Penilaian Alternative</h3>
+            <h3 class="mb-2 text-xl font-bold">Tabel Data Penilaian Warga</h3>
         </div>
 
         <div class="relative overflow-x-auto sm:rounded-lg">
@@ -48,7 +48,7 @@
                             'class' => 'h-5 w-5 text-white',
                         ])
                     </span>
-                    Tambah Penilaian Alternative</a>
+                    Tambah Penilaian Warga</a>
 
                 {{-- <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">

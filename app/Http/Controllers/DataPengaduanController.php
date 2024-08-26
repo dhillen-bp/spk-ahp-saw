@@ -15,7 +15,7 @@ class DataPengaduanController extends Controller
      */
     public function index()
     {
-        $reports = Pengaduan::orderByRaw("FIELD(status, 'menunggu', 'disetujui', 'ditolak')")
+        $reports = Pengaduan::with('criteria.subCriteria')->orderByRaw("FIELD(status, 'menunggu', 'disetujui', 'ditolak')")
             ->orderBy('created_at', 'asc')
             ->paginate(10);
 
@@ -104,11 +104,26 @@ class DataPengaduanController extends Controller
         );
 
         // Temukan laporan pengaduan berdasarkan ID
-        $report = Pengaduan::findOrFail($id);
+        $report = Pengaduan::with('criteria.subCriteria')->findOrFail($id);
         $report->status = $validated['status'];
 
+        if ($report->criteria->nama == 'Usia' || $report->criteria->nama == 'Jumlah Anggota Keluarga') {
+            $report->old_value = number_format($report->old_value, 0, '.', '.');
+            $report->new_value = number_format($report->new_value, 0, '.', '.');
+        }
+
+        if ($report->criteria->subCriteria->isNotEmpty()) {
+            $oldSubCriteria = $report->criteria->subCriteria->firstWhere('nilai', $report->old_value);
+            $newSubCriteria = $report->criteria->subCriteria->firstWhere('nilai', $report->new_value);
+            $FixSubCriteria = $report->criteria->subCriteria->firstWhere('nilai', $validated['fix_value']);
+
+            $balasan = "Data Penilaian pada kriteria  {$report->criteria->nama}, sebelumnya bernilai = {$oldSubCriteria->nama} ({$report->old_value}), lalu nilai yang anda ajukan = {$newSubCriteria->nama} ({$report->new_value}). Hasil Pemeriksaan adalah TIDAK SESUAI, karena setelah pemeriksaan data anda yang benar {$FixSubCriteria->nama} ({$validated['fix_value']}).";
+        } else {
+            $balasan = "Data Penilaian pada kriteria  {$report->criteria->nama}, sebelumnya bernilai = {$report->old_value}, lalu nilai yang anda ajukan = {$report->new_value}. Hasil Pemeriksaan adalah TIDAK SESUAI, karena setelah pemeriksaan data anda yaitu = {$validated['fix_value']}.";
+        }
+
         // Cek apakah new_value sama dengan fix_value
-        if ($report->new_value == $validated['fix_value']) {
+        if ($report->new_value == $validated['fix_value'] && $validated['status'] == 'disetujui') {
             // Jika nilai sama, update alternative_value
             $alternativeValue = AlternativeValue::whereHas('alternative', function ($query) use ($report) {
                 $query->where('nik', $report->nik);
@@ -122,8 +137,7 @@ class DataPengaduanController extends Controller
 
                 if ($alternativeValueUpdated) {
                     // Simpan perubahan pada report
-                    $report->keterangan_balasan = $validated['keterangan_balasan'];
-                    $report->keterangan_balasan = $validated['keterangan_balasan'] . " Data Kriteria yang anda nyatakan salah {$report->old_value}, lalu data yang anda minta perbarui {$report->new_value} sesuai, karena setelah pemeriksaan data anda yang benar {$validated['fix_value']}";
+                    $report->keterangan_balasan = $validated['keterangan_balasan'] . ' ' . $balasan;
                     $report->save();
 
                     return redirect()->route('admin.data_pengaduan.index')->with('success_message', 'Data pengaduan berhasil diubah!');
@@ -131,7 +145,7 @@ class DataPengaduanController extends Controller
             }
         } else {
             // Jika nilai berbeda, tambahkan pesan default ke keterangan_balasan
-            $report->keterangan_balasan = $validated['keterangan_balasan'] . " Data Kriteria yang anda nyatakan salah {$report->old_value}, lalu data yang anda minta perbarui {$report->new_value} tidak sesuai, karena setelah pemeriksaan data anda yang benar {$validated['fix_value']}";
+            $report->keterangan_balasan = $validated['keterangan_balasan'] . ' ' . $balasan;
             $report->save();
 
             return redirect()->route('admin.data_pengaduan.index')->with('success_message', 'Data pengaduan berhasil diubah');
@@ -140,7 +154,7 @@ class DataPengaduanController extends Controller
         return redirect()->back()->with('error_message', 'Data pengaduan gagal diubah!');
     }
 
-
+    //
     public function updateAsAgree(Request $request, string $id)
     {
         $validated = $request->validate([

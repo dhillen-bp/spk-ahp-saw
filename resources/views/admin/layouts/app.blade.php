@@ -3,6 +3,7 @@
 
 <head>
     @include('admin.layouts.head')
+    <title>SPK BLT Dana Desa Karangwini</title>
 </head>
 
 <body class="">

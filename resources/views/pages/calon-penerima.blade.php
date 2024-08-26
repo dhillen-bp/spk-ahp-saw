@@ -230,6 +230,9 @@
                                                             <th scope="col" class="px-6 py-3">
                                                                 Nama
                                                             </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                Alamat
+                                                            </th>
                                                             @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
                                                                 <th scope="col" class="px-6 py-3">
                                                                     {{ $value->criteria->nama }}
@@ -252,6 +255,9 @@
                                                                 </th>
                                                                 <td class="px-6 py-4">
                                                                     {{ $data->alternative->nama }}
+                                                                </td>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $data->alternative->alamat }}
                                                                 </td>
                                                                 @foreach ($data->alternative->alternativeValues as $value)
                                                                     @if ($value->criteria->subCriteria->isNotEmpty())

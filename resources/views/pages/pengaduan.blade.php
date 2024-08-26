@@ -16,7 +16,7 @@
                         <ol class="list-inside list-decimal space-y-2">
                             <li>Masuk ke halaman pengaduan.</li>
                             <li>Tekan tombol Buat Aduan berwarna biru.</li>
-                            <li>Isikan form pengaduan sesuai yang ingin anda laporkan.</li>
+                            <li>Isikan form pengaduan sesuai yang ingin anda laporkan jika anda menemui kesalahan data.</li>
                         </ol>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                                     @if ($data->status == 'disetujui')
                                         <span class="badge-success">
                                             {{ $data->status }}</span>
-                                    @elseif($data->status == 'diproses')
-                                        <span class="badge-primary">
+                                    @elseif($data->status == 'ditolak')
+                                        <span class="badge-danger">
                                             {{ $data->status }}</span>
                                     @else
                                         <span class="badge-warning">
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <p class="font-normal text-gray-700 dark:text-gray-400">
-                                    {{ strlen($data->deskripsi) > 20 ? substr($data->deskripsi, 0, 20) . '...' : $data->deskripsi }}
+                                    {{ strlen($data->deskripsi_aduan) > 20 ? substr($data->deskripsi_aduan, 0, 20) . '...' : $data->deskripsi_aduan }}
                                     <a href="{{ route('pengaduan.show', $data->id) }}"
                                         class="inline-flex items-center font-medium text-blue-600 hover:underline">
                                         Selengkapnya</a>

@@ -5,19 +5,17 @@
         <div class="relative h-96 w-full bg-cover bg-center py-32"
             style="background-image: url('{{ asset('images/background/karangwuni-bg.jpg') }}');">
             <div class="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-900 opacity-75"></div>
-            <h1 class="relative text-center text-3xl font-bold text-white">Pengumuman</h1>
+            <h1 class="relative text-center text-3xl font-bold text-white">Pengumuman Penerima BLT Dana Desa </h1>
         </div>
 
         <div class="-mb-16 p-4 md:px-6">
             <div class="relative -top-24 mx-2 rounded-lg bg-blue-100 p-8 sm:mx-4 md:mx-8">
                 <div class="rounded-lg bg-blue-700 p-4 text-white">
-                    <h3 class="text-center text-xl font-bold">Pengumuman Terkait Pengambilan BLT Dana Desa 2024</h3>
+                    <h3 class="text-center text-xl font-bold">Pengumuman Terkait Pengambilan BLT Dana Desa
+                        {{ $selectedYear }}</h3>
                     <div class="my-4">
                         <ol class="list-inside list-decimal space-y-2">
-                            <li>BLT Dana Desa dapat diambil ke balai desa pada hari Senin, 10 Juni 2024 mulai pukul 09.00.
-                            </li>
-                            <li>Jika tidak bisa datang, bisa diwakilkan dengan membawa fotokopi KK/KTP penerima.</li>
-                            <li>Jika ada yang ingin ditanyakan lebih lanjut, hubungi ...</li>
+                            <li>Berikut adalah pengumuman penerima BLT Dana Desa</li>
                         </ol>
                     </div>
                 </div>
@@ -107,6 +105,9 @@
                                         <th scope="col" class="px-6 py-3">
                                             Nama
                                         </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Alamat
+                                        </th>
                                         @foreach ($paginatedResults->first()->alternative->alternativeValues as $value)
                                             <th scope="col" class="px-6 py-3">
                                                 {{ $value->criteria->nama }}
@@ -126,6 +127,9 @@
                                             </th>
                                             <td class="px-6 py-4">
                                                 {{ $data->alternative->nama }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ $data->alternative->alamat }}
                                             </td>
                                             @foreach ($data->alternative->alternativeValues as $value)
                                                 @if ($value->criteria->subCriteria->isNotEmpty())

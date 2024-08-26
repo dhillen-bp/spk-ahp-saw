@@ -3,6 +3,7 @@
 
 <head>
     @include('layouts.head')
+    <title>Web BLT Dana Desa Karangwini</title>
 </head>
 
 <body class="">

@@ -116,12 +116,38 @@
                             <td class="px-6 py-4">
                                 {{ $data->criteria->nama }}
                             </td>
+
                             <td class="px-6 py-4">
-                                {{ $data->criteria->nama == 'Usia' || $data->criteria->nama == 'Jumlah Anggota Keluarga' ? number_format($data->old_value, 0, '.', '.') : $data->old_value }}
+                                @if ($data->criteria->nama == 'Usia' || $data->criteria->nama == 'Jumlah Anggota Keluarga')
+                                    {{ number_format($data->old_value, 0, '.', '.') }}
+                                @else
+                                    @php
+                                        // Cari subCriteria yang memiliki nilai sesuai dengan $data->old_value
+                                        $matchingSubCriteria = $data->criteria->subCriteria->firstWhere(
+                                            'nilai',
+                                            $data->old_value,
+                                        );
+                                    @endphp
+
+                                    {{ $matchingSubCriteria ? $matchingSubCriteria->nama : $data->old_value }}
+                                @endif
                             </td>
                             <td class="px-6 py-4">
-                                {{ $data->criteria->nama == 'Usia' || $data->criteria->nama == 'Jumlah Anggota Keluarga' ? number_format($data->new_value, 0, '.', '.') : $data->new_value }}
+                                @if ($data->criteria->nama == 'Usia' || $data->criteria->nama == 'Jumlah Anggota Keluarga')
+                                    {{ number_format($data->new_value, 0, '.', '.') }}
+                                @else
+                                    @php
+                                        // Cari subCriteria yang memiliki nilai sesuai dengan $data->new_value
+                                        $matchingSubCriteria = $data->criteria->subCriteria->firstWhere(
+                                            'nilai',
+                                            $data->new_value,
+                                        );
+                                    @endphp
+
+                                    {{ $matchingSubCriteria ? $matchingSubCriteria->nama : $data->new_value }}
+                                @endif
                             </td>
+
 
                             <td class="px-6 py-4">
                                 <span
