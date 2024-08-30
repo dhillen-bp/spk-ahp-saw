@@ -56,34 +56,40 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             <span class="flex items-center">
-                                ID <svg class="ms-1 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
-                                </svg>
+                                ID @include('partials.icons._sort-icon')
                             </span>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            NIK
+                            <span class="flex items-center">
+                                NIK @include('partials.icons._sort-icon')
+                            </span>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            No KK
+                            <span class="flex items-center">
+                                No KK @include('partials.icons._sort-icon')
+                            </span>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Nama
+                            <span class="flex items-center">
+                                Nama @include('partials.icons._sort-icon')
+                            </span>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Alamat
+                            <span class="flex items-center">
+                                Alamat @include('partials.icons._sort-icon')
+                            </span>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Jenis Kelamin
+                            <span class="flex items-center">
+                                Jenis Kelamin @include('partials.icons._sort-icon')
+                            </span>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Action
                         </th>
                     </tr>
                 </thead>
-                <tbody class="text-center" id="alternativeTable">
+                <tbody class="text-center">
                     @foreach ($alternatives as $data)
                         <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
                             <th class="px-6 py-4">
@@ -104,46 +110,75 @@
                             <td class="px-6 py-4">
                                 {{ $data->jenis_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="flex justify-between px-6 py-4">
                                 {{-- <a href="" class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a> --}}
-                                <a href="{{ route('admin.alternative.edit', $data->id) }}"
-                                    class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
                                 @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
-                                    <button data-modal-target="delete-modal-{{ $loop->iteration }}"
-                                        data-modal-toggle="delete-modal-{{ $loop->iteration }}"
-                                        class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">Hapus</button>
+                                    <a href="{{ route('admin.alternative.edit', $data->id) }}"
+                                        class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
+
+                                    <button data-id="{{ $data->id }}" data-name="{{ $data->nama }}"
+                                        data-modal-toggle="delete-modal" data-modal-target="delete-modal"
+                                        data-target="#delete-modal" class="btn-danger rounded-lg px-2.5 py-1.5 text-xs">
+                                        Hapus
+                                    </button>
                                 @endif
                             </td>
                         </tr>
 
-                        @component('admin.layouts.modal_delete', [
-                            'deleteMessage' => "Anda yakin menghapus data = $data->nama?",
-                            'loopId' => $loop->iteration,
-                            'deletedId' => $data->id,
-                            'routeName' => 'admin.alternative.destroy',
-                        ])
+                        <!-- Modal HTML -->
+                        @component('admin.layouts._modal_delete_datatables')
                         @endcomponent
                     @endforeach
                 </tbody>
             </table>
         </div>
-        {{-- PAGINATION --}}
-        {{-- <div>
-            {{ $alternatives->links('vendor.pagination.tailwind') }}
-        </div> --}}
+
     </div>
 @endsection
 
 @push('after-script')
     <script type="module">
-        if (document.getElementById("alternativeTable") && typeof simpleDatatables.DataTable !== 'undefined') {
-            const dataTable = new simpleDatatables.DataTable("#alternativeTable", {
-                searchable: true,
-                sortable: true,
-                paging: true,
-                perPage: 10,
-                perPageSelect: [10, 15, 20, 25],
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (event) => {
+                if (event.target.matches('[data-modal-toggle="delete-modal"]')) {
+                    const button = event.target;
+                    const id = button.getAttribute('data-id');
+                    const name = button.getAttribute('data-name');
+                    // Ambil data-target tanpa tanda #
+                    const targetSelector = button.getAttribute('data-target');
+                    const modal = document.querySelector(targetSelector);
+
+                    console.log(name); // Untuk debugging
+
+                    if (modal) {
+                        console.log("modal ", name);
+                        const modalBody = modal.querySelector('.modal-body');
+                        if (modalBody) {
+                            // Menggunakan innerHTML untuk memasukkan HTML
+                            modalBody.innerHTML = `Anda yakin menghapus data <strong>${name}</strong>?`;
+                        }
+                        modal.querySelector('form').setAttribute('action',
+                            `/admin/alternative/destroy/${id}`);
+                        modal.classList.remove('hidden');
+                    }
+                }
+
+                if (event.target.matches('[data-modal-close]')) {
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(modal => modal.classList.add('hidden'));
+                }
             });
-        }
+
+            // DATATABLES
+            if (document.getElementById("alternativeTable") && typeof simpleDatatables.DataTable !== 'undefined') {
+                const dataTable = new simpleDatatables.DataTable("#alternativeTable", {
+                    searchable: true,
+                    sortable: true,
+                    paging: true,
+                    perPage: 10,
+                    perPageSelect: [10, 15, 20, 25],
+                });
+            }
+        });
     </script>
 @endpush

@@ -15,7 +15,7 @@ class AlternativeValueController extends Controller
      */
     public function index()
     {
-        $alternatives = Alternative::with('alternativeValues', 'alternativeValues.criteria.subCriteria')->whereHas('alternativeValues')->paginate(10);
+        $alternatives = Alternative::with('alternativeValues', 'alternativeValues.criteria.subCriteria')->whereHas('alternativeValues')->get();
 
         $criterias = Criteria::all();
         return view('admin.pages.alternative.penilaian.index', compact('alternatives', 'criterias'));

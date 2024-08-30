@@ -107,7 +107,7 @@ class DataPengaduanController extends Controller
         $report = Pengaduan::with('criteria.subCriteria')->findOrFail($id);
         $report->status = $validated['status'];
 
-        if ($validated['fix_value'] != $report->old_value || $validated['fix_value'] != $report->new_value) {
+        if ($validated['fix_value'] != $report->new_value && $validated['fix_value'] != $report->old_value) {
             return redirect()->back()->with('error_message', 'Nilai yang anda masukkan tidak sesuai dengan data yang lama maupun data yang diajukan warga!');
         }
 
@@ -119,7 +119,7 @@ class DataPengaduanController extends Controller
         if ($report->criteria->subCriteria->isNotEmpty()) {
             $oldSubCriteria = $report->criteria->subCriteria->firstWhere('nilai', $report->old_value);
             $newSubCriteria = $report->criteria->subCriteria->firstWhere('nilai', $report->new_value);
-            $FixSubCriteria = $report->criteria->subCriteria->firstWhere('nilai', $validated['fix_value']);
+            $FixSubCriteria = $validated['fix_value'];
 
             $balasan = "Data Penilaian pada kriteria  {$report->criteria->nama}, sebelumnya bernilai = {$oldSubCriteria->nama} ({$report->old_value}), lalu nilai yang anda ajukan = {$newSubCriteria->nama} ({$report->new_value}). Hasil Pemeriksaan adalah TIDAK SESUAI, karena setelah pemeriksaan data anda yang benar {$FixSubCriteria->nama} ({$validated['fix_value']}).";
         } else {

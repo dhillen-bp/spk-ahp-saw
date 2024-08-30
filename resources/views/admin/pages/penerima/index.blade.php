@@ -103,8 +103,8 @@
                 Lihat Data Calon Penerima {{ $selectedYear }}
             </a>
 
-            @if ($paginatedResults->isNotEmpty())
-                <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+            @if ($rankingResults->isNotEmpty())
+                <table class="w-full text-left text-sm text-gray-500 rtl:text-right" id="penerimaTable">
                     <thead class="bg-blue-50 text-center text-xs font-bold uppercase text-gray-700">
                         <tr>
                             <th scope="col" class="px-6 py-3">
@@ -113,7 +113,7 @@
                             <th scope="col" class="px-6 py-3">
                                 Nama
                             </th>
-                            @foreach ($paginatedResults->first()->alternative->alternativeValues as $value)
+                            @foreach ($rankingResults->first()->alternative->alternativeValues as $value)
                                 <th scope="col" class="px-6 py-3">
                                     {{ $value->criteria->nama }}
                                 </th>
@@ -127,10 +127,10 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        @foreach ($paginatedResults as $data)
+                        @foreach ($rankingResults as $data)
                             <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
                                 <th class="px-6 py-4">
-                                    {{ ($paginatedResults->currentPage() - 1) * $paginatedResults->perPage() + $loop->iteration }}
+                                    {{ $loop->iteration }}
                                 </th>
                                 <td class="px-6 py-4">
                                     {{ $data->alternative->nama }}
@@ -187,12 +187,20 @@
             @endif
 
         </div>
-        {{-- PAGINATION --}}
-        <div>
-            {{ $paginatedResults->links('vendor.pagination.tailwind') }}
-        </div>
+
     </div>
 @endsection
 
 @push('after-script')
+    <script type="module">
+        if (document.getElementById("penerimaTable") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#penerimaTable", {
+                searchable: true,
+                sortable: true,
+                paging: true,
+                perPage: 10,
+                perPageSelect: [10, 15, 20, 25],
+            });
+        }
+    </script>
 @endpush

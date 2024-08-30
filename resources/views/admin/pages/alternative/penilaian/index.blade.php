@@ -49,43 +49,15 @@
                         ])
                     </span>
                     Tambah Penilaian Warga</a>
-
-                <label for="table-search" class="sr-only">Search</label>
-                <div class="relative">
-                    <div
-                        class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 left-0 flex items-center ps-3 rtl:right-0">
-                        <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <input type="text" id="table-search"
-                        class="block w-80 rounded-lg border border-gray-300 bg-white p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                        placeholder="Search for items">
-                </div>
-
-                <div>
-                    <button type="button"
-                        class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
-                        <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                        </svg>
-                        Export
-                    </button>
-                </div>
             </div>
 
-            <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+            <table class="w-full text-left text-sm text-gray-500 rtl:text-right" id="alternativeValueTable">
                 <thead class="bg-blue-50 text-center text-xs font-bold text-gray-700">
                     <tr>
-                        <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
+                        <th scope="col" class="border px-6 py-3 align-middle" rowspan="2">
                             No
                         </th>
-                        <th scope="col" class="border px-6 py-3 uppercase" rowspan="2" class="align-middle">
+                        <th scope="col" class="border px-6 py-3 align-middle" rowspan="2">
                             Nama
                         </th>
                         @php
@@ -93,16 +65,17 @@
                                 fn($criteria) => $criteria->alternativeValues->isNotEmpty(),
                             );
                         @endphp
-                        <th colspan="{{ $filteredCriterias->count() }}" class="border px-6 py-3 uppercase">
+                        <th scope="col" class="border px-6 py-3 uppercase" colspan="{{ $filteredCriterias->count() }}"
+                            rowspan="1">
                             Kriteria
                         </th>
-                        <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
+                        <th scope="col" class="border px-6 py-3 align-middle" rowspan="2">
                             Aksi
                         </th>
                     </tr>
                     <tr>
                         @foreach ($filteredCriterias as $criteria)
-                            <th scope="col" class="border px-6 py-3">
+                            <th scope="col" class="border px-6 py-3" rowspan="1">
                                 {{ $criteria->nama }}
                             </th>
                         @endforeach
@@ -112,7 +85,7 @@
                     @foreach ($alternatives as $data)
                         <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
                             <th class="px-6 py-4">
-                                {{ ($alternatives->currentPage() - 1) * $alternatives->perPage() + $loop->iteration }}
+                                {{ $loop->iteration }}
                             </th>
                             <td class="border px-6 py-4">
                                 {{ $data->nama }}
@@ -152,15 +125,21 @@
                 </tbody>
             </table>
 
-
-
-        </div>
-        {{-- PAGINATION --}}
-        <div>
-            {{ $alternatives->links('vendor.pagination.tailwind') }}
         </div>
     </div>
 @endsection
 
 @push('after-script')
+    <script type="module">
+        if (document.getElementById("alternativeValueTable") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#alternativeValueTable", {
+                searchable: true,
+                sortable: true,
+                paging: true,
+                perPage: 10,
+                perPageSelect: [10, 15, 20, 25],
+
+            });
+        }
+    </script>
 @endpush

@@ -84,6 +84,6 @@ class AlternativeController extends Controller
         Alternative::where('id', $id)->delete();
 
         return redirect()->route('admin.alternative.index')
-            ->with('success', 'Data  alternatif berhasil dihapus!');
+            ->with('success_message', 'Data  warga berhasil dihapus!');
     }
 }

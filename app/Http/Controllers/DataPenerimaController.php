@@ -41,20 +41,7 @@ class DataPenerimaController extends Controller
             })->where('is_verified', 1)->orderByDesc('skor_total')
             ->take($jumlahPenerima)->get();
 
-
-        // Mendapatkan halaman saat ini
-        $page = Paginator::resolveCurrentPage();
-
-        // Membagi koleksi ke halaman dengan jumlah item per halaman
-        $paginatedResults = new LengthAwarePaginator(
-            $rankingResults->forPage($page, $perPage = 10), // Data untuk halaman ini
-            $rankingResults->count(), // Total item dalam koleksi
-            $perPage, // Jumlah item per halaman
-            $page, // Halaman saat ini
-            ['path' => Paginator::resolveCurrentPath()] // URL path untuk pagination
-        );
-
-        return view('admin.pages.penerima.index', compact('paginatedResults', 'criteriaSelected', 'selectedYear'));
+        return view('admin.pages.penerima.index', compact('rankingResults', 'criteriaSelected', 'selectedYear'));
     }
 
 
@@ -147,7 +134,7 @@ class DataPenerimaController extends Controller
                 $query->where('nama', $selectedYear);
             })
             ->orderByDesc('skor_total')
-            ->paginate(10);
+            ->get();
 
         return view('admin.pages.penerima.calon-penerima', compact('rankingResults', 'criteriaSelected', 'selectedYear'));
     }

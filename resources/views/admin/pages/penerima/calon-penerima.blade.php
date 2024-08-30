@@ -128,7 +128,7 @@
             </div>
 
             @if ($rankingResults->isNotEmpty())
-                <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+                <table class="w-full text-left text-sm text-gray-500 rtl:text-right" id="calonPenerimaTable">
                     <thead class="bg-slate-50 text-center text-xs font-bold uppercase text-gray-700">
                         <tr>
                             <th scope="col" class="px-6 py-3">
@@ -225,12 +225,20 @@
                 </table>
             @endif
         </div>
-        {{-- PAGINATION --}}
-        <div>
-            {{ $rankingResults->links('vendor.pagination.tailwind') }}
-        </div>
+
     </div>
 @endsection
 
 @push('after-script')
+    <script type="module">
+        if (document.getElementById("calonPenerimaTable") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#calonPenerimaTable", {
+                searchable: true,
+                sortable: true,
+                paging: true,
+                perPage: 10,
+                perPageSelect: [10, 15, 20, 25],
+            });
+        }
+    </script>
 @endpush
