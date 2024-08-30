@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
     <div class="my-10">
-        <h1 class="my-4 text-3xl font-bold">TAMBAH ALTERNATIVE</h1>
+        <h1 class="my-4 text-3xl font-bold">TAMBAH WARGA</h1>
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                 <li class="inline-flex items-center">
@@ -107,7 +107,14 @@
 
         <div class="col-span-2 rounded-lg bg-blue-50 p-4">
             <h3 class="text-center text-lg font-bold">Keterangan</h3>
-            <p></p>
+            <p class="mt-2">
+                <strong>NIK:</strong> Nomor Induk Kependudukan warga. Pastikan terdiri dari 16 digit.<br>
+                <strong>No KK:</strong> Nomor Kartu Keluarga warga. Pastikan terdiri dari 16 digit.<br>
+                <strong>Nama:</strong> Nama lengkap warga sesuai KTP.<br>
+                <strong>Alamat:</strong> Alamat tempat tinggal warga. (misal: KARANGWUNI RT 001 RW 002)<br>
+                <strong>Jenis Kelamin:</strong> Laki-Laki (L) atau Perempuan (P).
+            </p>
         </div>
+
     </div>
 @endsection

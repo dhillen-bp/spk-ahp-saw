@@ -50,7 +50,7 @@
                     </span>
                     Tambah Penilaian Warga</a>
 
-                {{-- <label for="table-search" class="sr-only">Search</label>
+                <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div
                         class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 left-0 flex items-center ps-3 rtl:right-0">
@@ -64,9 +64,9 @@
                     <input type="text" id="table-search"
                         class="block w-80 rounded-lg border border-gray-300 bg-white p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Search for items">
-                </div> --}}
+                </div>
 
-                {{-- <div>
+                <div>
                     <button type="button"
                         class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
                         <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"
@@ -77,90 +77,90 @@
                         Export
                     </button>
                 </div>
-            </div> --}}
+            </div>
 
-                <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-                    <thead class="bg-blue-50 text-center text-xs font-bold text-gray-700">
-                        <tr>
-                            <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
-                                No
+            <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
+                <thead class="bg-blue-50 text-center text-xs font-bold text-gray-700">
+                    <tr>
+                        <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
+                            No
+                        </th>
+                        <th scope="col" class="border px-6 py-3 uppercase" rowspan="2" class="align-middle">
+                            Nama
+                        </th>
+                        @php
+                            $filteredCriterias = $criterias->filter(
+                                fn($criteria) => $criteria->alternativeValues->isNotEmpty(),
+                            );
+                        @endphp
+                        <th colspan="{{ $filteredCriterias->count() }}" class="border px-6 py-3 uppercase">
+                            Kriteria
+                        </th>
+                        <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
+                            Aksi
+                        </th>
+                    </tr>
+                    <tr>
+                        @foreach ($filteredCriterias as $criteria)
+                            <th scope="col" class="border px-6 py-3">
+                                {{ $criteria->nama }}
                             </th>
-                            <th scope="col" class="border px-6 py-3 uppercase" rowspan="2" class="align-middle">
-                                Nama
-                            </th>
-                            @php
-                                $filteredCriterias = $criterias->filter(
-                                    fn($criteria) => $criteria->alternativeValues->isNotEmpty(),
-                                );
-                            @endphp
-                            <th colspan="{{ $filteredCriterias->count() }}" class="border px-6 py-3 uppercase">
-                                Kriteria
-                            </th>
-                            <th scope="col" class="border px-6 py-3" rowspan="2" class="align-middle">
-                                Aksi
-                            </th>
-                        </tr>
-                        <tr>
-                            @foreach ($filteredCriterias as $criteria)
-                                <th scope="col" class="border px-6 py-3">
-                                    {{ $criteria->nama }}
-                                </th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        @foreach ($alternatives as $data)
-                            <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
-                                <th class="px-6 py-4">
-                                    {{ ($alternatives->currentPage() - 1) * $alternatives->perPage() + $loop->iteration }}
-                                </th>
-                                <td class="border px-6 py-4">
-                                    {{ $data->nama }}
-                                </td>
-                                @foreach ($filteredCriterias as $criteria)
-                                    @php
-                                        $alternativeValue = $data->alternativeValues->firstWhere(
-                                            'criteria_id',
-                                            $criteria->id,
-                                        );
-                                    @endphp
-                                    <td class="border px-6 py-4">
-                                        @if ($alternativeValue)
-                                            @if ($alternativeValue->criteria->subCriteria->isNotEmpty())
-                                                @php
-                                                    $subCriteriaName =
-                                                        $alternativeValue->criteria->subCriteria->firstWhere(
-                                                            'nilai',
-                                                            $alternativeValue->nilai,
-                                                        )->nama ?? 'N/A';
-                                                @endphp
-                                                {{ $subCriteriaName . ' (' . $alternativeValue->nilai . ')' }}
-                                            @else
-                                                {{ number_format($alternativeValue->nilai, 0, '.', '.') ?? 'N/A' }}
-                                            @endif
-                                        @else
-                                            N/A
-                                        @endif
-                                    </td>
-                                @endforeach
-                                <td class="border px-6 py-4">
-                                    <a href="{{ route('admin.alternative.penilaian.show', $data->id) }}"
-                                        class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
-                                </td>
-                            </tr>
                         @endforeach
-                    </tbody>
-                </table>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach ($alternatives as $data)
+                        <tr class="text-gray-900 odd:bg-white even:bg-blue-50 hover:bg-gray-50 even:hover:bg-blue-100">
+                            <th class="px-6 py-4">
+                                {{ ($alternatives->currentPage() - 1) * $alternatives->perPage() + $loop->iteration }}
+                            </th>
+                            <td class="border px-6 py-4">
+                                {{ $data->nama }}
+                            </td>
+                            @foreach ($filteredCriterias as $criteria)
+                                @php
+                                    $alternativeValue = $data->alternativeValues->firstWhere(
+                                        'criteria_id',
+                                        $criteria->id,
+                                    );
+                                @endphp
+                                <td class="border px-6 py-4">
+                                    @if ($alternativeValue)
+                                        @if ($alternativeValue->criteria->subCriteria->isNotEmpty())
+                                            @php
+                                                $subCriteriaName =
+                                                    $alternativeValue->criteria->subCriteria->firstWhere(
+                                                        'nilai',
+                                                        $alternativeValue->nilai,
+                                                    )->nama ?? 'N/A';
+                                            @endphp
+                                            {{ $subCriteriaName . ' (' . $alternativeValue->nilai . ')' }}
+                                        @else
+                                            {{ number_format($alternativeValue->nilai, 0, '.', '.') ?? 'N/A' }}
+                                        @endif
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+                            @endforeach
+                            <td class="border px-6 py-4">
+                                <a href="{{ route('admin.alternative.penilaian.show', $data->id) }}"
+                                    class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
 
 
-            </div>
-            {{-- PAGINATION --}}
-            <div>
-                {{ $alternatives->links('vendor.pagination.tailwind') }}
-            </div>
         </div>
-    @endsection
+        {{-- PAGINATION --}}
+        <div>
+            {{ $alternatives->links('vendor.pagination.tailwind') }}
+        </div>
+    </div>
+@endsection
 
-    @push('after-script')
-    @endpush
+@push('after-script')
+@endpush

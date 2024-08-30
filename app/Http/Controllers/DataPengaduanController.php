@@ -107,6 +107,10 @@ class DataPengaduanController extends Controller
         $report = Pengaduan::with('criteria.subCriteria')->findOrFail($id);
         $report->status = $validated['status'];
 
+        if ($validated['fix_value'] != $report->old_value || $validated['fix_value'] != $report->new_value) {
+            return redirect()->back()->with('error_message', 'Nilai yang anda masukkan tidak sesuai dengan data yang lama maupun data yang diajukan warga!');
+        }
+
         if ($report->criteria->nama == 'Usia' || $report->criteria->nama == 'Jumlah Anggota Keluarga') {
             $report->old_value = number_format($report->old_value, 0, '.', '.');
             $report->new_value = number_format($report->new_value, 0, '.', '.');

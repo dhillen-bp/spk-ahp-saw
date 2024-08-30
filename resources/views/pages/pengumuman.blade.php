@@ -11,11 +11,11 @@
         <div class="-mb-16 p-4 md:px-6">
             <div class="relative -top-24 mx-2 rounded-lg bg-blue-100 p-8 sm:mx-4 md:mx-8">
                 <div class="rounded-lg bg-blue-700 p-4 text-white">
-                    <h3 class="text-center text-xl font-bold">Pengumuman Terkait Pengambilan BLT Dana Desa
+                    <h3 class="text-center text-xl font-bold">Pengumuman Terkait BLT Dana Desa Karangwuni Tahun
                         {{ $selectedYear }}</h3>
                     <div class="my-4">
                         <ol class="list-inside list-decimal space-y-2">
-                            <li>Berikut adalah pengumuman penerima BLT Dana Desa</li>
+                            <li>Berikut adalah daftar penerima BLT Dana Desa</li>
                         </ol>
                     </div>
                 </div>

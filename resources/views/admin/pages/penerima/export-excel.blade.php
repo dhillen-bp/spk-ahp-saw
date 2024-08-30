@@ -15,10 +15,11 @@ $sheet->setTitle('Laporan Penerima');
 // Set header
 $sheet->setCellValue('A1', 'No');
 $sheet->setCellValue('B1', 'NIK');
-$sheet->setCellValue('C1', 'Nama');
-$sheet->setCellValue('D1', 'Alamat');
+$sheet->setCellValue('C1', 'NO KK');
+$sheet->setCellValue('D1', 'Nama');
+$sheet->setCellValue('E1', 'Alamat');
 
-$column = 'E';
+$column = 'F';
 foreach ($rankingResults->first()->alternative->alternativeValues as $value) {
     $sheet->setCellValue($column . '1', $value->criteria->nama);
     $column++;
@@ -31,10 +32,11 @@ $row = 2;
 foreach ($rankingResults as $data) {
     $sheet->setCellValue('A' . $row, $row - 1);
     $sheet->setCellValue('B' . $row, "'" . $data->alternative->nik);
-    $sheet->setCellValue('C' . $row, $data->alternative->nama);
-    $sheet->setCellValue('D' . $row, $data->alternative->alamat);
+    $sheet->setCellValue('C' . $row, "'" . $data->alternative->no_kk);
+    $sheet->setCellValue('D' . $row, $data->alternative->nama);
+    $sheet->setCellValue('E' . $row, $data->alternative->alamat);
 
-    $column = 'E';
+    $column = 'F';
     foreach ($data->alternative->alternativeValues as $value) {
         if ($value->criteria->subCriteria->isNotEmpty()) {
             foreach ($value->criteria->subCriteria as $subCriteria) {

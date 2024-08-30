@@ -23,8 +23,8 @@ class AlternativeRequest extends FormRequest
     {
         return [
             'nama' => 'required|string|max:255',
-            'nik' => 'required|string',
-            'no_kk' => 'required|string',
+            'nik' => 'required|numeric|digits:16',
+            'no_kk' => 'required|numeric|digits:16',
             'alamat' => 'required|string|',
             'jenis_kelamin' => 'nullable|in:L,P',
         ];
@@ -35,7 +35,11 @@ class AlternativeRequest extends FormRequest
         return [
             'nama.required' => 'Nama warga harus di isi!',
             'nik.required' => 'NIK warga harus di isi!',
-            'no_kk.required' => 'No KK warga harus di isi!',
+            'nik.numeric' => 'NIK warga harus berupa angka!',
+            'nik.digits' => 'NIK harus terdiri dari 16 digit!',
+            'no_kk.required' => 'No.  KK warga harus di isi!',
+            'no_kk.numeric' => 'No.KK warga harus berupa angka!',
+            'no_kk.digits' => 'No KK harus terdiri dari 16 digit!',
             'alamat.required' => 'Alamat harus di isi!',
             'jenis_kelamin.in' => 'Jenis Kelamin harus L (Laki-Laki) atau P (Perempuan)!',
         ];

@@ -13,7 +13,7 @@ class AlternativeController extends Controller
      */
     public function index()
     {
-        $alternatives = Alternative::paginate(10);
+        $alternatives = Alternative::get();
         return view('admin.pages.alternative.index', compact('alternatives'));
     }
 
