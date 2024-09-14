@@ -38,9 +38,9 @@
          <form id="searchForm" class="mx-auto mb-4 mt-8 flex max-w-md items-center">
              <label for="simple-search" class="sr-only">Search</label>
              <div class="relative w-full">
-                 <input type="text" id="simple-search" name="query"
+                 <input type="number" id="simple-search" name="query"
                      class="block w-full rounded-full border border-gray-300 bg-gray-50 p-2.5 py-3 ps-5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                     placeholder="Masukkan NIK Anda" required />
+                     placeholder="Masukkan NIK Anda" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required />
              </div>
              <button type="submit" data-modal-target="searchModal" data-modal-toggle="searchModal"
                  class="ms-2 rounded-full border border-blue-700 bg-blue-700 p-3 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

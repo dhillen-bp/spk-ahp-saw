@@ -39,7 +39,7 @@
     </div>
 
     <div class="mx-auto w-full py-4 lg:w-[700px]">
-        @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+        @if (Auth::guard('admin')->user()->role === 'pemerintah_desa' || Auth::guard('admin')->user()->role === 'rt_rw')
             <div class="flex justify-between">
                 <a href="{{ route('admin.alternative.penilaian.edit', $alternative->id) }}"
                     class="btn-warning rounded-lg px-2.5 py-2 text-sm">Edit</a>

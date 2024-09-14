@@ -80,12 +80,9 @@ Route::prefix('alternative')->name('admin.alternative.')->middleware('role:pemer
     Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [AlternativeController::class, 'update'])->name('update');
     Route::delete('/destroy/{id}', [AlternativeController::class, 'destroy'])->name('destroy');
-
-    Route::middleware('role:pemerintah_desa')->group(function () {
-        Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('edit');
-        Route::patch('/update/{id}', [AlternativeController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [AlternativeController::class, 'destroy'])->name('destroy');
-    });
+    Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('edit');
+    Route::patch('/update/{id}', [AlternativeController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [AlternativeController::class, 'destroy'])->name('destroy');
 
     Route::prefix('penilaian')->name('penilaian.')->group(function () {
         Route::get('/', [AlternativeValueController::class, 'index'])->name('index');
@@ -93,12 +90,9 @@ Route::prefix('alternative')->name('admin.alternative.')->middleware('role:pemer
 
         Route::get('/tambah', [AlternativeValueController::class, 'create'])->name('create');
         Route::post('/store', [AlternativeValueController::class, 'store'])->name('store');
-
-        Route::middleware('role:pemerintah_desa')->group(function () {
-            Route::get('/edit/{id}', [AlternativeValueController::class, 'edit'])->name('edit');
-            Route::patch('/update/{id}', [AlternativeValueController::class, 'update'])->name('update');
-            Route::delete('/destroy/{id}', [AlternativeValueController::class, 'destroy'])->name('destroy');
-        });
+        Route::get('/edit/{id}', [AlternativeValueController::class, 'edit'])->name('edit');
+        Route::patch('/update/{id}', [AlternativeValueController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [AlternativeValueController::class, 'destroy'])->name('destroy');
     });
 });
 

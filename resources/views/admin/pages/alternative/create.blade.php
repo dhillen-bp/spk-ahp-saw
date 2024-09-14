@@ -47,7 +47,8 @@
                 <label for="nik"
                     class="{{ $errors->has('nik') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     NIK</label>
-                <input type="number" id="nik" name="nik" required
+                <input type="number" id="nik" name="nik"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" required
                     class="{{ $errors->has('nik') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('nik') }}" />
                 @error('nik')
@@ -58,7 +59,8 @@
                 <label for="no_kk"
                     class="{{ $errors->has('no_kk') ? 'text-red-900' : 'text-gray-900' }} mb-2 block text-sm font-medium">
                     No KK</label>
-                <input type="number" id="no_kk" name="no_kk" required
+                <input type="number" id="no_kk" name="no_kk"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" required
                     class="{{ $errors->has('no_kk') ? 'input-error' : 'input-default' }} block w-full rounded-lg border p-2.5 text-sm"
                     value="{{ old('no_kk') }}" />
                 @error('no_kk')

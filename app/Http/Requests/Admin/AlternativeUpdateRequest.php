@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class AlternativeRequest extends FormRequest
+class AlternativeUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,9 +22,17 @@ class AlternativeRequest extends FormRequest
      */
     public function rules(): array
     {
+        $alternativeId = $this->route('id');
+
         return [
             'nama' => 'required|string|max:255',
-            'nik' => 'required|numeric|digits:16|unique:alternatives,nik',
+            'nik' => [
+                'required',
+                'numeric',
+                'digits:16',
+                // Ignore the current record's NIK when checking for uniqueness
+                Rule::unique('alternatives', 'nik')->ignore($alternativeId),
+            ],
             'no_kk' => 'required|numeric|digits:16',
             'alamat' => 'required|string|',
             'jenis_kelamin' => 'nullable|in:L,P',

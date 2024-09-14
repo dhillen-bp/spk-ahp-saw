@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\AlternativeRequest;
+use App\Http\Requests\Admin\AlternativeUpdateRequest;
 use App\Models\Alternative;
 use Illuminate\Http\Request;
 
@@ -30,8 +31,13 @@ class AlternativeController extends Controller
      */
     public function store(AlternativeRequest $request)
     {
+        // Validate the request
         $validated = $request->validated();
 
+        // Convert the 'nama' field to uppercase
+        $validated['nama'] = strtoupper($validated['nama']);
+
+        // Create the alternative record
         $alternative = Alternative::create($validated);
 
         if ($alternative) {
@@ -39,6 +45,7 @@ class AlternativeController extends Controller
         }
         return redirect()->back()->with('error_message', 'Data alternative gagal ditambahkan!');
     }
+
 
     /**
      * Display the specified resource.
@@ -61,12 +68,20 @@ class AlternativeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AlternativeRequest $request,  $id)
+    public function update(AlternativeUpdateRequest $request, $id)
     {
+        // Validate the request
         $validated = $request->validated();
 
+        // Convert the 'nama' field to uppercase
+        if (isset($validated['nama'])) {
+            $validated['nama'] = strtoupper($validated['nama']);
+        }
+
+        // Find the existing alternative by ID
         $alternative = Alternative::findOrFail($id);
 
+        // Update the alternative record
         $kriteriaUpdated = $alternative->update($validated);
 
         if ($kriteriaUpdated) {
@@ -74,6 +89,7 @@ class AlternativeController extends Controller
         }
         return redirect()->back()->with('error_message', 'Data alternative gagal diubah!');
     }
+
 
     /**
      * Remove the specified resource from storage.

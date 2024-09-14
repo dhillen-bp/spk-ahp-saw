@@ -164,22 +164,17 @@
                                     {{ $data->skor_total }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    <button data-modal-target="aksi-modal-{{ $loop->iteration }}"
-                                        data-modal-toggle="aksi-modal-{{ $loop->iteration }}"
-                                        class="btn-warning rounded-lg px-2.5 py-1.5 text-xs" type="button">
+                                    <button data-modal-target="aksi-modal" data-modal-toggle="aksi-modal"
+                                        data-id="{{ $data->id }}" data-name="{{ $data->alternative->nama }}"
+                                        data-target="#aksi-modal" class="btn-warning rounded-lg px-2.5 py-1.5 text-xs"
+                                        type="button">
                                         Aksi
                                     </button>
+
                                 </td>
                             </tr>
 
-                            @component('admin.layouts.modal_aksi', [
-                                'chooseName' => $data->alternative->nama,
-                                'loopId' => $loop->iteration,
-                                'chooseId' => $data->id,
-                                'is_verified' => $data->is_verified,
-                                'is_verified_desc' => $data->is_verified_desc,
-                                'routeName' => 'admin.penerima.verifikasi',
-                            ])
+                            @component('admin.layouts.modal_aksi_datatables')
                             @endcomponent
                         @endforeach
                     </tbody>
@@ -193,6 +188,39 @@
 
 @push('after-script')
     <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (event) => {
+                if (event.target.matches('[data-modal-toggle="aksi-modal"]')) {
+                    const button = event.target;
+                    const id = button.getAttribute('data-id');
+                    const name = button.getAttribute('data-name');
+                    // Ambil data-target tanpa tanda #
+                    const targetSelector = button.getAttribute('data-target');
+                    const modal = document.querySelector(targetSelector);
+
+                    console.log(name); // Untuk debugging
+
+                    if (modal) {
+                        console.log("modal ", name);
+                        const modalName = modal.querySelector('.modalName');
+                        if (modalName) {
+                            // Menggunakan innerHTML untuk memasukkan HTML
+                            modalName.innerHTML = `Verifikasi Data Penerima - ${name}`;
+                        }
+                        modal.querySelector('form').setAttribute('action',
+                            `/admin/data-penerima/verifikasi/${id}`);
+                        modal.classList.remove('hidden');
+                    }
+                }
+
+                if (event.target.matches('[data-modal-close]')) {
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(modal => modal.classList.add('hidden'));
+                }
+            });
+        });
+
+
         if (document.getElementById("penerimaTable") && typeof simpleDatatables.DataTable !== 'undefined') {
             const dataTable = new simpleDatatables.DataTable("#penerimaTable", {
                 searchable: true,

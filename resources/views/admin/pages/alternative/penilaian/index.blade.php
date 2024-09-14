@@ -65,13 +65,10 @@
                                 fn($criteria) => $criteria->alternativeValues->isNotEmpty(),
                             );
                         @endphp
-                        <th scope="col" class="border px-6 py-3 uppercase" colspan="{{ $filteredCriterias->count() }}"
+                        {{-- <th scope="col" class="border px-6 py-3 uppercase" colspan="{{ $filteredCriterias->count() }}"
                             rowspan="1">
                             Kriteria
-                        </th>
-                        <th scope="col" class="border px-6 py-3 align-middle" rowspan="2">
-                            Aksi
-                        </th>
+                        </th> --}}
                     </tr>
                     <tr>
                         @foreach ($filteredCriterias as $criteria)
@@ -79,6 +76,10 @@
                                 {{ $criteria->nama }}
                             </th>
                         @endforeach
+
+                        <th scope="col" class="border px-6 py-3 align-middle" rowspan="1">
+                            Aksi
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">

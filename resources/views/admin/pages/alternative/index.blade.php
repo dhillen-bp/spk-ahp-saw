@@ -112,7 +112,7 @@
                             </td>
                             <td class="flex justify-between px-6 py-4">
                                 {{-- <a href="" class="btn-primary rounded-lg px-2.5 py-1.5 text-xs">Detail</a> --}}
-                                @if (Auth::guard('admin')->user()->role === 'pemerintah_desa')
+                                @if (Auth::guard('admin')->user()->role === 'pemerintah_desa' || Auth::guard('admin')->user()->role === 'rt_rw')
                                     <a href="{{ route('admin.alternative.edit', $data->id) }}"
                                         class="btn-warning rounded-lg px-2.5 py-1.5 text-xs">Edit</a>
 
